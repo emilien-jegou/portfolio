@@ -1,35 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
+body {
+  /* Background */
+  --color-bg-subtle: #F2F2F2;
+  --color-bg-default: #FFF;
 
-/**
- * WHAT IS THIS FILE?
- *
- * Globally applied styles. No matter which components are in the page or matching route,
- * the styles in here will be applied to the Document, without any sort of CSS scoping.
- *
- */
-html {
-  -webkit-text-size-adjust: 100%;
-  -moz-tab-size: 4;
-  -o-tab-size: 4;
-  tab-size: 4;
-  font-family:
-    ui-sans-serif,
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Roboto,
-    "Helvetica Neue",
-    Arial,
-    "Noto Sans",
-    sans-serif,
-    "Apple Color Emoji",
-    "Segoe UI Emoji",
-    "Segoe UI Symbol",
-    "Noto Color Emoji";
+  /* Text */
+  --color-text-default: #111827;
+  --color-text-subtle: #374151;
+  --color-text-subtler: #CACACA;
+  --color-text-disabled: #C0C0C0;
+
+  /* Border */
+  --color-border-default: #181818;
+  --color-border-subtle: #cacaca;
+  --color-border-subtler: #EBEBEB;
+
+  /* Other */
+  --color-focused: rgba(0, 0, 0, 0.15);
+  --color-contrast: #000;
 }
 
 body {
-  padding: 0;
-  line-height: inherit;
+  overflow-x: hidden;
+  color: var(--color-text-default);
+  background-color: var(--color-bg-default);
+}
+
+*, ::before, ::after {
+  border-color: var(--color-border-subtler);
+}
+
+@layer components {
+  .mob-h-screen {
+    height: 100vh;
+    height: 100svh;
+  }
+
+  .bg-subtle { @apply bg-bg-subtle }
+  .bg-default { @apply bg-bg-default }
+
+  .text-subtle { @apply text-text-subtle }
+  .text-subtler { @apply text-text-subtler }
+  .text-default { @apply text-text-default }
+  .text-disabled { @apply text-text-disabled }
+
+  .border-default { @apply border border-border-default }
+  .border-subtle { @apply border border-border-subtle }
+  .border-subtler { @apply border border-border-subtler }
+
+  .custom-container {
+    @apply w-full max-w-[640px] px-4;
+  }
 }

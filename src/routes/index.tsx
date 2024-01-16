@@ -4,12 +4,15 @@ import type { DocumentHead } from '@builder.io/qwik-city';
 export default component$(() => {
   return (
     <>
-      <h1>Hi 👋</h1>
-      <p>
-        Can't wait to see what you build with qwik!
-        <br />
-        Happy coding.
-      </p>
+      <main class="mx-auto custom-container">
+        <h1 class="text-4xl font-extrabold">Hi There,</h1>
+        <p class="text-subtle leading-7 mt-6">
+          I'm a French software engineer with over 3 years in full-stack development and an IT
+          Master's from Epitech. I love discovering new things, so I started this blog, hope you
+          find it interesting!
+        </p>
+      </main>
+      <p></p>
     </>
   );
 });
