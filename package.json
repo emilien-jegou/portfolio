@@ -20,6 +20,7 @@
     "fmt": "prettier --write .",
     "fmt.check": "prettier --check .",
     "lint": "eslint \"src/**/*.ts*\"",
+    "lint.fix": "npm run lint -- --fix",
     "preview": "qwik build preview && vite preview --open",
     "start": "vite --open --mode ssr",
     "qwik": "qwik"
@@ -33,6 +34,10 @@
     "@typescript-eslint/parser": "^6.18.1",
     "eslint": "^8.56.0",
     "eslint-plugin-qwik": "^1.3.5",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-import-resolver-typescript": "^3.6.1",
     "prettier": "^3.1.1",
     "typescript": "5.3.3",
     "undici": "*",
