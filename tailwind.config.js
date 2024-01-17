@@ -12,11 +12,13 @@ export default {
         // Background
         'bg-default': 'var(--color-bg-default)',
         'bg-subtle': 'var(--color-bg-subtle)',
+        'bg-contrast': 'var(--color-bg-contrast)',
 
         // Text
         'text-default': 'var(--color-text-default)',
         'text-subtle': 'var(--color-text-subtle)',
         'text-subtler': 'var(--color-text-subtler)',
+        'text-contrast': 'var(--color-text-contrast)',
         'text-disabled': 'var(--color-text-disabled)',
 
         // Border
@@ -26,7 +28,6 @@ export default {
 
         // Other
         focused: 'var(--color-focused)',
-        contrast: 'var(--color-contrast)',
       },
     },
   },

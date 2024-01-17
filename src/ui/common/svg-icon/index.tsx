@@ -6,7 +6,7 @@ const getIconSizePx = (size: IconSize) =>
   ({
     sm: '12px',
     md: '16px',
-    lg: '20px',
+    lg: '18px',
   })[size];
 
 export type IconProps = {
