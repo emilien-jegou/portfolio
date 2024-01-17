@@ -32,21 +32,21 @@ export default component$(() => {
         <h2 class="text-lg text-subtler">Latest posts</h2>
         <div class="flex flex-col gap-20 my-12">
           <BlogCard
-            slug="/test"
+            slug="/blog/my-blog-article"
             title="This is a blog post name"
             description="I am just filling some random info in this so that it fill in around 3 lines when squashed"
             imageUrl="https://picsum.photos/1200/720"
             date={subDays(new Date(), 5)}
           />
           <BlogCard
-            slug="/test"
+            slug="/blog/my-blog-article"
             title="This is a blog post name"
             description="I am just filling some random info in this so that it fill in around 3 lines when squashed"
             imageUrl="https://picsum.photos/1201/720"
             date={subDays(new Date(), 60)}
           />
           <BlogCard
-            slug="/test"
+            slug="/blog/my-blog-article"
             title="This is a blog post name"
             description="I am just filling some random info in this so that it fill in around 3 lines when squashed"
             imageUrl="https://picsum.photos/600/600"

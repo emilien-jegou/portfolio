@@ -2,35 +2,40 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   overflow-x: hidden;
   color: var(--color-text-default);
   background-color: var(--color-bg-default);
 }
 
-*, ::before, ::after {
+*,
+::before,
+::after {
   border-color: var(--color-border-subtler);
 }
 
 @layer components {
-
   .light-theme {
     /* Background */
-    --color-bg-subtle: #F2F2F2;
-    --color-bg-default: #FFF;
-    --color-bg-contrast: #2A2A2A;
+    --color-bg-subtle: #f2f2f2;
+    --color-bg-default: #fff;
+    --color-bg-contrast: #2a2a2a;
 
     /* Text */
     --color-text-default: #111827;
     --color-text-subtle: #374151;
-    --color-text-subtler: #8E959E;
-    --color-text-disabled: #C0C0C0;
-    --color-text-contrast: #FFFFFF;
+    --color-text-subtler: #8e959e;
+    --color-text-disabled: #c0c0c0;
+    --color-text-contrast: #ffffff;
 
     /* Border */
     --color-border-default: #181818;
     --color-border-subtle: #cacaca;
-    --color-border-subtler: #EBEBEB;
+    --color-border-subtler: #ebebeb;
 
     /* Other */
     --color-focused: rgba(0, 0, 0, 0.15);
@@ -41,19 +46,41 @@ body {
     height: 100svh;
   }
 
-  .bg-subtle { @apply bg-bg-subtle }
-  .bg-default { @apply bg-bg-default }
-  .bg-contrast { @apply bg-bg-contrast }
+  .bg-subtle {
+    @apply bg-bg-subtle;
+  }
+  .bg-default {
+    @apply bg-bg-default;
+  }
+  .bg-contrast {
+    @apply bg-bg-contrast;
+  }
 
-  .text-subtle { @apply text-text-subtle }
-  .text-subtler { @apply text-text-subtler }
-  .text-default { @apply text-text-default }
-  .text-contrast { @apply text-text-contrast }
-  .text-disabled { @apply text-text-disabled }
+  .text-subtle {
+    @apply text-text-subtle;
+  }
+  .text-subtler {
+    @apply text-text-subtler;
+  }
+  .text-default {
+    @apply text-text-default;
+  }
+  .text-contrast {
+    @apply text-text-contrast;
+  }
+  .text-disabled {
+    @apply text-text-disabled;
+  }
 
-  .border-default { @apply border border-border-default }
-  .border-subtle { @apply border border-border-subtle }
-  .border-subtler { @apply border border-border-subtler }
+  .border-default {
+    @apply border border-border-default;
+  }
+  .border-subtle {
+    @apply border border-border-subtle;
+  }
+  .border-subtler {
+    @apply border border-border-subtler;
+  }
 
   body {
     @apply light-theme;
