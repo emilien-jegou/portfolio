@@ -2,10 +2,10 @@
 
 .mdx h1 { @apply font-extrabold text-4xl }
 .mdx h2 { @apply font-extrabold text-2xl }
-.mdx h3 { @apply font-bold text-lg text-subtle }
+.mdx h3 { @apply font-bold text-lg text-text-subtle }
 .mdx h4 { @apply font-semibold }
 
-.mdx p { @apply text-subtle leading-7 }
+.mdx p { @apply text-text-subtle leading-7 }
 
 /* Spacing */
 
