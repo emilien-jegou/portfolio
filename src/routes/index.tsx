@@ -1,5 +1,6 @@
 import { component$ } from '@builder.io/qwik';
 import { subDays } from 'date-fns';
+import articles from '~/generated/blog-data';
 import { Button } from '~/ui/common/button';
 import { ArrowDownIcon } from '~/ui/icons/arrow-down';
 import { BlogCard } from '~/ui/layout/blog-card';
@@ -31,27 +32,16 @@ export default component$(() => {
       <section class="custom-container mx-auto mt-24 sm:mt-36" id="blog">
         <h2 class="text-lg text-subtler">Latest posts</h2>
         <div class="flex flex-col gap-20 my-12">
-          <BlogCard
-            slug="/blog/my-blog-article"
-            title="This is a blog post name"
-            description="I am just filling some random info in this so that it fill in around 3 lines when squashed"
-            imageUrl="https://picsum.photos/1200/720"
-            date={subDays(new Date(), 5)}
-          />
-          <BlogCard
-            slug="/blog/my-blog-article"
-            title="This is a blog post name"
-            description="I am just filling some random info in this so that it fill in around 3 lines when squashed"
-            imageUrl="https://picsum.photos/1201/720"
-            date={subDays(new Date(), 60)}
-          />
-          <BlogCard
-            slug="/blog/my-blog-article"
-            title="This is a blog post name"
-            description="I am just filling some random info in this so that it fill in around 3 lines when squashed"
-            imageUrl="https://picsum.photos/600/600"
-            date={subDays(new Date(), 400)}
-          />
+          {Object.entries(articles).map(([slug, { article }]: any, idx) => (
+            <BlogCard
+              key={idx}
+              slug={`/blog/${slug}`}
+              title={article.title}
+              description={article.description}
+              imageUrl={article.imageUrl}
+              date={subDays(new Date(), 5)}
+            />
+          ))}
         </div>
       </section>
       <footer class="mt-24 mb-4 text-center text-subtler text-sm">
