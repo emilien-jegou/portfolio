@@ -1,0 +1,12 @@
+- outline colors on buttons
+- proper footer
+- contact button, email computed on click
+- back button on article page
+- dark theme
+- pwa capabilities
+- verify lighthouse score on all page
+- mobile responsivitiy
+- prefer no animation settings
+- verify aria labels
+- add anonymous analytics
+- settings button on page top-right to change: fonts & theme

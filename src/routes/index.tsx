@@ -1,11 +1,23 @@
 import { component$ } from '@builder.io/qwik';
-import { subDays } from 'date-fns';
 import articles from '~/generated/blog-data';
 import { Button } from '~/ui/common/button';
 import { ArrowDownIcon } from '~/ui/icons/arrow-down';
 import { BlogCard } from '~/ui/layout/blog-card';
+import { FooterBar } from '~/ui/layout/footer-bar';
 import { HeaderBar } from '~/ui/layout/header-bar';
 import type { DocumentHead } from '@builder.io/qwik-city';
+
+type Article = {
+  slug: string;
+  title: string;
+  imageUrl: string;
+  description: string;
+  createdAt: number;
+};
+
+const sortedArticles: Article[] = Object.entries(articles)
+  .map(([slug, { data }]: any) => ({ slug, ...data }))
+  .sort((a: any, b: any) => b.createdAt - a.createdAt);
 
 export default component$(() => {
   return (
@@ -32,31 +44,30 @@ export default component$(() => {
       <section class="custom-container mx-auto mt-24 sm:mt-36" id="blog">
         <h2 class="text-lg text-subtler">Latest posts</h2>
         <div class="flex flex-col gap-20 my-12">
-          {Object.entries(articles).map(([slug, { article }]: any, idx) => (
+          {sortedArticles.map((data, idx) => (
             <BlogCard
               key={idx}
-              slug={`/blog/${slug}`}
-              title={article.title}
-              description={article.description}
-              imageUrl={article.imageUrl}
-              date={subDays(new Date(), 5)}
+              slug={`/blog/${data.slug}`}
+              title={data.title}
+              description={data.description}
+              imageUrl={data.imageUrl}
+              date={new Date(data.createdAt)}
             />
           ))}
         </div>
       </section>
-      <footer class="mt-24 mb-4 text-center text-subtler text-sm">
-        <p>Copyright (c) Emilien Jegou</p>
-      </footer>
+      <FooterBar />
     </>
   );
 });
 
 export const head: DocumentHead = {
-  title: 'Welcome to Qwik',
+  title: 'emje.dev',
   meta: [
     {
       name: 'description',
-      content: 'Qwik site description',
+      content:
+        'Welcome to my personal programming blog where you can explore the web technologies that power my site. Dive into my setup, journey through my development experiences.',
     },
   ],
 };
