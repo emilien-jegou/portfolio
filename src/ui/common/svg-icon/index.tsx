@@ -30,7 +30,7 @@ export const SvgIcon = (props: SvgIconProps) => {
 
   return (
     <svg
-      style={{ 'min-width': sizePx, 'min-height': sizePx, ...props.style }}
+      style={{ 'min-width': sizePx, 'min-height': sizePx }}
       width={sizePx}
       height={sizePx}
       class={props.class}

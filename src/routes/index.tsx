@@ -1,5 +1,5 @@
 import { component$ } from '@builder.io/qwik';
-import articles from '~/generated/blog-data';
+import articles from '~/generated/blog-data.json';
 import { Button } from '~/ui/common/button';
 import { ArrowDownIcon } from '~/ui/icons/arrow-down';
 import { BlogCard } from '~/ui/layout/blog-card';
