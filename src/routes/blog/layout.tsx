@@ -1,10 +1,13 @@
 import { component$, Slot } from '@builder.io/qwik';
-import { useDocumentHead } from '@builder.io/qwik-city';
+import { Link, useDocumentHead } from '@builder.io/qwik-city';
 import { format } from 'date-fns';
+import { ArrowLeftIcon } from '~/ui/icons/arrow-left';
 import { FooterBar } from '~/ui/layout/footer-bar';
-import type { DocumentHead, RequestHandler } from '@builder.io/qwik-city';
+import type { DocumentHead } from '@builder.io/qwik-city';
 
 import './mdx.css';
+import './prism-theme-dark.css';
+import { BlogSeparator } from '~/ui/common/blog-separator';
 
 export default component$(() => {
   const {
@@ -13,24 +16,23 @@ export default component$(() => {
 
   return (
     <>
-      <main class="mt-24 mx-auto custom-container">
+      <Link
+        class="absolute xl:fixed top-4 left-4 gap-1 font-semibold text-default text-sm underline flex items-center"
+        href="/"
+      >
+        <ArrowLeftIcon /> Go back home
+      </Link>
+      <main class="relative mt-24 mx-auto custom-container">
         <h1 class="text-3xl sm:text-4xl sm:leading-[46px] font-extrabold max-w-[580px]">
           {data.title}
         </h1>
         <p class="text-subtler mt-4 sm:mt-6">
           Emilien Jegou, {format(data.createdAt, 'EEE MMMM dd yyyy')}
         </p>
-        <p class="text-subtle leading-7 mt-4 sm:mt-6 ">{data.description}</p>
-        <img
-          alt="article cover"
-          class="block w-full rounded-lg mt-6 shadow-sm h-[160px] object-cover"
-          src={data.imageUrl}
-          width={640}
-          height={142}
-        />
       </main>
-      <section class="mdx custom-container mx-auto">
+      <section class="mdx mt-8 custom-container mx-auto">
         <Slot />
+        <BlogSeparator />
       </section>
       <FooterBar />
     </>

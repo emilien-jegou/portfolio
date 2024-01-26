@@ -14,6 +14,11 @@ export default defineConfig((): UserConfig => {
           jsonOutputPath: './src/generated/blog-data.json',
         }),
         qwikCity({
+          mdxPlugins: {
+              rehypeSyntaxHighlight: true,
+              remarkGfm: true,
+              rehypeAutolinkHeadings: true,
+          },
           mdx: {
             rehypePlugins: [
               // Plugins can now be added manually to use a different configuration
