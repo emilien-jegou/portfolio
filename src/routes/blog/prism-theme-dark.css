@@ -1,0 +1,159 @@
+code[class*='language-'],
+pre {
+  border-bottom-left-radius: var(--code-blog-rounding, 0px);
+  border-bottom-right-radius: var(--code-blog-rounding, 0px);
+
+  color: #c6cdd5; /* base4 for general text */
+  font-family: 'Consolas', 'Bitstream Vera Sans Mono', 'Courier New', Courier, monospace;
+  direction: ltr;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  font-size: 14px;
+  line-height: 1.2em;
+  /* background-color: #0B0E14; /* base0 for background */
+  background-color: #191D24;
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+pre > code[class*='language-'] {
+  font-size: inherit;
+}
+
+pre::-moz-selection,
+pre::-moz-selection,
+code[class*='language-']::-moz-selection,
+code[class*='language-'] ::-moz-selection {
+  background: #89929b; /* base3 for selections */
+}
+
+pre::selection,
+pre::selection,
+code[class*='language-']::selection,
+code[class*='language-'] ::selection {
+  background: #89929b; /* base3 for selections */
+}
+
+/* Code blocks */
+pre {
+  @apply p-6 sm:p-8;
+  margin: 0.5em 0;
+  overflow: auto;
+  border: 1px solid #21262d; /* base2 for border */
+}
+
+/* Inline code */
+:not(pre) > code[class*='language-'] {
+  padding: 0.2em;
+  padding-top: 1px;
+  padding-bottom: 1px;
+  background: #161b22; /* base1 for inline code background */
+  border: 1px solid #21262d; /* base2 for inline code border */
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: #ACB6BF8C; /* Updated green for comments */
+}
+
+.token.namespace {
+  opacity: 0.7;
+}
+
+.token.string,
+.token.attr-value {
+  color: #AAD94C; /* Updated red for strings */
+}
+
+.token.punctuation,
+.token.operator {
+  color: #ecf2f8; /* Updated base5 for punctuation and operators */
+}
+
+.token.entity,
+.token.url,
+.token.symbol,
+.token.number,
+.token.boolean,
+.token.variable,
+.token.constant,
+.token.property,
+.token.regex,
+.token.inserted {
+  color: #D2A6FF; /* Updated lightblue for these tokens */
+}
+
+.token.atrule,
+.token.keyword,
+.token.attr-name {
+  color: #FF8F40; /* Updated purp for atrules, keywords, and attribute-names */
+}
+
+.token.function {
+  color: #FFB454; /* Updated blue for functions */
+}
+
+.token.deleted {
+  color: #fa7970; /* No change, keeping original red for deleted text */
+}
+
+.token.tag,
+.token.selector {
+  color: #faa356; /* No change, keeping original orange for tags and selectors */
+}
+
+.token.important {
+  font-weight: bold;
+}
+
+.token.bold {
+  font-weight: bold;
+}
+
+.token.italic {
+  font-style: italic;
+}
+
+
+/* Custom scrollbar for Webkit browsers */
+pre::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+  background-color: #0B0E14; /* base0 for background */
+}
+
+pre::-webkit-scrollbar-track {
+  border-radius: l0px;
+  background-color: #161b22; /* base1 for inline code background */
+}
+
+pre::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: #2f363d; /* slightly lighter than base1 for contrast */
+  border: 3px solid #161b22; /* base1 for inline code background */
+}
+
+pre::-webkit-scrollbar-thumb:hover {
+  background: #3b434c; /* slightly lighter for hover effect */
+}
+
+/* Custom scrollbar for Firefox */
+pre {
+  scrollbar-width: thin;
+  scrollbar-color: #2f363d #161b22; /* thumb and track */
+}
+
+/* For IE and Edge */
+pre {
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+

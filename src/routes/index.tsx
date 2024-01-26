@@ -1,7 +1,7 @@
-import { component$ } from '@builder.io/qwik';
+import { $, component$, useSignal } from '@builder.io/qwik';
 import articles from '~/generated/blog-data.json';
 import { Button } from '~/ui/common/button';
-import { ArrowDownIcon } from '~/ui/icons/arrow-down';
+import { Modal } from '~/ui/common/modal';
 import { BlogCard } from '~/ui/layout/blog-card';
 import { FooterBar } from '~/ui/layout/footer-bar';
 import { HeaderBar } from '~/ui/layout/header-bar';
@@ -10,7 +10,7 @@ import type { DocumentHead } from '@builder.io/qwik-city';
 type Article = {
   slug: string;
   title: string;
-  imageUrl: string;
+  thumbnailUrl: string;
   description: string;
   createdAt: number;
 };
@@ -20,6 +20,8 @@ const sortedArticles: Article[] = Object.entries(articles)
   .sort((a: any, b: any) => b.createdAt - a.createdAt);
 
 export default component$(() => {
+  const reachOutModalVisible = useSignal(false);
+
   return (
     <>
       <HeaderBar />
@@ -31,14 +33,21 @@ export default component$(() => {
           find it interesting!
         </p>
         <div class="flex items-center gap-6 mt-4 sm:mt-6">
-          <Button>
+          <Button
+            onClick$={$((): void => {
+              reachOutModalVisible.value = true;
+            })}
+          >
             <span>Reach out</span>
             <span class="text-[16px]">✉️</span>
           </Button>
-          <a class="flex items-center gap-1 text-sm font-medium hover:underline" href="#blog">
+          <Modal bind:show={reachOutModalVisible}>
+            <p>Here</p>
+          </Modal>
+          {/*<a class="flex items-center gap-1 text-sm font-medium hover:underline" href="#blog">
             <span>Discover my blog</span>
             <ArrowDownIcon size="lg" class="mt-[1px]" />
-          </a>
+          </a>*/}
         </div>
       </main>
       <section class="custom-container mx-auto mt-24 sm:mt-36" id="blog">
@@ -50,7 +59,7 @@ export default component$(() => {
               slug={`/blog/${data.slug}`}
               title={data.title}
               description={data.description}
-              imageUrl={data.imageUrl}
+              thumbnailUrl={data.thumbnailUrl}
               date={new Date(data.createdAt)}
             />
           ))}

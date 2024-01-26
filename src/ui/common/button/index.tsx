@@ -9,7 +9,7 @@ export type ButtonProps = {
   onClick$?: PropFunction<() => void>;
 };
 
-export const Button = (props: ButtonProps) => (
+export const Button = ({ onClick$, ...props }: ButtonProps) => (
   <button
     class={twMerge(
       'flex flex-row justify-center items-center whitespace-nowrap rounded-[10px] gap-2 h-10 font-medium bg-contrast text-contrast border border-[0.5px] border-border-subtler hover:drop-shadow-sm text-sm px-5',
@@ -18,7 +18,7 @@ export const Button = (props: ButtonProps) => (
     )}
     disabled={props.disabled}
     type={props.type ?? 'button'}
-    onClick$={props.onClick$}
+    onClick$={onClick$}
   >
     {props.children}
   </button>

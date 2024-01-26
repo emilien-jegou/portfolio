@@ -20,6 +20,7 @@ export default {
         'text-subtler': 'var(--color-text-subtler)',
         'text-contrast': 'var(--color-text-contrast)',
         'text-disabled': 'var(--color-text-disabled)',
+        'text-link': 'var(--color-text-link)',
 
         // Border
         'border-default': 'var(--color-border-default)',
@@ -31,5 +32,7 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require("tailwindcss-animate"),
+  ],
 };

@@ -4,12 +4,10 @@
 
 html {
   scroll-behavior: smooth;
-}
-
-body {
-  overflow-x: hidden;
-  color: var(--color-text-default);
-  background-color: var(--color-bg-default);
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  text-rendering: optimizelegibility
 }
 
 *,
@@ -31,6 +29,7 @@ body {
     --color-text-subtler: #8e959e;
     --color-text-disabled: #c0c0c0;
     --color-text-contrast: #ffffff;
+    --color-text-link: #174291;
 
     /* Border */
     --color-border-default: #181818;
@@ -49,9 +48,11 @@ body {
   .bg-subtle {
     @apply bg-bg-subtle;
   }
+
   .bg-default {
     @apply bg-bg-default;
   }
+
   .bg-contrast {
     @apply bg-bg-contrast;
   }
@@ -59,15 +60,24 @@ body {
   .text-subtle {
     @apply text-text-subtle;
   }
+
   .text-subtler {
     @apply text-text-subtler;
   }
+
   .text-default {
     @apply text-text-default;
   }
+
+  .text-link {
+    @apply text-text-link;
+  }
+
+
   .text-contrast {
     @apply text-text-contrast;
   }
+
   .text-disabled {
     @apply text-text-disabled;
   }
@@ -75,9 +85,11 @@ body {
   .border-default {
     @apply border border-border-default;
   }
+
   .border-subtle {
     @apply border border-border-subtle;
   }
+
   .border-subtler {
     @apply border border-border-subtler;
   }
@@ -88,5 +100,15 @@ body {
 
   .custom-container {
     @apply w-full max-w-[640px] px-4;
+  }
+
+  .custom-container .grow-out-20 {
+    width: 768px;
+    transform: translateX(-64px);
+  }
+
+  .custom-container .grow-out-40 {
+    width: 896px;
+    transform: translateX(-128px);
   }
 }
