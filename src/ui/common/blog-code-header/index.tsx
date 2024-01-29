@@ -23,7 +23,7 @@ export const BlogCodeHeader = (props: BlogCodeHeaderProps) => (
     }}
     class="flex bg-[#0B0E14] text-xs gap-4 justify-between text-white/50 px-2 py-1"
   >
-    <span>{props.language}</span>
+    <span class="select-none">{props.language}</span>
     <div class="flex gap-2">
       <HeaderInlineIconButton
         class="hidden lg:inline-block"
