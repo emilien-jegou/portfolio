@@ -1,18 +1,21 @@
 import { component$, Slot } from '@builder.io/qwik';
-import { Link, useDocumentHead } from '@builder.io/qwik-city';
+import { Link, useContent, useDocumentHead } from '@builder.io/qwik-city';
 import { format } from 'date-fns';
+import { BlogSeparator } from '~/ui/common/blog-separator';
+import { TableOfContents } from '~/ui/common/table-of-contents';
 import { ArrowLeftIcon } from '~/ui/icons/arrow-left';
 import { FooterBar } from '~/ui/layout/footer-bar';
 import type { DocumentHead } from '@builder.io/qwik-city';
 
 import './mdx.css';
 import './prism-theme-dark.css';
-import { BlogSeparator } from '~/ui/common/blog-separator';
 
 export default component$(() => {
   const {
     frontmatter: { data },
   } = useDocumentHead();
+
+  const { headings } = useContent();
 
   return (
     <>
@@ -22,18 +25,21 @@ export default component$(() => {
       >
         <ArrowLeftIcon /> Go back home
       </Link>
-      <main class="relative mt-24 mx-auto custom-container">
-        <h1 class="text-3xl sm:text-4xl sm:leading-[46px] font-extrabold max-w-[580px]">
-          {data.title}
-        </h1>
-        <p class="text-subtler mt-4 sm:mt-6">
-          Emilien Jegou, {format(data.createdAt, 'EEE MMMM dd yyyy')}
-        </p>
-      </main>
-      <section class="mdx mt-8 custom-container mx-auto">
-        <Slot />
-        <BlogSeparator />
-      </section>
+      <div class="relative mx-auto custom-container">
+        <TableOfContents headings={headings ?? []} />
+        <main id="intro" class="relative mt-24">
+          <h1 class="text-3xl sm:text-4xl sm:leading-[46px] font-extrabold max-w-[580px]">
+            {data.title}
+          </h1>
+          <p class="text-subtler mt-4 sm:mt-6">
+            Emilien Jegou, {format(data.createdAt, 'EEE MMMM dd yyyy')}
+          </p>
+        </main>
+        <section class="mdx mt-8">
+          <Slot />
+          <BlogSeparator />
+        </section>
+      </div>
       <FooterBar />
     </>
   );
