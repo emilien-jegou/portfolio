@@ -27,8 +27,8 @@ export const BlogCode = component$((props: BlogCodeProps) => {
   return (
     <div
       class={twMerge(
-        viewType.value !== 'fullscreen' && 'mt-8 blog-code-rounding bg-[#191D24]',
-        viewType.value === 'expanded' && 'lg:w-[920px] lg:-translate-x-[140px]',
+        viewType.value !== 'fullscreen' && 'mt-8 shadow blog-code-rounding bg-[#191D24]',
+        viewType.value === 'expanded' && 'lg:w-[940px] shadow-xl lg:-translate-x-[140px]',
         viewType.value === 'fullscreen' && 'fixed top-0 left-0 w-[100%] h-screen z-50',
       )}
     >

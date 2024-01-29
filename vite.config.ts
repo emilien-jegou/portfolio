@@ -1,20 +1,18 @@
 import { defineConfig, type UserConfig } from "vite";
 import { qwikVite } from "@builder.io/qwik/optimizer";
 import { qwikCity } from "@builder.io/qwik-city/vite";
-// eslint-disable-next-line import/no-unresolved
 import { qwikPwa } from "@qwikdev/pwa";
 import tsconfigPaths from "vite-tsconfig-paths";
-import FrontmatterPlugin from './utils/vite-plugin-qwik-static-frontmatter-loader';
-
-
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
+import MarkdownParserPlugin from './utils/vite-plugin-qwik-markdown-parser';
 
 export default defineConfig((): UserConfig => {
   return {
     plugins: [
-        FrontmatterPlugin({
+        MarkdownParserPlugin({
           contentDirectory: './src/routes/blog',
           jsonOutputPath: './src/generated/blog-data.json',
+          parse: (data) => data.data,
         }),
         qwikCity({
           mdxPlugins: {

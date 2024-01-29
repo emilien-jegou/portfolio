@@ -10,6 +10,8 @@ html {
   text-rendering: optimizelegibility
 }
 
+* { scroll-margin-top: 40px; }
+
 *,
 ::before,
 ::after {
@@ -26,7 +28,7 @@ html {
     /* Text */
     --color-text-default: #111827;
     --color-text-subtle: #374151;
-    --color-text-subtler: #8e959e;
+    --color-text-subtler: #7E848C;
     --color-text-disabled: #c0c0c0;
     --color-text-contrast: #ffffff;
     --color-text-link: #174291;
