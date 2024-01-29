@@ -21,7 +21,7 @@ export const FullScreenImageModal = (props: FullscreenImageModalProps) => (
         props['bind:show'].value = false;
       }}
     >
-      <img class="rounded-t-md h-full" {...props.image} />
+      <img class="rounded-t-md h-full max-h-[80vh] w-full" {...props.image} />
       <figcaption class="rounded-b-md w-full text-center text-xs font-medium py-1 px-2 bg-black text-white">
         {props.image.alt}
       </figcaption>

@@ -12,7 +12,7 @@ export const TableOfContents = (props: TableOfContentsProps) => {
           Introduction
         </a>
         {props.headings
-          .filter((h) => h.level === 2)
+          .filter((h) => h.level <= 2)
           .map((heading, idx) => (
             <a
               class="text-sm text-subtler whitespace-nowrap overflow-hidden text-ellipsis"

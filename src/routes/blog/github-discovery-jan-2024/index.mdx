@@ -18,8 +18,6 @@ import { BlogCoverImage } from '~/ui/common/blog-cover-image';
 
 This month issue is highly focused on AI, but you will also find cool CLI tools, a series of guide and a new backend framework for rust inspired by ruby on rails, enjoy your reading!
 
-<BlogCoverImage src="https://picsum.photos/640/300" />
-
 <BlogSeparator />
 
 ## GPT crawler
@@ -30,7 +28,7 @@ The team at Builder.io, known for creating Qwik.js and Partytown, among other to
 
 Library developers seeking to enhance their website's accessibility will find this especially beneficial as it allows you to provide information beyond ChatGPT's training set to your users. Qwik.js, a new frontend framework from the same creators notably has a very useful AI assistant on their website which could very well be powered by GPT Crawler!
 
-<BlogImage alt="Simple launch of GPT crawler using a basic configuration" width={960} height={618} src="/images/posts/github-discovery-jan-2024/282893436-feb8763a-152b-4708-9c92-013b5c70d2f2.gif" />
+<BlogImage alt="Demo launch of GPT crawler using a basic configuration" width={960} height={618} src="/images/posts/github-discovery-jan-2024/282893436-feb8763a-152b-4708-9c92-013b5c70d2f2.gif" />
 
 <BlogGithubLink href="https://github.com/BuilderIO/gpt-crawler" label="Gpt crawler on github" />
 <BlogSeparator />
@@ -56,9 +54,9 @@ It's worth noting that Emotivoice is merely the tip of the iceberg of TTS engine
 
 Photomaker, developed by Tencent, represents a significant advancement in AI image generation technology. It ingeniously combines a user's photo with a given prompt, crafting a photo combination that is remarkably close to reality. Although it isn't perfect, the level of fidelity it achieves is impressive, often producing results that can easily fool the eye. This tool stands out for its ability to blend elements seamlessly, offering a glimpse into the future of digital image manipulation and creation.
 
-![[Pasted image 20240124192403.png]]
+<BlogImage alt="Demo of photomaker on a face with glasses" width={1432} height={1072} src="/images/posts/github-discovery-jan-2024/photomaker.png" />
 
-If you wish to try it, the easiest way is to <ExternalLinkInline label="go on replicate" href="https://replicate.com/tencentarc/photomaker" /> where the full model can be tried for free without signup!
+To try it, the easiest way is to <ExternalLinkInline label="go on replicate" href="https://replicate.com/tencentarc/photomaker" /> where the full model can be tried for free without signup!
 
 <BlogGithubLink href="https://github.com/TencentARC/PhotoMaker" label="PhotoMaker on github" />
 <BlogSeparator />
@@ -67,7 +65,7 @@ If you wish to try it, the easiest way is to <ExternalLinkInline label="go on re
 
 <BlogTags tags={['rust', 'AI', 'CLI']} />
 
-Kicking off our list of noteworthy Rust packages, OCRS is a CLI tool designed to facilitate image-to-text conversion (see command bellow). It's exciting to see the AI world breach over to the CLI environment, as there is still so much innovation that remains in the space!
+Kicking off our list of noteworthy Rust packages, OCRS is a CLI tool designed to facilitate image-to-text conversion (see command below). It's exciting to see the AI world breach over to the CLI environment, as there is still so much innovation that remains in the space!
 
 
 <BlogCode language="bash">
@@ -76,7 +74,7 @@ ocrs image.png -o content.txt
 ```
 </BlogCode>
 
-![[image.png]]
+<BlogImage alt="Text conversion of martinfowler.com" width={1432} height={1072} src="/images/posts/github-discovery-jan-2024/ocrs.png" noBorder />
 
 ![[Pasted image 20240124234541.png]]
 The results from OCRS are impressively convincing! It accurately identifies title text and various menu navigation items from an image. While the tool occasionally struggles to differentiate between sections of a webpage, leading to some mixed-up content, pre-cropping each text section beforehand could be a viable solution to enhance its accuracy.
@@ -87,11 +85,11 @@ The results from OCRS are impressively convincing! It accurately identifies titl
 ## Maybe.co, manage your finances
 <BlogTags tags={['typescript', 'node', 'backend', 'application']} />
 
-Maybe is a personal finance management app, originally fully closed, the project went open source in January 2024 aiming to change their business model into a self-hosted/hosted solutions, following in the footstep of companies like GitLab. At first glance, this strategy appears to be successful, as the project reached the impressive milestone of acquiring 13,000 stars on its repository just two weeks after its release!
+Maybe is a personal finance management app, originally fully closed, the project went open source in January 2024 aiming to change their business model into a self-hosted/hosted solution, following in the footstep of companies like GitLab. At first glance, this strategy appears to be successful, as the project reached the impressive milestone of acquiring 13,000 stars on its repository just two weeks after its release!
 
-![[2024-01-25_00-08.png]]
+<BlogImage alt="Maybe.co dashboard view" width={1432} height={1072} src="/images/posts/github-discovery-jan-2024/maybe.png" noBorder />
 
-It is rare to see full-stack application as polished as Maybe go fully open-source, and it's all in typescript! Beyond its capabilities as a personal finance app, Maybe offers invaluable insights into the construction of financial software, I particularly enjoyed reading <ExternalLinkInline href="https://github.com/maybe-finance/maybe/wiki/Handling-Money" label="their documentation on money formatting" />!
+It is rare to see full-stack application as polished as Maybe go fully open-source, and it's all in typescript! Beyond its capabilities as a personal finance app, Maybe offers invaluable insights into the construction of financial software, I particularly enjoyed reading <ExternalLinkInline href="https://github.com/maybe-finance/maybe/wiki/Handling-Money" label="their documentation on money formatting!" />
 
 <BlogGithubLink href="https://github.com/maybe-finance/maybe" label="Maybe on github" />
 <BlogSeparator />
@@ -100,11 +98,11 @@ It is rare to see full-stack application as polished as Maybe go fully open-sour
 
 <BlogTags tags={['ruby', 'CLI']} />
 
-Curlyq (curl query?), is a CLI tool that marries the text-fetching efficiency of `curl` with a webpage parser.
+Curlyq is a CLI tool that marries the text-fetching efficiency of `curl` with a webpage parser.
 
-One of it's notable feature is its capability to open web pages in a browser, enabling JavaScript execution prior to data retrieval. This can significantly fasten the web scraping process by eliminating the necessity for intricate setups, such as installing Playwright for Node.js.
+One of it's notable feature is its capability to open web pages in a browser, enabling JavaScript execution prior to data retrieval, something curl is not capable of.
 
-All in all, CurlyQ is a great tool to have in reach when performing data scraping!
+This tool can facilitate the web scraping process by eliminating the need of configuring a scraping environment in either node or python, here everything is packaged inside one CLI command.
 
 <BlogCode language="bash">
 ```bash
@@ -132,24 +130,13 @@ curlyq scrape
 
 ## Loco
 
-![[Pasted image 20240125035339.png]]
+<BlogImage alt="Loco.rs website" width={1432} height={1072} src="/images/posts/github-discovery-jan-2024/loco.png" noBorder />
 
 Loco is a project crazy enough to bring the Ruby on Rails backend experience over to rust, in essence it simplifies a lot of the questions a developer may have when starting a backend in Rust as currently when building a backend in rust we have to "build our house", first we select a web framework (axum, rocket, warp...), then a orm (sqlx, diesel, sea-orm), then a queuing system (rabbitmq, redis...) all of thoses brick takes time to integrate and can hinder massively the initial bootstraping of a backend and sometime feel like we are building a framework instead of using it.
 
 Loco instead gives the user access to database migrations, workers and queus, database seeding, a mailer, pagination... of course it's opiniated in doing so, and as such it's not for recommended for everyone but we've seen time and time again that this archetype of framework just work: laravel for php, ruby on rails, spring MVC in Java, nest.js in node. Loco is a much needed and exciting addition to the rust ecosystem !
 
 <BlogGithubLink href="https://github.com/loco-rs/loco" label="Loco on github" />
-<BlogSeparator />
-
-## OpenGFW
-
-The Great Fire Wall surround all internet traffic going on in China, someone so what they were doing and decided to rebuild and improve it, the end goal not being censorship but protection of private networks. Still, we can't deny that a lot of buzz was generated around the name, which provided the author a lot of free publicity.
-
-
-<blockquote class="twitter-tweet"><p lang="zh" dir="ltr">海外码农治疗思乡病，已经到了丧心病狂的地步😓😓 <a href="https://t.co/8kKr5m9xRZ">pic.twitter.com/8kKr5m9xRZ</a></p>&mdash; Jeff Li (@jefflijun) <a href="https://twitter.com/jefflijun/status/1749255721995157511?ref_src=twsrc%5Etfw">January 22, 2024</a></blockquote>
-
-<BlogGithubLink href="https://github.com/apernet/OpenGFW" label="OpenGFW on github" />
-
 <BlogSeparator />
 
 # Guides & resources
