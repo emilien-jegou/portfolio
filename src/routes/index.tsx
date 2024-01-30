@@ -2,6 +2,7 @@ import { $, component$, useSignal } from '@builder.io/qwik';
 import articles from '~/generated/blog-data.json';
 import { Button } from '~/ui/common/button';
 import { Modal } from '~/ui/common/modal';
+import { ReachOutForm } from '~/ui/forms/reach-out-form';
 import { BlogCard } from '~/ui/layout/blog-card';
 import { FooterBar } from '~/ui/layout/footer-bar';
 import { HeaderBar } from '~/ui/layout/header-bar';
@@ -41,9 +42,7 @@ export default component$(() => {
             <span>Reach out</span>
             <span class="text-[16px]">✉️</span>
           </Button>
-          <Modal bind:show={reachOutModalVisible}>
-            <p>Here</p>
-          </Modal>
+          <ReachOutForm bind:show={reachOutModalVisible} />
           {/*<a class="flex items-center gap-1 text-sm font-medium hover:underline" href="#blog">
             <span>Discover my blog</span>
             <ArrowDownIcon size="lg" class="mt-[1px]" />
