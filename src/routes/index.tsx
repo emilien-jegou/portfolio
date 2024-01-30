@@ -1,7 +1,6 @@
 import { $, component$, useSignal } from '@builder.io/qwik';
 import articles from '~/generated/blog-data.json';
 import { Button } from '~/ui/common/button';
-import { Modal } from '~/ui/common/modal';
 import { ReachOutForm } from '~/ui/forms/reach-out-form';
 import { BlogCard } from '~/ui/layout/blog-card';
 import { FooterBar } from '~/ui/layout/footer-bar';

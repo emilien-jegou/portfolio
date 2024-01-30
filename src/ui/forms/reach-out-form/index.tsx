@@ -15,8 +15,24 @@ export const ReachOutForm = (props: ReachOutFormProps) => {
       <ReachOutFormLogic
         disabled={false}
         loading={false}
-        onSubmit$={(data: any) => {
-          console.info('there', data);
+        onSubmit$={async (data) => {
+          try {
+            // Do this properly
+            await fetch('https://emje.dev/api/contact', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+              },
+              body: new URLSearchParams({
+                email: data.email,
+                message: data.message,
+                category: data.reason === 'other' ? data.otherReason : data.reason,
+                metadata: '',
+              } as any),
+            });
+          } catch (error) {
+            console.error(error);
+          }
         }}
         onCancel$={() => {
           props['bind:show'].value = false;
