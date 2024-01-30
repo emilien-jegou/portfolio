@@ -15,7 +15,7 @@ export const Modal = component$((props: ModalProps) => (
     class={twMerge(
       'modal-animation bg-transparent',
       !props.disableBackground &&
-        'bg-default w-full max-w-lg border bg-background p-6 shadow-lg sm:rounded-lg sm:max-w-[425px]',
+        'bg-default w-full max-w-lg border bg-background p-6 shadow-lg sm:rounded-lg sm:max-w-[640px]',
     )}
   >
     <ModalContent>

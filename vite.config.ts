@@ -2,6 +2,7 @@ import { defineConfig, type UserConfig } from "vite";
 import { qwikVite } from "@builder.io/qwik/optimizer";
 import { qwikCity } from "@builder.io/qwik-city/vite";
 import { qwikPwa } from "@qwikdev/pwa";
+import svgx from "@svgx/vite-plugin-qwik";
 import tsconfigPaths from "vite-tsconfig-paths";
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import MarkdownParserPlugin from './utils/vite-plugin-qwik-markdown-parser';
@@ -28,7 +29,8 @@ export default defineConfig((): UserConfig => {
           },
         }),
         qwikVite(),
-         qwikPwa({}),
+        qwikPwa({}),
+        svgx(),
         tsconfigPaths()
     ],
     server: {

@@ -39,7 +39,9 @@ html {
     --color-border-subtler: #ebebeb;
 
     /* Other */
-    --color-focused: rgba(0, 0, 0, 0.15);
+    --color-focused: #578DFF;
+    --color-focused-subtle: #DEE8FD;
+    --color-error: rgb(239 68 68);
   }
 
   .mob-h-screen {
@@ -94,6 +96,10 @@ html {
 
   .border-subtler {
     @apply border border-border-subtler;
+  }
+
+  .field-focused {
+    @apply outline outline-focused outline-1 shadow-sm ring-focused-subtle ring ring-3;
   }
 
   body {

@@ -7,7 +7,13 @@ export default {
     },
     extend: {
       borderWidth: {},
-      outlineWidth: {},
+      ringWidth: {
+        3: '4px',
+      },
+      outlineWidth: {
+        0: '0px',
+        2.5: '3px',
+      },
       colors: {
         // Background
         'bg-default': 'var(--color-bg-default)',
@@ -27,8 +33,13 @@ export default {
         'border-subtle': 'var(--color-border-subtle)',
         'border-subtler': 'var(--color-border-subtler)',
 
-        // Other
+
+        // Focus states
         focused: 'var(--color-focused)',
+        'focused-subtle': 'var(--color-focused-subtle)',
+
+        // Other
+        error: 'var(--color-error)',
       },
     },
   },

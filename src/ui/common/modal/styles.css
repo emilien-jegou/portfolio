@@ -1,5 +1,5 @@
 .modal-animation.modal-showing::backdrop {
-  @apply bg-black/80;
+  @apply bg-black/60;
 }
 
 .modal-animation.modal-showing,
