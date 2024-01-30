@@ -50,7 +50,7 @@ export default component$(() => {
       </main>
       <section class="custom-container mx-auto mt-24 sm:mt-36" id="blog">
         <h2 class="text-lg text-subtler">Latest posts</h2>
-        <div class="flex flex-col gap-20 my-12">
+        <div class="flex flex-col gap-12 gap-20 my-12">
           {sortedArticles.map((data, idx) => (
             <BlogCard
               key={idx}
