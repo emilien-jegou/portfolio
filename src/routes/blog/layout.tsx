@@ -1,10 +1,11 @@
 import { component$, Slot } from '@builder.io/qwik';
-import { Link, useContent, useDocumentHead } from '@builder.io/qwik-city';
+import { useContent, useDocumentHead } from '@builder.io/qwik-city';
 import { format } from 'date-fns';
 import { BlogSeparator } from '~/ui/common/blog-separator';
 import { TableOfContents } from '~/ui/common/table-of-contents';
 import { ArrowLeftIcon } from '~/ui/icons/arrow-left';
 import { FooterBar } from '~/ui/layout/footer-bar';
+import { buildHead } from '~/utils/build-head';
 import type { DocumentHead } from '@builder.io/qwik-city';
 
 import './mdx.css';
@@ -19,12 +20,12 @@ export default component$(() => {
 
   return (
     <>
-      <Link
+      <a
         class="absolute xl:fixed top-4 left-4 gap-1 font-semibold text-default text-sm underline flex items-center"
         href="/"
       >
         <ArrowLeftIcon /> Go back home
-      </Link>
+      </a>
       <div class="relative mx-auto custom-container">
         <TableOfContents headings={headings ?? []} />
         <main id="intro" class="relative mt-24">
@@ -49,12 +50,9 @@ export const head: DocumentHead = ({
   head: {
     frontmatter: { data },
   },
-}: any) => ({
-  title: `${data.title} - emje.dev`,
-  description: data.description,
-  og: {
-    title: `${data.title} - emje.dev`,
+}: any) =>
+  buildHead({
+    title: data.title,
     description: data.description,
-    image: data.imageUrl,
-  },
-});
+    shareImage: data.shareImageUrl,
+  });

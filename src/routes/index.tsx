@@ -5,6 +5,7 @@ import { ReachOutForm } from '~/ui/forms/reach-out-form';
 import { BlogCard } from '~/ui/layout/blog-card';
 import { FooterBar } from '~/ui/layout/footer-bar';
 import { HeaderBar } from '~/ui/layout/header-bar';
+import { buildHead } from '~/utils/build-head';
 import type { DocumentHead } from '@builder.io/qwik-city';
 
 type Article = {
@@ -68,13 +69,9 @@ export default component$(() => {
   );
 });
 
-export const head: DocumentHead = {
-  title: 'emje.dev',
-  meta: [
-    {
-      name: 'description',
-      content:
-        'Welcome to my personal programming blog where you can explore the web technologies that power my site. Dive into my setup, journey through my development experiences.',
-    },
-  ],
-};
+export const head: DocumentHead = buildHead({
+  title: 'Emilien Jegou, Fullstack enginner blog',
+  description:
+    'My personal blog, where I talk about the technology I love. Dive into my setup, journey through my development experiences.',
+  shareImage: '/share.png',
+});

@@ -1,9 +1,10 @@
 ---
 data:
-  title: 'Github discovery of January 2024'
+  title: 'Github projects discovery of January 2024'
   thumbnailUrl: '/images/posts/github-discovery-jan-2024/thumbnail.png'
   description: 'Discover the latest AI, Web framework and CLI tools that came out over the last month!'
-  createdAt: 1706625145000
+  shareImageUrl: '/images/posts/github-discovery-jan-2024/share.svg'
+  createdAt: 1706723375000
 ---
 
 import { ExternalLinkInline } from '~/ui/common/external-link';
@@ -52,11 +53,12 @@ It's worth noting that Emotivoice is merely the tip of the iceberg of TTS engine
 
 <BlogTags tags={['python', 'AI']} />
 
-Photomaker, developed by Tencent, represents a significant advancement in AI image generation technology. It ingeniously combines a user's photo with a given prompt, crafting a photo combination that is remarkably close to reality. Although it isn't perfect, the level of fidelity it achieves is impressive, often producing results that can easily fool the eye. This tool stands out for its ability to blend elements seamlessly, offering a glimpse into the future of digital image manipulation and creation.
+Photomaker, developed by Tencent, represents a notable leap in AI image generation technology. In essente it allows the generation of a photo or digital image by combining a given face with a prompt. While the result image is not flawless, the level of fidelity it achieves is impressive, often producing results that can appear real.
+
+To try it, the simplest way is to <ExternalLinkInline label="go on replicate" href="https://replicate.com/tencentarc/photomaker" /> where the full model can be tried for free without signup!
 
 <BlogImage alt="Demo of photomaker on a face with glasses" width={1432} height={1072} src="/images/posts/github-discovery-jan-2024/photomaker.png" />
 
-To try it, the easiest way is to <ExternalLinkInline label="go on replicate" href="https://replicate.com/tencentarc/photomaker" /> where the full model can be tried for free without signup!
 
 <BlogGithubLink href="https://github.com/TencentARC/PhotoMaker" label="PhotoMaker on github" />
 <BlogSeparator />
@@ -65,7 +67,7 @@ To try it, the easiest way is to <ExternalLinkInline label="go on replicate" hre
 
 <BlogTags tags={['rust', 'AI', 'CLI']} />
 
-Kicking off our list of noteworthy Rust packages, OCRS is a CLI tool designed to facilitate image-to-text conversion (see command below). It's exciting to see the AI world breach over to the CLI environment, as there is still so much innovation that remains in the space!
+First rust package of the month, OCRS is a CLI tool designed to facilitate image-to-text conversion (see below). After testing I can say that the results from OCRS are very convincing, it can accurately identifies title text and various menu navigation items. While there are some artifacts in the result text, there are also ways to deal with them in either pre-processing (e.g., cropping the input image) or post-processing (e.g., asking a language model to correct the text output).
 
 
 <BlogCode language="bash">
@@ -76,8 +78,7 @@ ocrs image.png -o content.txt
 
 <BlogImage alt="Text conversion of martinfowler.com" width={1432} height={1072} src="/images/posts/github-discovery-jan-2024/ocrs.png" noBorder />
 
-![[Pasted image 20240124234541.png]]
-The results from OCRS are impressively convincing! It accurately identifies title text and various menu navigation items from an image. While the tool occasionally struggles to differentiate between sections of a webpage, leading to some mixed-up content, pre-cropping each text section beforehand could be a viable solution to enhance its accuracy.
+It's exciting to see the AI world breach over to the CLI environment, as there is still so much innovation that remains in the space!
 
 <BlogGithubLink href="https://github.com/robertknight/ocrs" label="OCRS on github" />
 <BlogSeparator />
@@ -85,11 +86,13 @@ The results from OCRS are impressively convincing! It accurately identifies titl
 ## Maybe.co, manage your finances
 <BlogTags tags={['typescript', 'node', 'backend', 'application']} />
 
-Maybe is a personal finance management app, originally fully closed, the project went open source in January 2024 aiming to change their business model into a self-hosted/hosted solution, following in the footstep of companies like GitLab. At first glance, this strategy appears to be successful, as the project reached the impressive milestone of acquiring 13,000 stars on its repository just two weeks after its release!
+Maybe is a personal finance management app, originally fully closed, the project went open source in January 2024 aiming to change their business model into a self-hosted/hosted solution, following in the footstep of companies like GitLab.
+
+At first glance, their strategy appears to be successful, as the project reached the impressive milestone of acquiring 13,000 stars on its repository just two weeks after its release!
 
 <BlogImage alt="Maybe.co dashboard view" width={1432} height={1072} src="/images/posts/github-discovery-jan-2024/maybe.png" noBorder />
 
-It is rare to see full-stack application as polished as Maybe go fully open-source, and it's all in typescript! Beyond its capabilities as a personal finance app, Maybe offers invaluable insights into the construction of financial software, I particularly enjoyed reading <ExternalLinkInline href="https://github.com/maybe-finance/maybe/wiki/Handling-Money" label="their documentation on money formatting!" />
+It is rare to see full-stack application as polished as Maybe go fully open-source, and it's all in typescript! Beyond its capabilities as a personal finance app, Maybe offers invaluable insights into the construction of financial software, I particularly enjoyed reading some of <ExternalLinkInline href="https://github.com/maybe-finance/maybe/wiki/Handling-Money" label="their documentation!" />
 
 <BlogGithubLink href="https://github.com/maybe-finance/maybe" label="Maybe on github" />
 <BlogSeparator />
@@ -132,9 +135,11 @@ curlyq scrape
 
 <BlogImage alt="Loco.rs website" width={1432} height={1072} src="/images/posts/github-discovery-jan-2024/loco.png" noBorder />
 
-Loco is a project crazy enough to bring the Ruby on Rails backend experience over to rust, in essence it simplifies a lot of the questions a developer may have when starting a backend in Rust as currently when building a backend in rust we have to "build our house", first we select a web framework (axum, rocket, warp...), then a orm (sqlx, diesel, sea-orm), then a queuing system (rabbitmq, redis...) all of thoses brick takes time to integrate and can hinder massively the initial bootstraping of a backend and sometime feel like we are building a framework instead of using it.
+Loco is an ambitious project aimed at simplifying the backend development experience in Rust by copying many elements of the ruby on rails backend development experience. Typically, setting up a Rust backend involves numerous decisions – from choosing a web framework, to selecting an ORM, adding a queuing system, or even setting up anthentication... Each of these components requires time to integrate, often slowing down the early stage of a project. Loco aims to streamline this process.
 
-Loco instead gives the user access to database migrations, workers and queus, database seeding, a mailer, pagination... of course it's opiniated in doing so, and as such it's not for recommended for everyone but we've seen time and time again that this archetype of framework just work: laravel for php, ruby on rails, spring MVC in Java, nest.js in node. Loco is a much needed and exciting addition to the rust ecosystem !
+Right off the bat, Loco gives the user the ability to add database migrations, use workers and queues, send emails, build pagination, use socket communication... and even setup authentication! To enable these functionalities Loco has to be strongly opiniated on how your backend will be architectured. While this limit the flexibility of this framework we've seen time and time again how appreciated this archetype is – think laravel for php, ruby on rails, nest.js in node...
+
+ Loco is a much needed and exciting addition to the rust ecosystem and I am looking forward to seeing it evolve!
 
 <BlogGithubLink href="https://github.com/loco-rs/loco" label="Loco on github" />
 <BlogSeparator />
