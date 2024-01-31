@@ -1,4 +1,3 @@
-import { Link } from '@builder.io/qwik-city';
 import { formatDistance } from 'date-fns';
 import { twMerge } from 'tailwind-merge';
 
@@ -12,7 +11,7 @@ type BlogCardProps = {
 };
 
 export const BlogCard = (props: BlogCardProps) => (
-  <Link href={props.slug}>
+  <a href={props.slug}>
     <div class={twMerge('flex items-center gap-8 sm:gap-20', props.class)}>
       <div>
         <p class="text-subtler text-sm">
@@ -34,5 +33,5 @@ export const BlogCard = (props: BlogCardProps) => (
         />
       </div>
     </div>
-  </Link>
+  </a>
 );
