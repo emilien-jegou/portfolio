@@ -1,11 +1,9 @@
-- outline colors on buttons
+- outline colors on components
 - proper footer
-- contact button, email computed on click
-- back button on article page
+- fix the inputs contour on firefox
 - dark theme
-- pwa capabilities
 - verify lighthouse score on all page
-- mobile responsivitiy
+- confirm mobile display on all pages
 - prefer no animation settings
 - verify aria labels
 - add anonymous analytics
