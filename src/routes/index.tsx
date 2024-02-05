@@ -70,8 +70,8 @@ export default component$(() => {
 });
 
 export const head: DocumentHead = buildHead({
-  title: 'Emilien Jegou, Fullstack enginner blog',
+  title: 'Emilien Jegou, Fullstack engineer blog',
   description:
-    'My personal blog, where I talk about the technology I love. Dive into my setup, journey through my development experiences.',
+    'My personal blog, where I talk about the technology I love, explore new areas and share my programming knowledge.',
   shareImage: '/share.png',
 });
