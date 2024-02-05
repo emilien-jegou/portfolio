@@ -13,22 +13,9 @@ const sortedArticles: Article[] = Object.entries(articles)
   .map(([slug, { data }]: any) => ({ slug, ...data }))
   .sort((a: any, b: any) => b.createdAt - a.createdAt);
 
-function sendMessage(message: string, writableStream: WritableStream) {
-  // defaultWriter is of type WritableStreamDefaultWriter
-  const defaultWriter = writableStream.getWriter();
-  defaultWriter.write(message);
-
-  // Call ready again to ensure that all chunks are written
-  //   before closing the writer.
-  defaultWriter.ready
-    .then(() => defaultWriter.close())
-    .catch((err) => console.error('Stream error:', err));
-}
-
 export const onGet: RequestHandler = async (e) => {
-  const stream: WritableStream = e.getWritableStream();
-
-  sendMessage(
+  e.send(
+    200,
     `<?xml version="1.0" encoding="UTF-8" ?>
 <rss version="2.0">
 <channel>
@@ -54,8 +41,5 @@ export const onGet: RequestHandler = async (e) => {
 
 </channel>
 </rss>`,
-    stream,
   );
 };
-
-export default () => <></>;
