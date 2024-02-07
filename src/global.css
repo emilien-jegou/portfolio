@@ -120,4 +120,6 @@ html {
     width: 896px;
     transform: translateX(-128px);
   }
+
+  * { @apply border-border-default; }
 }

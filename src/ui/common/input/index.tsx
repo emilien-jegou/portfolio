@@ -37,7 +37,7 @@ export const Input = component$(
           onBlur$?.(...args);
         }}
         class={twMerge(
-          'border-2 transition-outline rounded-md p-2 w-full focus-visible:field-focused',
+          'border transition-outline rounded-md p-2 w-full focus-visible:field-focused',
           disabled &&
             'cursor-not-allowed shadow-sm outline-0 cursor-pointer border-transparent bg-subtle text-subtle',
           error && 'border-error',
