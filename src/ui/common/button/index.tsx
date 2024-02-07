@@ -1,8 +1,10 @@
 import { twMerge } from 'tailwind-merge';
+import { CheckmarkFilledIcon } from '~/ui/icons/checkmark';
+import { LoadingIcon } from '~/ui/icons/loading';
 import type { JSXChildren, PropFunction } from '@builder.io/qwik';
 
 export type ButtonProps = {
-  disabled?: boolean;
+  state?: Partial<Record<'disabled' | 'loading' | 'success', boolean>>;
   class?: string;
   type?: 'button' | 'submit';
   children: JSXChildren;
@@ -15,16 +17,25 @@ export const Button = ({ variant = 'fill', onClick$, ...props }: ButtonProps) =>
     class={twMerge(
       'flex flex-row justify-center items-center whitespace-nowrap rounded-[10px] gap-2 h-10 font-medium hover:drop-shadow-sm text-sm px-5',
       variant === 'fill' &&
-        'border border-[0.5px] text-contrast bg-contrast hover:opacity-95 border-border-subtler',
+        twMerge(
+          'border border-[0.5px] text-contrast bg-contrast hover:opacity-95 border-border-subtler',
+          props.state?.success && 'bg-success',
+        ),
       variant === 'transparent' && 'bg-transparent hover:bg-subtle',
       variant === 'outline' && 'border bg-transparent hover:bg-subtle',
-      props.disabled && 'cursor-hand opacity-[85]',
+      (props.state?.loading || props.state?.disabled) && 'cursor-hand opacity-80 hover:opacity-80',
       props.class,
     )}
-    disabled={props.disabled}
+    disabled={props.state?.loading || props.state?.disabled}
     type={props.type ?? 'button'}
     onClick$={onClick$}
   >
-    {props.children}
+    {props.state?.loading && (
+      <>
+        <LoadingIcon /> <span class="text-xs">Please wait...</span>
+      </>
+    )}
+    {props.state?.success && <CheckmarkFilledIcon />}
+    {!props.state?.loading && props.children}
   </button>
 );

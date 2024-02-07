@@ -44,5 +44,5 @@ lerna-debug.log*
 # Nix
 .direnv
 
-# Cloudflare
-#functions/**/*.js
+# Misc
+TODO.txt

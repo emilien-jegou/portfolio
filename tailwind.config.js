@@ -40,6 +40,7 @@ export default {
 
         // Other
         error: 'var(--color-error)',
+        success: 'var(--color-success)'
       },
     },
   },

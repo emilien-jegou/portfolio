@@ -41,7 +41,8 @@ html {
     /* Other */
     --color-focused: #578DFF;
     --color-focused-subtle: #DEE8FD;
-    --color-error: rgb(239 68 68);
+    --color-error: #DC2626;
+    --color-success: #00A064;
   }
 
   .mob-h-screen {
