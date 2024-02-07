@@ -36,14 +36,13 @@ type ReachOutFormLogicData = z.infer<typeof loginFormSchema>;
 
 type ReachOutFormLogicProps = {
   class?: string;
-  disabled: boolean;
   loading: boolean;
   onSubmit$: PropFunction<(data: ReachOutFormLogicData) => void>;
   onCancel$?: PropFunction<() => void>;
 };
 
 export const ReachOutFormLogic = component$(
-  ({ disabled, loading, class: className, onSubmit$, onCancel$ }: ReachOutFormLogicProps) => {
+  ({ loading, class: className, onSubmit$, onCancel$ }: ReachOutFormLogicProps) => {
     const form = useForm<ReachOutFormLogicData>('user-login', {
       onSuccess$: onSubmit$,
       validate: zodForm$(loginFormSchema),
@@ -115,7 +114,7 @@ export const ReachOutFormLogic = component$(
           <Button variant="transparent" onClick$={onCancel$}>
             Cancel
           </Button>
-          <Button type="submit" disabled={loading || disabled}>
+          <Button type="submit" state={{ loading, disabled: form.hasError.value }}>
             Contact me
           </Button>
         </div>

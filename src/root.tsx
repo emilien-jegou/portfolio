@@ -1,5 +1,6 @@
 import { component$ } from '@builder.io/qwik';
 import { QwikCityProvider, RouterOutlet, ServiceWorkerRegister } from '@builder.io/qwik-city';
+import { Portal, PortalProvider } from './providers/portal';
 import { RouterHead } from './ui/logics/router-head';
 
 import './global.css';
@@ -21,8 +22,11 @@ export default component$(() => {
         <RouterHead />
       </head>
       <body lang="en">
-        <RouterOutlet />
-        <ServiceWorkerRegister />
+        <PortalProvider>
+          <RouterOutlet />
+          <ServiceWorkerRegister />
+          <Portal name="toast" />
+        </PortalProvider>
       </body>
     </QwikCityProvider>
   );
