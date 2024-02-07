@@ -39,9 +39,9 @@ export const BlogCodeHeader = (props: BlogCodeHeaderProps) => (
       >
         {props.view === 'fullscreen' ? <ArrowMinimizeIcon /> : <ArrowExpandIcon />}
       </HeaderInlineIconButton>
-      <HeaderInlineIconButton onClick$={$((): void => {})}>
+      {/*<HeaderInlineIconButton onClick$={$((): void => {})}>
         <ClipboardFilledIcon class="mt-[1px]" />
-      </HeaderInlineIconButton>
+      </HeaderInlineIconButton>*/}
     </div>
   </div>
 );
