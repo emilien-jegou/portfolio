@@ -50,7 +50,6 @@ export const Toast = component$((props: ToastProps) => {
           aria-live="off"
           aria-atomic="true"
           onMouseOver$={() => {
-            console.info('there');
             if (timerId.value !== null) {
               clearTimeout(timerId.value);
               timerId.value = null;

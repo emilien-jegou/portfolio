@@ -81,6 +81,7 @@ export const ReachOutFormLogic = component$(
             { value: 'open-source', label: 'Open-Source' },
             { value: 'other', label: 'Other' },
           ]}
+          disabled={loading}
         />
         <div class={twMerge('mb-4 animate-in fade-in', form.fields.reason !== 'other' && 'hidden')}>
           <InputField

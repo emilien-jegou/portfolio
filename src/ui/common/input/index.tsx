@@ -39,7 +39,7 @@ export const Input = component$(
         class={twMerge(
           'border transition-outline rounded-md p-2 w-full focus-visible:field-focused',
           disabled &&
-            'cursor-not-allowed shadow-sm outline-0 cursor-pointer border-transparent bg-subtle text-subtle',
+            'cursor-not-allowed shadow-sm outline-0 border-transparent bg-subtle text-subtle',
           error && 'border-error',
           className,
         )}

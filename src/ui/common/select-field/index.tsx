@@ -13,6 +13,7 @@ export type SelectFieldProps = {
   info?: JSXChildren;
   label: string;
   required?: boolean;
+  disabled?: boolean;
 } & Omit<SelectProps, 'error'>;
 
 export const SelectField = component$(

@@ -1,4 +1,4 @@
-import { useContext, type Signal, component$, useSignal } from '@builder.io/qwik';
+import { useContext, type Signal, component$, useSignal, useTask$ } from '@builder.io/qwik';
 import { PortalAPI } from '~/providers/portal';
 import { Modal } from '~/ui/common/modal';
 import { sendToast } from '~/ui/common/toast';
@@ -12,6 +12,12 @@ type ReachOutFormProps = {
 export const ReachOutForm = component$((props: ReachOutFormProps) => {
   const portal = useContext(PortalAPI);
   const loading = useSignal(false);
+
+  useTask$(({ track }) => {
+    track(() => props['bind:show'].value);
+    if (props['bind:show'].value == false) return;
+    loading.value = false;
+  });
 
   return (
     <Modal bind:show={props['bind:show']}>
@@ -43,7 +49,7 @@ export const ReachOutForm = component$((props: ReachOutFormProps) => {
             sendToast(portal, {
               status: 'success',
               title: 'We received your message',
-              description: "Thank you for reaching out, we'll get back to you shortly!",
+              description: "Thank you for reaching out, I'll get back to you shortly!",
             });
           } catch (error) {
             sendToast(portal, {
