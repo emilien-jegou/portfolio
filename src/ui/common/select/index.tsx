@@ -1,8 +1,11 @@
 import { $, component$, useId, useOnDocument, useSignal } from '@builder.io/qwik';
 import { twMerge } from 'tailwind-merge';
 import { SelectExpandIcon } from '~/ui/icons/select-expand';
+import { FocusCycleController } from '~/ui/logics/focus-cycle-controller';
+import { FocusCycleNode } from '~/ui/logics/focus-cycle-node';
+import { findIndex } from '~/utils/safe-std';
 import { SelectOption } from './option';
-import type { PropFunction } from '@builder.io/qwik';
+import type { PropFunction, QRL } from '@builder.io/qwik';
 
 import './styles.css';
 
@@ -19,6 +22,7 @@ export type SelectProps = {
 
 export const Select = component$((props: SelectProps) => {
   const ref = useSignal<HTMLDivElement>();
+  const buttonRef = useSignal<HTMLButtonElement>();
   const focused = useSignal(false);
   const expanded = useSignal(false);
   const id = useId();
@@ -34,10 +38,12 @@ export const Select = component$((props: SelectProps) => {
   return (
     <div ref={ref} class={twMerge('relative w-full', props.class)}>
       <button
+        ref={buttonRef}
         type="button"
         role="combobox"
         aria-controls={`radix-:${id}:`}
         aria-expanded={expanded.value}
+        disabled={props.disabled}
         onFocus$={() => {
           focused.value = true;
         }}
@@ -46,13 +52,15 @@ export const Select = component$((props: SelectProps) => {
         }}
         onClick$={(e) => {
           e.preventDefault();
+          e.stopPropagation();
           expanded.value = !expanded.value;
         }}
         aria-autocomplete="none"
         class={twMerge(
           'w-full flex items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 shadow-sm ring-offset-background [&amp;>span]:line-clamp-1',
           (expanded.value || focused.value) && 'field-focused',
-          props.disabled && 'cursor-not-allowed opacity-50',
+          props.disabled &&
+            'cursor-not-allowed shadow-sm outline-0 border-transparent bg-subtle text-subtle',
           props.error && 'border-error',
         )}
       >
@@ -64,25 +72,36 @@ export const Select = component$((props: SelectProps) => {
         <SelectExpandIcon class="h-4 w-4 opacity-50" />
       </button>
 
-      <div
-        role="presentation"
-        class={twMerge(
-          'select-expanded flex flex-col border shadow-sm rounded-md absolute bg-default z-50 top-[100%] mt-2 p-1 h-fit w-full',
-          !expanded.value && 'hidden',
-        )}
-      >
-        {props.options.map((option, idx) => (
-          <SelectOption
-            key={idx}
-            onClick$={() => {
-              expanded.value = false;
-              props.onSelect$(option.value);
-            }}
-            selected={option.value === props.selected}
-            label={option.label}
-          />
-        ))}
-      </div>
+      {expanded.value && (
+        <FocusCycleController
+          defaultPosition={findIndex(props.options, (o) => o.value === props.selected) ?? 0}
+          role="presentation"
+          class={twMerge(
+            'select-expanded flex flex-col border shadow-sm rounded-md absolute bg-default z-50 top-[100%] mt-2 p-1 h-fit w-full',
+          )}
+        >
+          {props.options.map((option, idx) => (
+            <FocusCycleNode
+              key={idx}
+              position={idx}
+              render$={$((focused: boolean, focus$: QRL<() => void>) => (
+                <SelectOption
+                  onClick$={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    expanded.value = false;
+                    props.onSelect$(option.value);
+                    buttonRef.value?.focus();
+                  }}
+                  onMouseOver$={() => focus$()}
+                  selected={focused /*option.value === props.selected*/}
+                  label={option.label}
+                />
+              ))}
+            />
+          ))}
+        </FocusCycleController>
+      )}
     </div>
   );
 });

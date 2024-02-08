@@ -85,7 +85,8 @@ export const Textarea = component$(
           'relative rounded-md border text-sm leading-none shadow-xs cursor-text',
           error && 'border-error',
           focused.value && 'field-focused',
-          disabled && 'cursor-not-allowed opacity-50',
+          disabled &&
+            'cursor-not-allowed shadow-sm outline-0 border-transparent bg-subtle text-subtle',
           className,
         )}
       >
@@ -94,7 +95,11 @@ export const Textarea = component$(
           name={name}
           spellcheck={false}
           rows={props.rows}
-          class="w-full block h-[39px] p-2.5 pt-3 pr-10 text-sm bg-transparent leading-tight focus:outline-none font-medium placeholder:font-normal text-text-default placeholder:text-text-subtle focus:placeholder:text-subtler resize-none overflow-y-hidden"
+          disabled={disabled}
+          class={twMerge(
+            'w-full block h-[39px] p-2.5 pt-3 pr-10 text-sm bg-transparent leading-tight focus:outline-none font-medium placeholder:font-normal text-text-default placeholder:text-text-subtle focus:placeholder:text-subtler resize-none overflow-y-hidden',
+            disabled && 'cursor-not-allowed',
+          )}
           onFocus$={() => {
             focused.value = true;
           }}

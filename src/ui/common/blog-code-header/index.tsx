@@ -4,7 +4,6 @@ import { ArrowExpandIcon } from '~/ui/icons/arrow-expand';
 import { ArrowFitIcon } from '~/ui/icons/arrow-fit';
 import { ArrowFitInIcon } from '~/ui/icons/arrow-fit-in';
 import { ArrowMinimizeIcon } from '~/ui/icons/arrow-minimize';
-import { ClipboardFilledIcon } from '~/ui/icons/clipboard';
 import type { JSXChildren, PropFunction } from '@builder.io/qwik';
 
 export type CodeViewType = 'default' | 'expanded' | 'fullscreen';
