@@ -1,9 +1,51 @@
+body[data-color-mode='light'] {
+  --base0: #191a23; /* Slightly darker to match --color-bg-default */
+  --base1: #20212e; /* Matches --color-bg-subtle */
+  --base3: #36374a; /* Darker shade for contrast against lighter texts */
+  --base4: #cdced9; /* Lighter text color for contrast */
+  --base5: #eeeffc; /* Matches --color-text-default for clear readability */
+  --green: #ACB6BF8C;
+  --red: #AAD94C;
+  --lightblue: #D2A6FF;
+  --purp: #FF8F40;
+  --blue: #FFB454;
+  --original-red: #fa7970;
+  --original-orange: #faa356;
+  --scroll-thumb: #3b434c;
+  --scroll-thumb-hover: #4c5565;
+  --scroll-track: #20212e;
+  --code-blog-background: var(--color-bg-stronger);
+}
+
+body[data-color-mode='dark'] {
+  --base0: #101118;
+  --base1: #181a20;
+  --base2: #202229;
+  --base3: #272b33;
+  --base4: #cdced9;
+  --base5: #eeeffc;
+
+  --green: #ACB6BF8C;
+  --red: #AAD94C;
+  --lightblue: #D2A6FF;
+  --purp: #FF8F40;
+  --blue: #FFB454;
+  --original-red: #fa7970;
+  --original-orange: #faa356;
+
+  --scroll-thumb: #343a45;
+  --scroll-thumb-hover: #4a5160;
+
+  --scroll-track: #181a20;
+  --code-blog-background: var(--color-bg-stronger);
+}
+
 code[class*='language-'],
 pre {
   border-bottom-left-radius: var(--code-blog-rounding, 0px);
   border-bottom-right-radius: var(--code-blog-rounding, 0px);
 
-  color: #c6cdd5; /* base4 for general text */
+  color: var(--base4); /* base4 for general text */
   font-family: 'Consolas', 'Bitstream Vera Sans Mono', 'Courier New', Courier, monospace;
   direction: ltr;
   text-align: left;
@@ -12,8 +54,7 @@ pre {
   word-break: normal;
   font-size: 14px;
   line-height: 1.2em;
-  /* background-color: #0B0E14; /* base0 for background */
-  background-color: #191D24;
+  background-color: var(--code-blog-background);
   -moz-tab-size: 4;
   -o-tab-size: 4;
   tab-size: 4;
@@ -24,29 +65,25 @@ pre {
 }
 
 pre > code[class*='language-'] {
-  font-size: inherit;
+  font-size: 14px;
 }
 
 pre::-moz-selection,
 pre::-moz-selection,
 code[class*='language-']::-moz-selection,
-code[class*='language-'] ::-moz-selection {
-  background: #89929b; /* base3 for selections */
-}
-
+code[class*='language-'] ::-moz-selection,
 pre::selection,
 pre::selection,
 code[class*='language-']::selection,
 code[class*='language-'] ::selection {
-  background: #89929b; /* base3 for selections */
+  background: var(--base3); /* base3 for selections */
 }
 
 /* Code blocks */
 pre {
-  @apply p-6 sm:p-8;
+  @apply p-6 sm:p-8 pt-2 sm:pt-2;
   margin: 0.5em 0;
   overflow: auto;
-  border: 1px solid #21262d; /* base2 for border */
 }
 
 /* Inline code */
@@ -54,29 +91,25 @@ pre {
   padding: 0.2em;
   padding-top: 1px;
   padding-bottom: 1px;
-  background: #161b22; /* base1 for inline code background */
-  border: 1px solid #21262d; /* base2 for inline code border */
+  background: var(--base1); /* base1 for inline code background */
+  border: 1px solid var(--base2); /* base2 for inline code border */
 }
 
 .token.comment,
 .token.prolog,
 .token.doctype,
 .token.cdata {
-  color: #ACB6BF8C; /* Updated green for comments */
-}
-
-.token.namespace {
-  opacity: 0.7;
+  color: var(--green); /* Updated green for comments */
 }
 
 .token.string,
 .token.attr-value {
-  color: #AAD94C; /* Updated red for strings */
+  color: var(--red); /* Updated red for strings */
 }
 
 .token.punctuation,
 .token.operator {
-  color: #ecf2f8; /* Updated base5 for punctuation and operators */
+  color: var(--base5); /* Updated base5 for punctuation and operators */
 }
 
 .token.entity,
@@ -89,32 +122,29 @@ pre {
 .token.property,
 .token.regex,
 .token.inserted {
-  color: #D2A6FF; /* Updated lightblue for these tokens */
+  color: var(--lightblue); /* Updated lightblue for these tokens */
 }
 
 .token.atrule,
 .token.keyword,
 .token.attr-name {
-  color: #FF8F40; /* Updated purp for atrules, keywords, and attribute-names */
+  color: var(--purp); /* Updated purp for atrules, keywords, and attribute-names */
 }
 
 .token.function {
-  color: #FFB454; /* Updated blue for functions */
+  color: var(--blue); /* Updated blue for functions */
 }
 
 .token.deleted {
-  color: #fa7970; /* No change, keeping original red for deleted text */
+  color: var(--original-red); /* No change, keeping original red for deleted text */
 }
 
 .token.tag,
 .token.selector {
-  color: #faa356; /* No change, keeping original orange for tags and selectors */
+  color: var(--original-orange); /* No change, keeping original orange for tags and selectors */
 }
 
-.token.important {
-  font-weight: bold;
-}
-
+.token.important,
 .token.bold {
   font-weight: bold;
 }
@@ -123,37 +153,15 @@ pre {
   font-style: italic;
 }
 
-
 /* Custom scrollbar for Webkit browsers */
 pre::-webkit-scrollbar {
   width: 10px;
   height: 10px;
-  background-color: #0B0E14; /* base0 for background */
+  background-color: var(--base0); /* base0 for background */
 }
 
 pre::-webkit-scrollbar-track {
-  border-radius: l0px;
-  background-color: #161b22; /* base1 for inline code background */
-}
-
-pre::-webkit-scrollbar-thumb {
   border-radius: 10px;
-  background: #2f363d; /* slightly lighter than base1 for contrast */
-  border: 3px solid #161b22; /* base1 for inline code background */
-}
-
-pre::-webkit-scrollbar-thumb:hover {
-  background: #3b434c; /* slightly lighter for hover effect */
-}
-
-/* Custom scrollbar for Firefox */
-pre {
-  scrollbar-width: thin;
-  scrollbar-color: #2f363d #161b22; /* thumb and track */
-}
-
-/* For IE and Edge */
-pre {
-  -ms-overflow-style: -ms-autohiding-scrollbar;
+  background-color: var(--scroll-track);
 }
 
