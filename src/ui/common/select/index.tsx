@@ -57,7 +57,7 @@ export const Select = component$((props: SelectProps) => {
         }}
         aria-autocomplete="none"
         class={twMerge(
-          'w-full flex items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 shadow-sm ring-offset-background [&amp;>span]:line-clamp-1',
+          'field w-full flex items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 shadow-sm ring-offset-background [&amp;>span]:line-clamp-1',
           (expanded.value || focused.value) && 'field-focused',
           props.disabled &&
             'cursor-not-allowed shadow-sm outline-0 border-transparent bg-subtle text-subtle',

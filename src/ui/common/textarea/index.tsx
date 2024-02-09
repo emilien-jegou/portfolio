@@ -82,7 +82,7 @@ export const Textarea = component$(
           transition: 'height 0.1s ease',
         }}
         class={twMerge(
-          'relative rounded-md border text-sm leading-none shadow-xs cursor-text',
+          'field relative rounded-md border text-sm leading-none shadow-xs cursor-text',
           error && 'border-error',
           focused.value && 'field-focused',
           disabled &&
