@@ -26,6 +26,7 @@ html {
     --color-bg-subtle: #f3f5f7;
     --color-bg-default: #fff;
     --color-bg-subtler: #f3f5f7;
+    --color-bg-stronger: #0B0E14;
     --color-bg-contrast: #2a2a2a;
 
     /* Text */
@@ -53,6 +54,7 @@ html {
     --color-bg-subtle: #20212e;
     --color-bg-default: #191a23;
     --color-bg-subtler: #2a2b3b;
+    --color-bg-stronger: #0B0E14;
     --color-bg-contrast: #2a2a2a;
 
     /* Text */
@@ -120,6 +122,10 @@ html {
 
   .bg-subtler {
     @apply bg-bg-subtler;
+  }
+
+  .bg-stronger {
+    @apply bg-bg-stronger;
   }
 
   .bg-contrast {

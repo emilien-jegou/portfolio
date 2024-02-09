@@ -20,7 +20,7 @@ export const BlogCodeHeader = (props: BlogCodeHeaderProps) => (
       borderTopLeftRadius: 'var(--code-blog-rounding, 0px)',
       borderTopRightRadius: 'var(--code-blog-rounding, 0px)',
     }}
-    class="flex bg-[#0B0E14] text-xs gap-4 justify-between text-white/50 px-2 py-1"
+    class="flex bg-stronger text-xs gap-4 justify-between text-white/50 px-3 py-3"
   >
     <span class="select-none">{props.language}</span>
     <div class="flex gap-2">
@@ -28,7 +28,7 @@ export const BlogCodeHeader = (props: BlogCodeHeaderProps) => (
         class="hidden lg:inline-block"
         onClick$={$(() => props.onViewChange$(props.view === 'expanded' ? 'default' : 'expanded'))}
       >
-        {props.view === 'expanded' ? <ArrowFitInIcon /> : <ArrowFitIcon />}
+        {props.view === 'expanded' ? <ArrowFitInIcon size="lg" /> : <ArrowFitIcon size="lg" />}
       </HeaderInlineIconButton>
       <HeaderInlineIconButton
         class="inline-block lg:hidden"
@@ -36,7 +36,11 @@ export const BlogCodeHeader = (props: BlogCodeHeaderProps) => (
           props.onViewChange$(props.view === 'fullscreen' ? 'default' : 'fullscreen'),
         )}
       >
-        {props.view === 'fullscreen' ? <ArrowMinimizeIcon /> : <ArrowExpandIcon />}
+        {props.view === 'fullscreen' ? (
+          <ArrowMinimizeIcon size="lg" />
+        ) : (
+          <ArrowExpandIcon size="lg" />
+        )}
       </HeaderInlineIconButton>
       {/*<HeaderInlineIconButton onClick$={$((): void => {})}>
         <ClipboardFilledIcon class="mt-[1px]" />

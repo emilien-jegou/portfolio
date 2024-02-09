@@ -32,6 +32,7 @@ export default {
         'bg-default': 'var(--color-bg-default)',
         'bg-subtle': 'var(--color-bg-subtle)',
         'bg-subtler': 'var(--color-bg-subtler)',
+        'bg-stronger': 'var(--color-bg-stronger)',
         'bg-contrast': 'var(--color-bg-contrast)',
 
         // Text
