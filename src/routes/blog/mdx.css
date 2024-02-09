@@ -15,7 +15,7 @@
 }
 
 .mdx p, .mdx li {
-  @apply text-text-default leading-7;
+  @apply text-text-subtle leading-7;
 }
 
 /* Spacing */

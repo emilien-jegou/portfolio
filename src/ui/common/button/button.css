@@ -1,0 +1,7 @@
+body[data-color-mode='dark'] .button-fill {
+  @apply bg-bg-subtler text-text-default;
+}
+
+body[data-color-mode='light'] .button-fill {
+  @apply bg-bg-contrast text-text-contrast;
+}
