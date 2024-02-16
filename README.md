@@ -21,7 +21,7 @@ I use Cloudflare pages for deployment, the contact form also use a D1 store. I h
 - [x] Various utilities on article (code block, fullscreen images, external links)
 - [x] Basic SEO capabilities and search engine indexing
 - [x] Automatic inclusion of article in the sitemap
-- [ ] Dark theme
+- [x] Dark theme
 - [ ] verify the website accessibility rating
     - [ ] 100 lighthouse score on all pages
     - [ ] verify aria labels
