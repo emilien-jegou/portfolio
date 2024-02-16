@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
-import matter, { GrayMatterFile } from 'gray-matter';
+import matter from 'gray-matter';
+import type { GrayMatterFile } from 'gray-matter';
 
 type ParseFn = (data: GrayMatterFile<string>) => unknown;
 
