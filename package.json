@@ -10,7 +10,6 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "prepare": "cd pwa && npm run build",
     "build": "npm run prepare && qwik build",
     "build.client": "vite build",
     "build.preview": "vite build --ssr src/entry.preview.tsx",
@@ -18,15 +17,18 @@
     "build.types": "tsc --incremental --noEmit",
     "deploy": "wrangler pages publish ./dist",
     "dev": "vite --mode ssr",
-    "dev.ts": "concurrently -n server,tsc -c magenta,cyan \"npm run dev\" \"npm run ts-watch\"",
     "dev.debug": "node --inspect-brk ./node_modules/vite/bin/vite.js --mode ssr --force",
+    "dev.ts": "concurrently -n server,tsc -c magenta,cyan \"npm run dev\" \"npm run ts-watch\"",
     "fmt": "prettier --write .",
     "fmt.check": "prettier --check .",
     "lint": "eslint \"src/**/*.ts*\"",
     "lint.fix": "npm run lint -- --fix",
+    "prepare": "cd pwa && npm run build",
     "preview": "qwik build preview && vite preview --open",
     "serve": "wrangler pages dev ./dist",
     "start": "vite --open --mode ssr",
+    "test.unit": "vitest",
+    "test.unit.ui": "vitest --ui",
     "ts-watch": "tsc --noEmit --incremental --preserveWatchOutput --pretty --watch",
     "qwik": "qwik"
   },
@@ -41,6 +43,7 @@
     "@types/node": "^20.10.8",
     "@typescript-eslint/eslint-plugin": "^6.18.1",
     "@typescript-eslint/parser": "^6.18.1",
+    "@vitest/ui": "^0.34.6",
     "autoprefixer": "^10.4.16",
     "concurrently": "^8.2.2",
     "eslint": "^8.56.0",
@@ -62,6 +65,7 @@
     "undici": "*",
     "vite": "^5.0.11",
     "vite-tsconfig-paths": "^4.2.1",
+    "vitest": "^0.34.6",
     "wrangler": "^3.0.0"
   },
   "dependencies": {
