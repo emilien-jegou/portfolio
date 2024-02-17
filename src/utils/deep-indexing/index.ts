@@ -1,4 +1,4 @@
-import { type Option, none, some } from './option';
+import { type Option, none, some } from '../option';
 
 // Remove traling character of type C, e.g.
 // RemoveTrailing<'hello', 'o'> = 'hell'
