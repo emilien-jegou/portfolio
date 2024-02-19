@@ -42,11 +42,11 @@ body[data-color-mode='dark'] {
 
 code[class*='language-'],
 pre {
+  @apply font-mono;
   border-bottom-left-radius: var(--code-blog-rounding, 0px);
   border-bottom-right-radius: var(--code-blog-rounding, 0px);
 
   color: var(--base4); /* base4 for general text */
-  font-family: 'Consolas', 'Bitstream Vera Sans Mono', 'Courier New', Courier, monospace;
   direction: ltr;
   text-align: left;
   white-space: pre;

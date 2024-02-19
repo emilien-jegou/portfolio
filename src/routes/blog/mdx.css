@@ -55,19 +55,9 @@
   padding-left: 0; /* Optional: remove padding if you don't want indentation */
 }
 
-/*.mdx > ul > li::before {*/
-  /*content: '•'; [> Unicode character for a bullet <]*/
-    /*unicode-bidi: isolate;*/
-    /*font-variant-numeric: tabular-nums;*/
-    /*text-transform: none;*/
-    /*text-indent: 0px !important;*/
-    /*text-align: start !important;*/
-    /*text-align-last: start !important;*/
-  /*line-height: 0; [> Adjust line height to align the bullet vertically <]*/
-  /*vertical-align: middle; [> Aligns the bullet vertically in the middle <]*/
-  /*margin-right: 8px; [> Space between the bullet and the text <]*/
-  /*display: inline-block; [> Ensures the bullet is in line with the text <]*/
-/*}*/
+.mdx > p > code {
+  @apply font-mono bg-bg-subtle rounded-sm px-1 shadow-sm;
+}
 
 /* Icon link on titles */
 
