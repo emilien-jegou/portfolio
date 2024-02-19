@@ -2,9 +2,9 @@ import Cookies from 'js-cookie';
 import { pipe } from 'remeda';
 import { match } from 'ts-pattern';
 import { chainSome, fromNullable, none, type Option } from '~/utils/option';
-import { chainSuccess, failable, ok, unwrap_or } from './result';
-import { safeJsonParse, safeJsonStringify } from './safe-std';
-import type { Result } from './result';
+import { chainSuccess, failable, ok, unwrap_or } from '../result';
+import { safeJsonParse, safeJsonStringify } from '../safe-std';
+import type { Result } from '../result';
 
 export type StorageType = 'cookie' | 'local' | 'session';
 
@@ -14,7 +14,7 @@ export type Storage<T = unknown> = {
   remove: () => Result;
 };
 
-type RawStorage = {
+export type RawStorage = {
   getItem: (key: string) => string | null;
   setItem: (key: string, value: string) => void;
   removeItem: (key: string) => void;
@@ -32,7 +32,7 @@ const rawCookieStorage = (): RawStorage => ({
   },
 });
 
-const safeStorage = <T>(storageKey: string, rawStorage: RawStorage): Storage<T> => ({
+export const safeStorage = <T>(storageKey: string, rawStorage: RawStorage): Storage<T> => ({
   get() {
     return pipe(
       failable(() => fromNullable(rawStorage.getItem(storageKey) as string | null)),
