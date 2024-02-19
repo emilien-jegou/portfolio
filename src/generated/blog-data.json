@@ -1,4 +1,13 @@
 {
+  "10-libraries-to-enhance-your-typescript-projects": {
+    "data": {
+      "title": "10 libraries to enhance your Typescript projects",
+      "thumbnailUrl": "/images/posts/10-libraries-to-enhance-your-typescript-projects/thumbnail.png",
+      "description": "Discover a set of TypeScript libraries to enhance your productivity, reduce bugs and deepen your understanding of the language.",
+      "shareImageUrl": "/images/posts/10-libraries-to-enhance-your-typescript-projects/share.svg",
+      "createdAt": 1708302809000
+    }
+  },
   "github-discovery-jan-2024": {
     "data": {
       "title": "Github projects discovery of January 2024",

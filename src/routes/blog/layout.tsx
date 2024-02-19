@@ -36,9 +36,8 @@ export default component$(() => {
             Emilien Jegou, {format(data.createdAt, 'EEE MMMM dd yyyy')}
           </p>
         </main>
-        <section class="mdx mt-8">
+        <section class="mdx my-8 mb-32">
           <Slot />
-          <BlogSeparator />
         </section>
       </div>
       <FooterBar />

@@ -4,6 +4,7 @@ export default {
   theme: {
     fontFamily: {
       sans: ['NotoSans', 'system-ui', 'sans-serif'],
+      mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', "Liberation Mono", "Courier New", 'monospace'],
     },
     variants: {
       extend: {

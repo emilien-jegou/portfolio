@@ -1,0 +1,402 @@
+---
+data:
+    title: '10 libraries to enhance your Typescript projects'
+    thumbnailUrl: '/images/posts/10-libraries-to-enhance-your-typescript-projects/thumbnail.png'
+    description: "Discover a set of TypeScript libraries to enhance your productivity, reduce bugs and deepen your understanding of the language."
+    shareImageUrl: '/images/posts/10-libraries-to-enhance-your-typescript-projects/share.svg'
+    createdAt: 1708302809000
+---
+
+import { ExternalLinkInline } from '~/ui/common/external-link';
+import { BlogCode } from '~/ui/common/blog-code';
+import { BlogSeparator } from '~/ui/common/blog-separator';
+import { BlogGithubLink } from '~/ui/common/blog-link-with-icon';
+import { BlogImage } from '~/ui/common/blog-image';
+
+Hey folks, this article is going to showcase utility libraries that you can use in your typescript projects to enhance development experience, this can include: fewer bugs, cleaner code, and even increase your productivity. I only want to showcase general-purpose Typescript packages that can be integrated anywhere, so I believe you will find this list somewhat different from what you are used to seeing elsewhere. 
+
+As we explore these libraries, I'll arrange them based on their technical implications, some are easy to integrate, while others require more consideration as they will somewhat "shift" the way you program in typescript — Enjoy!
+
+<BlogSeparator />
+
+## knip, find unused code
+
+Knip is a tool designed to identify and eliminate unused code in your TypeScript projects, effectively reducing your production bundle's size. By analyzing imports and exports, Knip provides a list of redundant exports, files, and dependencies for manual removal. It's particularly useful to run it before package upgrades, as it will help you avoid unnecessary version conflicts.
+
+<BlogImage alt="knip.dev website" width={1919} height={948} src="/images/posts/10-libraries-to-enhance-your-typescript-projects/knip.png" />
+
+<BlogSeparator />
+
+## ts-reset, improved standard library default
+
+The initial release of TypeScript came equipped with types for the JavaScript standard library, but these types haven't been updated to take advantage of TypeScript's newer features, primarily for legacy reasons. The `ts-reset` project aims to rectify this by improving default types and offering a safer API for interacting with the standard library.
+
+There is really no downside to adding this library to your typescript project, it will enforce stricter typing and fix many of the issue you may have had when working with the standard javascript library. 
+
+
+<BlogCode language="typescript">
+```typescript
+// Import in a single file, then across your whole project...
+import '@total-typescript/ts-reset'
+
+// .filter just got smarter!
+const filteredArray = [1, 2, undefined].filter(Boolean) // number[]
+
+// .includes now takes a string as the first parameter on
+// const arrays.
+const users = ['matt', 'sofia', 'waqas'] as const
+users.includes('bryan')
+```
+</BlogCode>
+
+<BlogGithubLink href="https://github.com/total-typescript/ts-reset" label="ts-reset on github" />
+
+<BlogSeparator />
+
+## type-fest, a cornucopia of types...
+
+TypeScript provides handy pre-configured types for object manipulation, such as `Pick`, `Partial`, and `Required`. However, there are times when these standard types aren't enough. That's where libraries like `type-fest` come in, offering a rich collection of types for those unique situations. `type-fest`, alongside alternatives like `ts-essentials` and `ts-toolbelt`, presents solutions to common type challenges, such as merging exclusive types to avoid errors in conditional checks.
+
+Here's a practical example of leveraging the type-fest library for creating a safe update interface:
+
+<BlogCode language="typescript">
+```typescript
+import { RequireAtLeastOne } from 'type-fest';
+
+type User = {
+  id: number;
+  password: string;
+  firstName: string;
+  lastName?: string;
+  age: number;
+  email: string;
+}
+
+type UpdateUser = RequireAtLeastOne<Partial<Omit<User, 'id'>>>;
+
+const updateUser = (userId: User['id'], updateFields: UpdateUser) => { /*...*/ }
+
+// We don't want to allow empty object because that means 
+// the operation performed no action:
+
+updateUser(123, {}); // error:  '{}' is not assignable to parameter of type UpdateUser
+updateUser(123, { age: 42 }); // ok
+```
+</BlogCode>
+
+<BlogGithubLink href="https://github.com/sindresorhus/type-fest" label="type-fest on github" />
+
+<BlogSeparator />
+
+## hotscript, functional style composable types
+
+Hotscript distinguishes itself from `type-fest`  by focusing on advanced type mutations through composable types and embracing a functional programming style. It simplifies the management of intricate type transformations, making it a great addition on this list.
+
+Here is how you could make use of hotscript to parse a path safely in a web framework:
+<BlogCode language="typescript">
+```typescript
+import { Pipe, Objects, Strings, ComposeLeft, Tuples, Match } from "hotscript";
+
+type QueryString<V extends string> = Pipe<
+  V,
+  [
+    Strings.Split<"/">,
+    Tuples.Filter<Strings.StartsWith<"<">>,
+    Tuples.Map<ComposeLeft<[Strings.Trim<"<" | ">">, Strings.Split<":">]>>,
+    Tuples.ToUnion,
+    Objects.FromEntries,
+    Objects.MapValues<
+      Match<[Match.With<"string", string>, Match.With<"number", number>]>
+    >
+  ]
+>;
+
+type MyQueryString = QueryString<"/users/<id:string>/posts/<index:number>">;
+//      ^? { id: string, index: number }
+
+```
+</BlogCode>
+
+
+<BlogGithubLink href="https://github.com/gvergnaud/hotscript" label="hostcript on github" />
+
+<BlogSeparator />
+
+## pattycake, zero-cost pattern matching
+
+Pattycake is a pattern matching library that emerges as a promising alternative to `ts-pattern`. It adopts a similar API but utilizes a TypeScript transpilation plugin to significantly speed up execution (up to 12 times faster), offering an almost zero-cost abstraction over traditional if-else statements.
+
+I don't believe `ts-pattern` to be a slow library, but I did encounter people reticent to use it because of its perceived performance impact. More than a copy-cat library, `pattycake`, present an excellent “selling point” to those still dubious about the power of pattern matching! 
+
+<BlogCode language="typescript jsx">
+```jsx
+import { match, P } from 'ts-pattern';
+
+type Data =
+  | { type: 'text'; content: string }
+  | { type: 'img'; src: string };
+
+type Result =
+  | { type: 'ok'; data: Data }
+  | { type: 'error'; error: Error };
+
+const result: Result = ...;
+
+const html = match(result)
+  .with({ type: 'error' }, () => <p>Oups! An error occured</p>)
+  .with({ type: 'ok', data: { type: 'text' } }, (res) => <p>{res.data.content}</p>)
+  .with({ type: 'ok', data: { type: 'img' } }, (res) => <img src={res.data.src} />)
+  .exhaustive();
+```
+</BlogCode>
+
+<BlogGithubLink href="https://github.com/aidenybai/pattycake" label="pattycake on github" />
+
+<BlogSeparator />
+
+## exhaustive, better typing that a switch
+
+Exhaustive is another library that complements the previous one on this list quite well. You can think of it as a library to use instead of the conventional “switch” statement. While it's not as powerful as a pattern matching library, its ability to “tag” the key of an object seems to be sufficient and less verbose in many scenarios; see example below:
+
+
+<BlogCode language="typescript">
+```typescript
+type Shape =
+  | { __kind: 'square'; size: number; }
+  | { __kind: 'rectangle'; width: number; height: number; }
+  | { __kind: 'circle'; radius: number; }
+
+// exhaustive version:
+const area1 = exhaustive.tag(s, '__kind', {
+  square: (shape) => shape.size ** 2,
+  rectangle: (shape) => shape.width * shape.height,
+  circle: (shape) => Math.PI * shape.radius ** 2,
+});
+
+// ... comparison with ts-pattern or pattycake:
+const area2 = match(s)
+  .with({ __kind: 'square' }, (shape) => shape.size ** 2)
+  .with({ __kind: 'rectangle' }, (shape) => shape.width * shape.height)
+  .with({ __kind: 'circle' }, (shape) => Math.PI * shape.radius ** 2)
+  .exhaustive();
+```
+</BlogCode>
+
+<BlogGithubLink href="https://github.com/lukemorales/exhaustive" label="exhaustive on github" />
+
+<BlogSeparator />
+
+## neverthrow, safer error handling
+
+<ExternalLinkInline href="https://www.typescriptlang.org/docs/handbook/unions-and-intersections.html#discriminating-unions" label="The advised way to treat error in typescript is through intersection types" />, the neverthrow library is here to help us with that, it offers a `Result` type which can be used to describe an operation success or failure as well as many utility functions to work with it.
+
+`try/catch` blocks are still widely used in JavaScript today, But you generally want to avoid adding exceptions in your program as it's really easy to miss catching one and Typescript won't help you when it happens.
+
+<BlogCode language="typescript">
+```typescript
+import { Result } from 'neverthrow';
+
+const safeJsonParse = Result.fromThrowable(JSON.parse);
+
+// This following code never throw error:
+safeJsonParse("{").match(
+  (data) => console.log(data),
+  (e) => console.error('Parse error:', e),
+);
+
+// Here is an equivalent using a try/catch block:
+try {
+  const data = JSON.parse("{");
+  console.log(data);
+} catch (e: unknown) {
+  console.error('Parse error:', e);
+}
+```
+</BlogCode>
+
+<BlogSeparator />
+
+## reflect-metadata, tie information to your objects
+
+Reflect-metadata is a polyfill library that mimic the metadata API that will ultimately be integrated into ECMAScript. It allows developers to attach metadata to classes, properties, methods, functions, objects, and more. The feature provided by this library are especially beneficial for applications dependent on decorators, as such you may already have encountered it through library like `nest.js` or `class-validator`.
+
+The type reflection API offers substantial power but requires cautious use as the metadata is linked to the object's pointer rather than its data representation; see the followign example:
+
+
+<BlogCode language="typescript">
+```typescript
+import "reflect-metadata";
+
+// Building up a simple metadata store...
+
+const Metadata = (metadataValue: any) => Reflect.metadata('metadata-store', metadataValue);
+
+Metadata.get = (target: Object, propertyKey?: string | symbol) =>
+Reflect.getMetadata('metadata-store', target, propertyKey as any);
+
+Metadata.set = (metadataValue: any, target: Object, propertyKey?: string | symbol) =>
+Reflect.defineMetadata('metadata-store', metadataValue, target, propertyKey as any);
+
+// ... using it:
+
+@Metadata('test1')
+class MyClass {
+  @Metadata('test2')
+  myMethod() {}
+}
+
+function myFunction() {}
+Metadata.set('test3', myFunction);
+
+let myVar = [1, 4, 6, 1, 7]
+Metadata.set('test4', myVar);
+
+console.assert('test1' === Metadata.get(MyClass));
+console.assert('test2' === Metadata.get(MyClass.prototype, 'myMethod'));
+console.assert('test3' === Metadata.get(myFunction));
+console.assert('test4' === Metadata.get(myVar));
+
+// One of the things to be wary about; myVar is now a copy of the
+// original object ...
+myVar = myVar.filter(x => x > 2);
+
+// ... and so we lost the metadata attached to it:
+console.assert(undefined === Metadata.get(myVar));
+```
+</BlogCode>
+
+<BlogGithubLink href="https://github.com/rbuckton/reflect-metadata" label="reflect-metadata on github" />
+
+<BlogSeparator />
+
+## remeda, chain your functions using pipelines
+
+Remeda is a utility library tailored for functional programming in TypeScript, offering essential functions to construct `pipes`. These pipes can be thought of as a means to seamlessly link functions together, where the output of one function feeds directly into the next. This functionality should eventually <ExternalLinkInline href="https://github.com/tc39/proposal-pipeline-operator" label="become part of the standard library" /> but in the meantime you can use Remeda to bridge the gap.
+
+What truly sets it apart from the standard library is its capability for lazy evaluation, here is an example of it:
+
+<BlogCode language="typescript">
+```typescript
+const arr = [1, 2, 2, 3, 3, 4, 5, 6];
+
+const result = R.pipe(
+  arr, // only four iterations instead of eight (array.length)
+  R.map(x => {
+    console.log('iterate', x);
+    return x;
+  }),
+  R.uniq(),
+  R.take(3)
+); // => [1, 2, 3]
+```
+</BlogCode>
+
+<BlogGithubLink href="https://github.com/remeda/remeda" label="Remeda on github" />
+
+<BlogSeparator />
+
+## effect-ts, concurrency on steroid!
+
+Effect-ts transforms TypeScript development by drawing on functional programming principles, aiming to satisfy a wide array of developer needs. At its core, it's build around the concept of Effect, which can be thought of as a Result type that also keep state about a computation needs, you may also think of them as alternative to promises.
+
+This library is particularly good at handling concurrency, but many more features are included, here are a few of them:
+- Integrated caching and logging systems
+- Metrics and tracing for monitoring
+- Stream processing capabilities for handling data flows
+- An execution runtime
+- Tools for unit testing
+
+Below is an example to illustrate the effectiveness and power of effect-ts in managing concurrency:
+
+<BlogCode language="typescript">
+```typescript
+import { Duration, Effect, Schedule, pipe } from "effect";
+
+// Simple exponential backoff
+const retryPolicy = pipe(
+  Schedule.exponential(Duration.seconds(1), 0.5),
+  Schedule.compose(Schedule.elapsed),
+  Schedule.whileOutput(Duration.lessThanOrEqualTo(Duration.seconds(10)))
+);
+
+const performTask = (id: number): Effect.Effect<number, string> => {
+    // This line will fail the task with id 0 and 5
+    if (id % 5 === 0) return Effect.fail(`Database error, id=${id}`)
+
+    // we just return anything here...
+    return Effect.succeed(Math.round(id ** 8.1 % id));
+}
+
+// Simulate an asynchronous operation with a delay
+const simulateAsyncTask = (taskId: number): Effect.Effect<number, string, never> => {
+  return pipe(
+    Effect.sleep(1000), // Simulate a 1-second delay
+    Effect.flatMap(() => performTask(taskId)),
+    Effect.tap((r: number) => console.log(`Task ${taskId} completed -- result: ${r}`)),
+    Effect.tapError((e: string) => Effect.succeed(console.error(`Task ${taskId} failed with error: ${e}`))),
+    Effect.retry(retryPolicy),
+    Effect.tapError(() => Effect.succeed(console.error(`Task ${taskId} was killed, maximum retry reached`))),
+  );
+}
+
+// An array of task IDs (0..10)
+const taskIds = Array.from({ length: 10 }, (_, idx) => idx);
+
+// Run the concurrent processing according to the schedule
+const runConcurrentlyWithSchedule = pipe(
+  taskIds,
+  Effect.forEach(simulateAsyncTask, { concurrency: 5 /* batch of 5 */ }),
+  Effect.tap((results) => console.log('Result:', results)),
+  Effect.asUnit
+);
+
+console.info('Starting...');
+
+// Execute the program, it will fail on zero and the try policy will take
+// effect, after retrying a few time (as per retry policy) the promise will
+// fail and we will enter the catch block.
+Effect.runPromise(runConcurrentlyWithSchedule)
+  .then(() => console.log('All tasks processed according to the schedule.'))
+  .catch(() => console.error('A fatal error occurred, all remaining tasks were stopped'));
+```
+</BlogCode>
+
+Will output the log:
+
+<BlogCode language="text">
+```text
+Starting...
+Task 0 failed with error: Database error, id=0
+Task 1 completed -- result: 0
+Task 2 completed -- result: 0
+Task 3 completed -- result: 3
+Task 4 completed -- result: 1
+Task 5 failed with error: Database error, id=5
+Task 6 completed -- result: 1
+Task 7 completed -- result: 4
+Task 8 completed -- result: 8
+Task 0 failed with error: Database error, id=0
+Task 9 completed -- result: 4
+Task 5 failed with error: Database error, id=5
+Task 0 failed with error: Database error, id=0
+Task 5 failed with error: Database error, id=5
+Task 0 failed with error: Database error, id=0
+...
+Task 5 failed with error: Database error, id=5
+Task 0 failed with error: Database error, id=0
+Task 0 was killed, maximum retry reached
+A fatal error occurred, all remaining tasks were stopped
+```
+</BlogCode>
+
+To grasp the applications and challenges addressed by the library, delve into Antoine Coulon's <ExternalLinkInline href="https://github.com/antoine-coulon/effect-introduction" label="introduction to it on github" />
+
+<BlogGithubLink href="https://github.com/Effect-TS" label="effect-ts on github" />
+
+<BlogSeparator />
+
+# Conclusion
+
+Navigating the vast sea of libraries and tools available to enhance our development workflows comes with its set of considerations. While libraries offer powerful shortcuts, simplifying tasks, and extending the functionality of our projects, they also introduce complexity and dependencies that can complicate the development process, especially for newcomers.
+
+This reminder serves as a crucial balance point, highlighting that in programming, the outcomes matters more than the tool! Adopting this perspective turns the decision-making process into a strategic endeavor, where the focus remains on achieving optimal outcomes through thoughtful consideration of the tools available, and only by knowing your options will you know what you are and aren't missing on!
