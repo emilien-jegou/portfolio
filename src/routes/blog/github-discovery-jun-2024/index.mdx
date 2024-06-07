@@ -1,0 +1,186 @@
+---
+data:
+  title: 'Github projects discovery of June 2024'
+  thumbnailUrl: '/images/posts/github-discovery-jun-2024/thumbnail.png'
+  description: 'Explore my top pick of github projects of the year, from AI web-scraping to a new redis implementation!'
+  shareImageUrl: '/images/posts/github-discovery-jan-2024/share.svg'
+  createdAt: 1717777441000
+---
+
+import { ExternalLinkInline } from '~/ui/common/external-link';
+import { BlogTags } from '~/ui/common/blog-tags';
+import { BlogGithubLink } from '~/ui/common/blog-link-with-icon';
+import { BlogSeparator } from '~/ui/common/blog-separator';
+import { BlogCode } from '~/ui/common/blog-code';
+import { BlogImage } from '~/ui/common/blog-image';
+
+It's been a while since my last blog post about the GitHub projects that piqued my interest, and there have been many interesting developments all around. I feel it's finally time to compile a new curated list of projects that may not have made the headlines but are here to improve our development experience!
+
+I think it's fair to say that this list will be highly personalized. If you were to ask around about the crazy projects that have come up since the start of the year, you would probably be told about the development of AI or new language models, and it would be a fair answer. Right now, out of the 30 most starred GitHub projects created this year, <ExternalLinkInline href="https://github.com/search?q=created%3A%3E%3D2024-01&type=repositories&ref=advsearch" label="21 of them are AI-related" />, a trend that continues down the list! If I were to pick the most popular projects of the year, this article would inevitably become a “Top AI projects of the year” which is not my goal.
+
+When selecting projects for this article, I instead focus on projects that fit a few criteria:
+- Practicality: Can I use this in my day-to-day work as a full-stack engineer?
+- Inventiveness: Is this a novel idea? A reimplementation with a twist?
+- Activity: Is the project still in development? Have there been recent updates or releases?
+
+<BlogSeparator />
+
+## LaVague, AI web scraping
+
+<BlogTags tags={['python', 'AI', 'Scraping']} />
+
+LaVague, meaning "the wave" in French, is a tool designed to simplify web scraping through AI instructions. The popularization of JavaScript and CSS frameworks and the resulting “name mangling” of classes and IDs force developers to use complex and fragile JavaScript or XPath queries to scrap web pages. When a site is modified and one of those query breaks, the user has no choice but to understand the page changes, debug the script, retest it, and sometimes redeploy it. If you have one scraping task, you should be fine, but if you are managing multiple web scrapers on multiple websites, this can quickly turn into a debugging nightmare.
+
+This project remedies this issue by utilizing a language model intelligent enough to understand HTML documents. If a button is modified and changes appearance or placement on the page, the AI should be able to retrieve it with ease. On the few occasions it doesn't, the developer has a much easier time debugging a script that works through flexible instructions instead of rigid document queries.
+
+Here is a demo of the LaVague library using selenium:
+
+<BlogCode language="python">
+```python
+from lavague.core import  WorldModel, ActionEngine
+from lavague.core.agents import WebAgent
+from lavague.drivers.selenium import SeleniumDriver
+
+selenium_driver = SeleniumDriver(headless=False)
+world_model = WorldModel()
+action_engine = ActionEngine(selenium_driver)
+agent = WebAgent(world_model, action_engine)
+agent.get("https://huggingface.co/docs")
+agent.run("Go on the quicktour of PEFT")
+```
+</BlogCode>
+
+<BlogGithubLink href="https://github.com/lavague-ai/LaVague" label="LaVague on github" />
+
+<BlogSeparator />
+
+## Redka, a redis clone using sqlite
+
+<BlogTags tags={['database', 'golang']} />
+
+Redka aims to be a reimplementation of Redis using SQLite as a backend, essentially creating a “disk storage” version of Redis. This project could serve as a practical persistent storage system for desktop applications or embedded programs, offering the robustness and lightweight nature of SQLite combined with the schemaless and simple API of Redis. The roadmap also includes plans to add new features such as publish/subscribe and streams types, which could broaden the tool's applicability, for example, by turning it into a viable option for inter-process communication.
+
+One of the most impressive aspects of Redka is that it doesn't fall short performance-wise. While it is obviously still lacking compared to in-memory storage, their benchmark shows that <ExternalLinkInline href="https://github.com/nalgeon/redka#performance" label="it's only around 4 to 5 times slower" /> when using disk storage.
+
+<BlogGithubLink href="https://github.com/nalgeon/redka" label="redka on github" />
+
+<BlogSeparator />
+
+## River, safer reverse proxy in rust
+
+<BlogTags tags={['networking', 'rust', 'reverse proxy']} />
+
+At the start of the year, Cloudflare open-sourced their in-house networking framework called <ExternalLinkInline href="https://github.com/cloudflare/pingora" label="Pingora" /> with the goal of improving the memory safety of critical applications. Almost immediately after their announcement, River, a reverse proxy application, arrived on the scene with the goal of making Cloudflare's framework more accessible for everyone's use.
+
+Effectively, River aims to become a modern replacement for Nginx, which was released in 2004 and is still largely the most used reverse proxy application in the world. Some of their selling points are:
+- Better connection reuse through a multithreaded model.
+- Less risk of memory issues or memory leaks.
+- Simplified configurations.
+
+Although the project is still experimental and some features are still in active development, you can already give it a try in your projects today.
+
+Here is a very basic example of a TOML configuration for TCP forwarding:
+
+<BlogCode language="toml">
+```toml
+[[basic-proxy]]
+name = "Example"
+listeners = [
+    { source = { kind = "Tcp", value = { addr = "0.0.0.0:8000" } } }
+]
+connector = { proxy_addr = "91.107.223.4:80" }
+```
+</BlogCode>
+
+<BlogGithubLink href="https://github.com/memorysafety/river" label="river on github" />
+
+<BlogSeparator />
+
+## Gritql, find and replace on the AST
+
+<BlogTags tags={['linter', 'rust']} />
+
+Gritql is a declarative query language for searching and modifying code. One of its main uses is to simplify the creation of linter and preprocessing rules for your projects. Instead of relying on complex regex statements that may break depending on your project formatting, Gritql provides you with a way to interact directly with your selected language's AST (Abstract Syntax Tree), allowing you to set rules on its tokens.
+
+It currently supports more than 10 languages and can be seen as an all-encompassing tool that you can learn once and use everywhere! For that reason, I find Gritql to be an extremely valuable tool to learn and one that will stay relevant over time.
+
+This is how you would use it for find and replace
+<BlogCode language="bash">
+```bash
+grit apply '`console.log($msg)` => `winston.log($msg)`'
+```
+</BlogCode>
+
+Plenty of examples are provided along with the tool. You can find them all <ExternalLinkInline href="https://github.com/getgrit/stdlib" label="in this repository under .grit" />. This repository also contains the GitHub actions to start using GritQL in your CI. Below is an example of a linter rule coded with GritQL:
+
+<BlogCode language="yaml">
+```yaml
+patterns:
+  - name: use_winston
+    level: error
+    body: |
+      `console.log($msg)` => `winston.log($msg)` where {
+        $msg <: not within or { `it($_, $_)`, `test($_, $_)`, `describe($_, $_)` }
+      }
+```
+</BlogCode>
+
+<BlogSeparator />
+
+<BlogGithubLink href="https://github.com/getgrit/gritql" label="gritql on github" />
+
+## Iceoryx2, multi OS zero-copy IPC
+
+<BlogTags tags={['IPC', 'multi-os', 'rust']} />
+
+This is my latest and favorite find of the (half-)year; I just wish I had found it sooner! Iceoryx2 is an extremely performant IPC library that uses shared memory for communication. It already supports Windows, macOS, and Linux.
+
+If I had to compare it to other IPC solutions on Linux, here is how I would describe its advantages:
+- It doesn't need a daemon to run in the background, unlike D-Bus, Redis, or Iceoryx1 (which was coded in C).
+- In Rust, the API is simpler and safer than Unix pipes, sockets, MQ, or using shared memory directly. You won't have to pass around file descriptors anymore!
+- It is built with performance in mind.
+
+Depending on the language you use, you may have to wait for the bindings to be implemented. As of the time I am writing this, it only supports Rust, but there are already plans to make libraries for C, C++, Python, and C#. It is also worth noting that even though it is already a cross-platform library, some features may be missing depending on your OS.
+
+The following is a simple example usage of the library that uses the default configuration; no permissions are configured on the shared memory:
+
+<BlogCode language="rust">
+```rust
+use iceoryx2::prelude::*;
+
+const CYCLE_TIME: core::time::Duration = core::time::Duration::from_secs(1);
+
+fn publish_send_one() -> eyre::Result<()> {
+    let service_name = ServiceName::new("My/Funk/ServiceName")?;
+    let service = zero_copy::Service::new(&service_name)
+        .publish_subscribe()
+        .open::<usize>()?;
+
+    let publisher = service.publisher().create()?;
+    publisher.loan_uninit()?.write_payload(1234).send()?;
+	Iox2::wait(CYCLE_TIME);	 // wait for message to be received
+
+    Ok(())
+}
+
+fn subscribe() -> eyre::Result<()> {
+    let service_name = ServiceName::new("My/Funk/ServiceName")?;
+    let service = zero_copy::Service::new(&service_name)
+        .publish_subscribe()
+        .open_or_create::<usize>()?;
+
+    let subscriber = service.subscriber().create()?;
+
+    while let Iox2Event::Tick = Iox2::wait(CYCLE_TIME) {
+        while let Some(sample) = subscriber.receive()? {
+            println!("received: {:?}", *sample);
+        }
+    }
+
+    Ok(())
+}
+```
+</BlogCode>
+
+<BlogGithubLink href="https://github.com/eclipse-iceoryx/iceoryx2" label="iceoryx2 on github" />
+
