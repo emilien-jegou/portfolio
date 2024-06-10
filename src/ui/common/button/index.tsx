@@ -10,7 +10,7 @@ export type ButtonProps = {
   class?: string;
   type?: 'button' | 'submit';
   children: JSXChildren;
-  onClick$?: PropFunction<() => void>;
+  onClick$?: PropFunction<(event: PointerEvent) => void>;
   variant?: 'fill' | 'transparent' | 'outline';
 };
 
@@ -19,10 +19,10 @@ export const Button = ({ variant = 'fill', onClick$, ...props }: ButtonProps) =>
     class={twMerge(
       'flex flex-row justify-center items-center whitespace-nowrap rounded-[10px] gap-2 h-10 font-medium hover:drop-shadow-sm text-sm px-5',
       variant === 'fill' &&
-        twMerge(
-          'border button-fill hover:opacity-95 border-border-subtler',
-          props.state?.success && 'bg-success',
-        ),
+      twMerge(
+        'border button-fill hover:opacity-95 border-border-subtler',
+        props.state?.success && 'bg-success',
+      ),
       variant === 'transparent' && 'bg-transparent hover:bg-subtle',
       variant === 'outline' && 'border bg-transparent hover:bg-subtle',
       (props.state?.loading || props.state?.disabled) && 'cursor-hand opacity-80 hover:opacity-80',
