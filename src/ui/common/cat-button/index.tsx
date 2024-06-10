@@ -10,7 +10,7 @@ export const CatButton = component$(() => {
 
   useVisibleTask$(({ track }) => {
     track(() => catArea.value);
-    if (!catArea.value) return () => { };
+    if (!catArea.value) return () => {};
     const catLauncher = new CatLauncher(catArea.value);
     launcher.value = noSerialize(catLauncher);
     return () => catLauncher.cleanup();

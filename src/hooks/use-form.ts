@@ -83,9 +83,11 @@ export const useForm = <FormValues extends Record<string, any>>(
       const current = formStorage.get();
       if (current.kind === 'none') return;
       const newKeys = new Set(Object.keys(current.value));
+      // eslint-disable-next-line qwik/valid-lexical-scope
       for (const key of Object.keys(fields)) {
         if (!newKeys.has(key as string)) {
-          delete fields[key];
+          // eslint-disable-next-line qwik/valid-lexical-scope
+          delete (fields as any)[key];
         }
       }
 
@@ -100,6 +102,7 @@ export const useForm = <FormValues extends Record<string, any>>(
     // the new value.
     // TODO: use structuredClone
     //const data = structuredClone({ ...fields });
+    // eslint-disable-next-line qwik/valid-lexical-scope
     const data = R.pipe(safeJsonStringify(fields), chainSuccess(safeJsonParse));
     if (data.kind === 'success') {
       const value = data.value as any;

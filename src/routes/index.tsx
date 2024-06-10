@@ -1,13 +1,13 @@
 import { $, component$, useSignal } from '@builder.io/qwik';
 import articles from '~/generated/blog-data.json';
 import { Button } from '~/ui/common/button';
+import { CatButton } from '~/ui/common/cat-button';
 import { ReachOutForm } from '~/ui/forms/reach-out-form';
 import { BlogCard } from '~/ui/layout/blog-card';
 import { FooterBar } from '~/ui/layout/footer-bar';
 import { HeaderBar } from '~/ui/layout/header-bar';
 import { buildHead } from '~/utils/build-head';
 import type { DocumentHead } from '@builder.io/qwik-city';
-import { CatButton } from '~/ui/common/cat-button';
 
 type Article = {
   slug: string;
@@ -30,7 +30,9 @@ export default component$(() => {
       <main class="mt-24 sm:mt-36 mx-auto custom-container">
         <h1 class="text-3xl sm:text-4xl font-extrabold">Hi There,</h1>
         <p class="text-subtle leading-7 mt-4 sm:mt-6 ">
-          My name is Emilien, I'm a French fullstack developer from Brittany france, mainly programming in node.js & rust. I love discovering new things, so I started this blog, hope you find it interesting!
+          My name is Emilien, I'm a French fullstack developer from Brittany france, mainly
+          programming in node.js & rust. I love discovering new things, so I started this blog, hope
+          you find it interesting!
         </p>
         <div class="flex items-center gap-6 mt-4 sm:mt-6">
           <Button

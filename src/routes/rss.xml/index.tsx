@@ -27,8 +27,9 @@ export const onGet: RequestHandler = async (e) => {
   <docs>https://emje.dev/rss</docs>
   <generator>emje.dev</generator>
 
-  ${sortedArticles.map(
-    (article) => `
+  ${sortedArticles
+    .map(
+      (article) => `
   <item>
     <title>${article.title}</title>
     <link>https://emje.dev/blog/${article.slug}</link>
@@ -37,7 +38,8 @@ export const onGet: RequestHandler = async (e) => {
     <guid>https://emje.dev/blog/${article.slug}</guid>
   </item>
   `,
-  ).join('\n')}
+    )
+    .join('\n')}
 
 </channel>
 </rss>`,

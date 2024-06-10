@@ -1,7 +1,6 @@
 import { component$, Slot } from '@builder.io/qwik';
 import { useContent, useDocumentHead } from '@builder.io/qwik-city';
 import { format } from 'date-fns';
-import { BlogSeparator } from '~/ui/common/blog-separator';
 import { TableOfContents } from '~/ui/common/table-of-contents';
 import { ArrowLeftIcon } from '~/ui/icons/arrow-left';
 import { FooterBar } from '~/ui/layout/footer-bar';
