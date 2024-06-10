@@ -17,7 +17,7 @@ export type ButtonProps = {
 export const Button = ({ variant = 'fill', onClick$, ...props }: ButtonProps) => (
   <button
     class={twMerge(
-      'flex flex-row justify-center items-center whitespace-nowrap rounded-[10px] gap-2 h-10 font-medium hover:drop-shadow-sm text-sm px-5',
+      'select-none flex flex-row justify-center items-center whitespace-nowrap rounded-[10px] gap-2 h-10 font-medium hover:drop-shadow-sm text-sm px-5',
       variant === 'fill' &&
         twMerge(
           'border button-fill hover:opacity-95 border-border-subtler',
