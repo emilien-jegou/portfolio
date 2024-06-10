@@ -142,7 +142,6 @@ export class CatLauncher {
 
   private addElement(body_id: number, position: XY, angle: number) {
     const element = document.createElement('img');
-    //element.src = this.toggleSecretImage() ? secretImages[(id % secretImages.length)] : CatImage;
     element.src = catImage;
     element.style.cssText = `height: ${this.imageSize * 2}px; width: ${this.imageSize * 2}px; position: absolute; pointer-events: none;`;
     this.domElements[body_id] = element;
