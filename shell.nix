@@ -1,9 +1,10 @@
 { pkgs ? import <nixpkgs> {} }:
 pkgs.mkShell {
   nativeBuildInputs = [
-    pkgs.buildPackages.nodejs-18_x
+    pkgs.nodejs_18
     pkgs.corepack
     pkgs.yarn
+    pkgs.nodePackages.typescript-language-server
   ];
 }
 
