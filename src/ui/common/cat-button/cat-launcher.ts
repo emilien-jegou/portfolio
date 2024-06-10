@@ -24,7 +24,7 @@ export class CatLauncher {
 
   constructor(container: HTMLElement) {
     this.container = container;
-    this.engine = Engine.create({ timing: { timeScale: 0.9 } });
+    this.engine = Engine.create();
     this.world = this.engine.world;
     this.updateBounds();
     window.addEventListener('resize', this.updateBounds.bind(this));
