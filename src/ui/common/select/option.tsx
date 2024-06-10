@@ -6,6 +6,7 @@ type SelectOptionProps = {
   selected?: boolean;
   label: string;
 } & HTMLAttributes<HTMLButtonElement>;
+
 export const SelectOption = component$((props: SelectOptionProps) => {
   const id = useId();
   const buttonRef = useSignal<HTMLButtonElement>();

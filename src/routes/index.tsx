@@ -42,6 +42,14 @@ export default component$(() => {
             <span>Reach out</span>
             <span class="text-[16px]">✉️</span>
           </Button>
+          <Button
+            onClick$={$((): void => {
+              reachOutModalVisible.value = true;
+            })}
+          >
+            <span>Cat</span>
+          </Button>
+
           <ReachOutForm bind:show={reachOutModalVisible} />
           {/*<a class="flex items-center gap-1 text-sm font-medium hover:underline" href="#blog">
             <span>Discover my blog</span>

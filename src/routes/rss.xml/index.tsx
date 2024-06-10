@@ -37,7 +37,7 @@ export const onGet: RequestHandler = async (e) => {
     <guid>https://emje.dev/blog/${article.slug}</guid>
   </item>
   `,
-  )}
+  ).join('\n')}
 
 </channel>
 </rss>`,
