@@ -48,6 +48,7 @@
     "@svgx/vite-plugin-qwik": "^1.0.1",
     "@types/eslint": "^8.56.1",
     "@types/js-cookie": "^3.0.6",
+    "@types/matter-js": "^0.19.6",
     "@types/node": "^20.10.8",
     "@typescript-eslint/eslint-plugin": "^6.18.1",
     "@typescript-eslint/parser": "^6.18.1",
@@ -83,6 +84,7 @@
     "@qwik-ui/headless": "^0.2.2",
     "date-fns": "^3.2.0",
     "js-cookie": "^3.0.5",
+    "matter-js": "^0.19.0",
     "remeda": "^1.39.0",
     "tailwind-merge": "^2.2.0",
     "ts-pattern": "^5.0.6"

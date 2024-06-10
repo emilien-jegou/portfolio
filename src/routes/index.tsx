@@ -7,6 +7,7 @@ import { FooterBar } from '~/ui/layout/footer-bar';
 import { HeaderBar } from '~/ui/layout/header-bar';
 import { buildHead } from '~/utils/build-head';
 import type { DocumentHead } from '@builder.io/qwik-city';
+import { CatButton } from '~/ui/common/cat-button';
 
 type Article = {
   slug: string;
@@ -29,9 +30,7 @@ export default component$(() => {
       <main class="mt-24 sm:mt-36 mx-auto custom-container">
         <h1 class="text-3xl sm:text-4xl font-extrabold">Hi There,</h1>
         <p class="text-subtle leading-7 mt-4 sm:mt-6 ">
-          I'm a French software engineer with over 3 years in full-stack development and an IT
-          Master's from Epitech. I love discovering new things, so I started this blog, hope you
-          find it interesting!
+          My name is Emilien, I'm a French fullstack developer from Brittany france, mainly programming in node.js & rust. I love discovering new things, so I started this blog, hope you find it interesting!
         </p>
         <div class="flex items-center gap-6 mt-4 sm:mt-6">
           <Button
@@ -42,14 +41,7 @@ export default component$(() => {
             <span>Reach out</span>
             <span class="text-[16px]">✉️</span>
           </Button>
-          <Button
-            onClick$={$((): void => {
-              reachOutModalVisible.value = true;
-            })}
-          >
-            <span>Cat</span>
-          </Button>
-
+          <CatButton />
           <ReachOutForm bind:show={reachOutModalVisible} />
           {/*<a class="flex items-center gap-1 text-sm font-medium hover:underline" href="#blog">
             <span>Discover my blog</span>
