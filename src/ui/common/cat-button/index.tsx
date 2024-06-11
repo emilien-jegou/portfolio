@@ -8,6 +8,7 @@ export const CatButton = component$(() => {
   const launcher = useSignal<NoSerialize<CatLauncher> | undefined>();
   const catArea = useSignal<HTMLElement | undefined>();
 
+  // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(({ track }) => {
     track(() => catArea.value);
     if (!catArea.value) return () => {};
