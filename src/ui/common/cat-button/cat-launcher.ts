@@ -25,6 +25,7 @@ export class CatLauncher {
   constructor(container: HTMLElement) {
     this.container = container;
     this.engine = Engine.create();
+    this.engine.timing.timeScale = 0.7;
     this.world = this.engine.world;
     this.updateBounds();
     window.addEventListener('resize', this.updateBounds.bind(this));
@@ -90,10 +91,22 @@ export class CatLauncher {
   }
 
   private run() {
-    if (this.running) {
-      this.onTick();
-      requestAnimationFrame(this.run.bind(this));
-    }
+    const fixedTimeStep = 1000 / 60; // 60 FPS
+    let lastTime = performance.now();
+
+    const tick = (time: number) => {
+      if (this.running) {
+        const deltaTime = time - lastTime;
+        lastTime = time;
+
+        Engine.update(this.engine, fixedTimeStep, deltaTime / fixedTimeStep);
+        this.onTick();
+
+        requestAnimationFrame(tick);
+      }
+    };
+
+    requestAnimationFrame(tick);
   }
 
   private updateBounds() {
@@ -153,8 +166,8 @@ export class CatLauncher {
     const startPosition = this.getRandomPosition();
     const catBody = Bodies.circle(startPosition.x, startPosition.y, this.imageSize, {
       density: 0.001,
-      frictionAir: 0.0003,
-      restitution: 0.1,
+      frictionAir: 0.003,
+      restitution: 0.2,
       friction: 0.01,
     });
 
