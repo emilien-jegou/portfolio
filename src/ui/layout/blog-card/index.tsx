@@ -1,3 +1,4 @@
+import { component$, useComputed$ } from '@builder.io/qwik';
 import { formatDistance } from 'date-fns';
 import { twMerge } from 'tailwind-merge';
 
@@ -10,13 +11,18 @@ type BlogCardProps = {
   date: Date;
 };
 
+const BlogCardDate = component$(({ date }: { date: Date }) => {
+  const d = useComputed$(() => formatDistance(date, new Date(), { addSuffix: true }));
+  return <p class="text-subtler text-sm">
+    {d.value}
+  </p>
+})
+
 export const BlogCard = (props: BlogCardProps) => (
   <a href={props.slug}>
     <div class={twMerge('flex items-center gap-8 sm:gap-20', props.class)}>
       <div>
-        <p class="text-subtler text-sm">
-          {formatDistance(props.date, new Date(), { addSuffix: true })}
-        </p>
+        <BlogCardDate date={props.date} />
         <h3 class="font-medium mt-1">{props.title}</h3>
         <p class="leading-6 mt-2 text-subtle text-sm max-w-[480px] sm:max-w-auto pr-6">
           {props.description}
