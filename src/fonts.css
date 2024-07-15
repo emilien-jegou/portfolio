@@ -1,3 +1,23 @@
+/**** DM Sans ****/
+
+@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  src:
+    url('/fonts/dm-sans/DMSans-VariableFont_opsz,wght.woff2') format('woff2'),
+    url('/fonts/dm-sans/DMSans-VariableFont_opsz,wght.woff') format('woff');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'DM Sans';
+  font-style: italic;
+  src:
+    url('/fonts/dm-sans/DMSans-Italic-VariableFont_opsz,wght.woff2') format('woff2'),
+    url('/fonts/dm-sans/DMSans-Italic-VariableFont_opsz,wght.woff') format('woff');
+  font-display: swap;
+}
+
 /**** NotoSans ****/
 
 @font-face {
