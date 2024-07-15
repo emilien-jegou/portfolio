@@ -1,0 +1,30 @@
+/* Allow background graphics/colors */
+@media print {
+  body {
+    -webkit-print-color-adjust: exact; /* Chrome, Safari */
+    print-color-adjust: exact; /* Firefox, Edge */
+  }
+
+  /* No border */
+  body, html {
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  /* No header */
+  @page {
+    margin: 0;
+  }
+
+  /* To ensure full-width printing */
+  @page {
+    size: auto;
+    margin: 0;
+  }
+
+  /* Optional: Adjust the layout if needed */
+  .content {
+    width: 100%;
+  }
+}
