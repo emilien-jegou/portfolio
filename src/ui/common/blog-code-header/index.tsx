@@ -1,9 +1,9 @@
 import { $ } from '@builder.io/qwik';
-import { twMerge } from 'tailwind-merge';
 import { ArrowExpandIcon } from '~/ui/icons/arrow-expand';
 import { ArrowFitIcon } from '~/ui/icons/arrow-fit';
 import { ArrowFitInIcon } from '~/ui/icons/arrow-fit-in';
 import { ArrowMinimizeIcon } from '~/ui/icons/arrow-minimize';
+import { cn } from '~/utils/cn';
 import type { JSXChildren, PropFunction } from '@builder.io/qwik';
 
 export type CodeViewType = 'default' | 'expanded' | 'fullscreen';
@@ -20,7 +20,7 @@ export const BlogCodeHeader = (props: BlogCodeHeaderProps) => (
       borderTopLeftRadius: 'var(--code-blog-rounding, 0px)',
       borderTopRightRadius: 'var(--code-blog-rounding, 0px)',
     }}
-    class="flex bg-stronger text-xs gap-4 justify-between text-white/50 px-3 py-3"
+    class="flex bg-[#030711] text-[white] border border-[#10141e] rounded-t-md text-xs gap-4 justify-between px-3 py-1 items-center"
   >
     <span class="select-none">{props.language}</span>
     <div class="flex gap-2">
@@ -57,7 +57,7 @@ type HeaderInlineIconButtonProps = {
 
 const HeaderInlineIconButton = (props: HeaderInlineIconButtonProps) => (
   <button
-    class={twMerge('text-white/50 hover:text-white/70', props.class)}
+    class={cn('text-white rounded-full hover:bg-white/20 p-1', props.class)}
     onClick$={props.onClick$}
   >
     {props.children}

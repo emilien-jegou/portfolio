@@ -41,6 +41,7 @@ export class CatLauncher {
   }
 
   private addBottomSensor() {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (this.line) {
       World.remove(this.world, this.line);
     }
@@ -143,6 +144,7 @@ export class CatLauncher {
 
   private moveElement(body_id: number, x: number, y: number, angle: number) {
     const radToDeg = (angle: number) => angle * (180 / Math.PI);
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (this.domElements[body_id]) {
       this.domElements[body_id].style.transform =
         `translate(${x - this.imageSize}px, ${y - this.imageSize}px) rotate(${radToDeg(angle)}deg)`;

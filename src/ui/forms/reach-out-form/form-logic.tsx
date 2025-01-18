@@ -1,12 +1,12 @@
 import { component$ } from '@builder.io/qwik';
 import { z } from '@builder.io/qwik-city';
 import { zodForm$ } from '@modular-forms/qwik';
-import { twMerge } from 'tailwind-merge';
 import { useForm } from '~/hooks/use-form';
 import { Button } from '~/ui/common/button';
 import { InputField } from '~/ui/common/input-field';
 import { SelectField } from '~/ui/common/select-field';
 import { TextareaField } from '~/ui/common/textarea-field';
+import { cn } from '~/utils/cn';
 import type { PropFunction } from '@builder.io/qwik';
 
 const loginFormSchema = z
@@ -83,7 +83,7 @@ export const ReachOutFormLogic = component$(
           ]}
           disabled={loading}
         />
-        <div class={twMerge('mb-4 animate-in fade-in', form.fields.reason !== 'other' && 'hidden')}>
+        <div class={cn('mb-4 animate-in fade-in', form.fields.reason !== 'other' && 'hidden')}>
           <InputField
             name="otherReason"
             value={form.fields.otherReason}

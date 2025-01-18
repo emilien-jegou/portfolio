@@ -18,6 +18,19 @@ export const InitialColorModeProvider = component$(() => {
   return (
     <ClientEffect
       onMount={async (_, dispatch) => {
+        // preset before calling localStorage function
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          document.body.dataset['colorMode'] = 'dark';
+          document.documentElement.style.colorScheme = 'dark';
+        } else {
+          // We ignore the light color mode because
+          // the website look better in dark right now
+          //document.body.dataset['colorMode'] = 'light';
+          //document.documentElement.style.colorScheme = 'light';
+          document.body.dataset['colorMode'] = 'dark';
+          document.documentElement.style.colorScheme = 'dark';
+        }
+
         // TODO: safe get localStorage
         const colorMode = localStorage.getItem('website-color-mode');
 
@@ -32,16 +45,18 @@ export const InitialColorModeProvider = component$(() => {
         } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
           document.body.dataset['colorMode'] = 'dark';
           document.documentElement.style.colorScheme = 'dark';
-          dispatch('dark (default)');
+          dispatch('dark');
         } else {
-          document.body.dataset['colorMode'] = 'light';
-          document.documentElement.style.colorScheme = 'light';
-          dispatch('light (default)');
+          document.body.dataset['colorMode'] = 'dark';
+          document.documentElement.style.colorScheme = 'dark';
+          //document.body.dataset['colorMode'] = 'light';
+          //document.documentElement.style.colorScheme = 'light';
+          dispatch('light');
         }
       }}
-      onEffect$={$(([scheme]) =>
-        track$(`successfully setup colorscheme with value: ${scheme}` as const),
-      )}
+      onEffect$={$(([scheme]) => {
+        track$(`successfully setup colorscheme with value: ${scheme}` as const);
+      })}
     />
   );
 });

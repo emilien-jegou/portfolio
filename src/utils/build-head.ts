@@ -1,7 +1,9 @@
+import type { DocumentMeta } from '@builder.io/qwik-city';
+
 type BuildHead = {
   title: string;
   description: string;
-  shareImage: string;
+  shareImage?: string;
 };
 
 export const buildHead = (data: BuildHead) => ({
@@ -18,7 +20,7 @@ export const buildHead = (data: BuildHead) => ({
       name: 'og:description',
       content: data.description,
     },
-    { name: 'og:image', content: data.shareImage },
+    data.shareImage !== undefined && { name: 'og:image', content: data.shareImage },
     { name: 'twitter:card', content: 'summary_large_image' },
     { name: 'twitter:url', content: 'https://emje.dev/' },
     { name: 'twitter:title', content: `${data.title} - emje.dev` },
@@ -27,5 +29,5 @@ export const buildHead = (data: BuildHead) => ({
       content: data.description,
     },
     { name: 'twitter:image', content: data.shareImage },
-  ],
+  ].filter((x?: DocumentMeta | false): x is DocumentMeta => !!x) as DocumentMeta[],
 });

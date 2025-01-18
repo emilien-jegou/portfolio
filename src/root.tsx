@@ -1,6 +1,8 @@
 import { QwikCityProvider, RouterOutlet, ServiceWorkerRegister } from '@builder.io/qwik-city';
+import { CookieBannerProvider } from './providers/cookie-banner-provider';
 import { InitialColorModeProvider } from './providers/initial-color-mode-provider';
 import { Portal, PortalProvider } from './providers/portal';
+import { ThemeContextProvider } from './providers/theme-provider';
 import { RouterHead } from './ui/logics/router-head';
 
 import './global.css';
@@ -22,12 +24,18 @@ export default () => {
         <RouterHead />
       </head>
       <body lang="en">
-        <InitialColorModeProvider />
-        <PortalProvider>
-          <RouterOutlet />
-          <ServiceWorkerRegister />
-          <Portal name="toast" />
-        </PortalProvider>
+        <div class="absolute z-[-1] top-0 left-0 w-screen h-[32vh] bg-pattern-checked pattern-subtlest" />
+        <div class="absolute z-[-1] top-[22vh] left-0 w-screen h-[10vh] bg-linear-to-b from-transparent to-bg-default" />
+        <ThemeContextProvider>
+          <CookieBannerProvider>
+            <InitialColorModeProvider />
+            <PortalProvider>
+              <RouterOutlet />
+              <ServiceWorkerRegister />
+              <Portal name="toast" />
+            </PortalProvider>
+          </CookieBannerProvider>
+        </ThemeContextProvider>
       </body>
     </QwikCityProvider>
   );

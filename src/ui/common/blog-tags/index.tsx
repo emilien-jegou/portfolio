@@ -11,5 +11,5 @@ export const BlogTags = ({ tags }: BlogTagsProps) => (
 );
 
 const Tag = ({ label }: { label: string }) => (
-  <span class="rounded-lg px-3 font-medium text-xs shadow-sm bg-subtle text-subtle">#{label}</span>
+  <span class="rounded-lg px-3 font-medium text-xs shadow-xs bg-subtle text-subtle">#{label}</span>
 );

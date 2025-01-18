@@ -5,7 +5,8 @@ export default {
     fontFamily: {
       dm: ['DM Sans', 'system-ui', 'sans-serif'],
       sans: ['NotoSans', 'system-ui', 'sans-serif'],
-      mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', "Liberation Mono", "Courier New", 'monospace'],
+      pixel: ['Jersey', 'serif'],
+      mono: ['FiraCode','ui-monospace', 'Menlo', 'Monaco', 'Consolas', "Liberation Mono", "Courier New", 'monospace'],
     },
     variants: {
       extend: {

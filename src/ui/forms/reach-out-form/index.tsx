@@ -21,7 +21,7 @@ export const ReachOutForm = component$((props: ReachOutFormProps) => {
 
   return (
     <Modal bind:show={props['bind:show']}>
-      <h2 class="mb-6 sm:mb-8 mt-10 text-xl sm:text-3xl font-bold max-w-[480px] leading-relaxed">
+      <h2 class="mb-6 sm:mb-8 mt-6 sm:mt-8 text-xl sm:text-3xl font-bold max-w-[480px] leading-relaxed">
         Need help with anything? Get in touch
       </h2>
       <ReachOutFormLogic
