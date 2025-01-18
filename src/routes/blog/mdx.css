@@ -1,3 +1,5 @@
+@reference "../../global.css";
+
 /* Typography */
 
 .mdx h1 {
@@ -15,7 +17,7 @@
 }
 
 .mdx p, .mdx li {
-  @apply text-text-subtle leading-7;
+  @apply leading-7;
 }
 
 /* Spacing */
@@ -55,8 +57,9 @@
   padding-left: 0; /* Optional: remove padding if you don't want indentation */
 }
 
-.mdx > p > code {
-  @apply font-mono bg-bg-subtle rounded-sm px-1 shadow-sm;
+.mdx code {
+  @apply font-mono bg-bgr-subtle rounded-sm px-1 shadow-sm;
+  line-height: 1.59 !important;
 }
 
 /* Icon link on titles */

@@ -1,5 +1,5 @@
-import { twMerge } from 'tailwind-merge';
 import { match } from 'ts-pattern';
+import { cn } from '~/utils/cn';
 
 import styles from './Tooltip.module.css';
 import type { JSXChildren } from '@builder.io/qwik';
@@ -15,11 +15,11 @@ export type TooltipProps = {
 
 // TODO: remove tailwind styles
 export const Tooltip = (props: TooltipProps) => (
-  <div class={twMerge('relative w-fit h-fit', styles.TooltipContainer, props.classes?.root)}>
+  <div class={cn('relative w-fit h-fit', styles.TooltipContainer, props.classes?.root)}>
     {!props.hidden && (
       <div
-        class={twMerge(
-          'absolute px-2 py-0.5 transition-opacity delay-200 duration-500 opacity-0 rounded bg-base-black text-base-white pointer-events-none',
+        class={cn(
+          'absolute px-2 py-0.5 transition-opacity delay-200 duration-500 opacity-0 rounded-sm bg-base-black text-base-white pointer-events-none',
 
           match(props.position ?? 'right')
             .with('right', () => 'left-full top-1/2 -translate-y-1/2')
@@ -28,7 +28,7 @@ export const Tooltip = (props: TooltipProps) => (
           styles.Tooltip,
         )}
       >
-        <div class={twMerge('text-xs tracking-wide font-medium w-max', props.classes?.tooltip)}>
+        <div class={cn('text-xs tracking-wide font-medium w-max', props.classes?.tooltip)}>
           {props.info}
         </div>
       </div>

@@ -1,5 +1,5 @@
 import { useId, component$, useSignal, useVisibleTask$ } from '@builder.io/qwik';
-import { twMerge } from 'tailwind-merge';
+import { cn } from '~/utils/cn';
 import type { HTMLAttributes } from '@builder.io/qwik';
 
 type SelectOptionProps = {
@@ -29,8 +29,8 @@ export const SelectOption = component$((props: SelectOptionProps) => {
       aria-labelledby={`radix-:${id}:`}
       aria-selected={props.selected}
       tabIndex={0}
-      class={twMerge(
-        'flex w-full cursor-pointer select-none items-center rounded-sm py-1.5 pl-2 pr-8 text-sm outline-none focus:bg-subtler data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
+      class={cn(
+        'flex w-full select-none items-center rounded-xs py-1.5 pl-2 pr-8 text-sm outline-hidden focus:bg-subtler data-disabled:pointer-events-none data-disabled:opacity-50',
         props.selected && 'select-selected-option',
       )}
       data-radix-collection-item=""

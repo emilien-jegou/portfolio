@@ -1,5 +1,5 @@
 import { component$, useId } from '@builder.io/qwik';
-import { twMerge } from 'tailwind-merge';
+import { cn } from '~/utils/cn';
 import type { PropFunction, QwikFocusEvent } from '@builder.io/qwik';
 import type { FieldElement } from '@modular-forms/qwik';
 
@@ -36,10 +36,10 @@ export const Input = component$(
         onBlur$={(...args) => {
           onBlur$?.(...args);
         }}
-        class={twMerge(
+        class={cn(
           'field border transition-outline rounded-md p-2 w-full focus-visible:field-focused',
           disabled &&
-            'cursor-not-allowed shadow-sm outline-0 border-transparent bg-subtle text-subtle',
+            'cursor-not-allowed shadow-xs outline-0 border-transparent bg-subtle text-subtle',
           error && 'border-error',
           className,
         )}

@@ -22,7 +22,7 @@ export const BlogImage = component$((props: BlogImageProps) => {
         }}
       >
         <img class="border rounded-md" {...props} />
-        <button class="absolute cursor-pointer bottom-2 right-2 p-1 rounded-sm bg-[#000]/20 hover:bg-[#000]/40">
+        <button class="absolute bottom-2 right-2 p-1 rounded-xs bg-[#000]/20 hover:bg-[#000]/40">
           <ArrowExpandIcon class="text-white" />
         </button>
       </div>
