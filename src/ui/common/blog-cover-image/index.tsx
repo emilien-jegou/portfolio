@@ -7,7 +7,7 @@ type BlogCoverImageProps = {
 export const BlogCoverImage = (props: BlogCoverImageProps) => (
   <img
     alt="article cover"
-    class="block w-full rounded-lg mt-6 shadow-sm h-[160px] object-cover"
+    class="block w-full rounded-lg mt-6 shadow-xs h-[160px] object-cover"
     src={props.src}
     width={props.width}
     height={props.height}

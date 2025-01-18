@@ -1,4 +1,4 @@
-import { JSXChildren } from "@builder.io/qwik";
+import type { JSXChildren } from '@builder.io/qwik';
 
 import './styles.css';
 
@@ -26,12 +26,9 @@ const HeaderDesc = (props: HeaderDescProps) => (
       <div class="font-bold w-px left-[100%] absolute shrink-0 top-0 h-[110%] border-l-[0.5px] border-[#C3C3BA]" />
       {props.label}
     </div>
-    <div>
-      {props.content}
-    </div>
+    <div>{props.content}</div>
   </div>
 );
-
 
 type WorkExperienceProps = {
   jobTitle: string;
@@ -40,10 +37,9 @@ type WorkExperienceProps = {
   from: string;
   to: string;
   length: string;
-  skills: string[],
-  bullets: string[],
+  skills: string[];
+  bullets: string[];
 };
-
 
 type SchoolEducationProps = {
   school: string;
@@ -56,7 +52,9 @@ type SchoolEducationProps = {
 export const SchoolEducation = (props: SchoolEducationProps) => (
   <div class="w-full text-sm">
     <div class="w-full flex items-center justify-between">
-      <h3 class="font-semibold">{props.school} - {props.location}</h3>
+      <h3 class="font-semibold">
+        {props.school} - {props.location}
+      </h3>
       <p class="text-gray-600 text-xs">
         {props.from} - {props.to}
       </p>
@@ -68,7 +66,7 @@ export const SchoolEducation = (props: SchoolEducationProps) => (
 type AboutMeProps = {
   label: string;
   desc: string;
-}
+};
 export const AboutMe = (props: AboutMeProps) => (
   <div class="text-sm">
     <h3 class="font-semibold">{props.label}</h3>
@@ -79,22 +77,37 @@ export const AboutMe = (props: AboutMeProps) => (
 export const WorkExperience = (props: WorkExperienceProps) => (
   <div class="w-full text-sm">
     <div class="w-full flex items-center justify-between">
-      <h3 class="font-semibold">{props.jobTitle}, {props.companyLink ? <a href={props.companyLink} class="underline">{props.company}</a> : <span>{props.company}</span>}</h3>
+      <h3 class="font-semibold">
+        {props.jobTitle},{' '}
+        {props.companyLink ? (
+          <a href={props.companyLink} class="underline">
+            {props.company}
+          </a>
+        ) : (
+          <span>{props.company}</span>
+        )}
+      </h3>
       <p class="text-gray-600 text-xs">
         {props.from} - {props.to} ({props.length})
       </p>
     </div>
     <div class="w-full gap-[6px] flex mt-2">
-      {props.skills.map(skill => <div class="text-xs rounded-full bg-gray-200 text-gray-700 font-medium px-2">{skill}</div>)}
+      {props.skills.map((skill, idx) => (
+        <div key={idx} class="text-xs rounded-full bg-gray-200 text-gray-700 font-medium px-2">
+          {skill}
+        </div>
+      ))}
     </div>
     <div class="w-full flex flex-col gap-1 mt-2">
-      {props.bullets.map((bullet) => <div class="flex gap-2">
-        <div class="text-md">•</div>
-        <p>{bullet}</p>
-      </div>)}
+      {props.bullets.map((bullet, idx) => (
+        <div key={idx} class="flex gap-2">
+          <div class="text-md">•</div>
+          <p>{bullet}</p>
+        </div>
+      ))}
     </div>
   </div>
-)
+);
 
 type SnippetProps = {
   label: string;
@@ -104,7 +117,9 @@ type SnippetProps = {
 };
 export const Snippet = (props: SnippetProps) => (
   <div class="w-full text-sm">
-    <p class="font-bold">{props.label} - <a href={props.link}>{props.linkLabel}</a></p>
+    <p class="font-bold">
+      {props.label} - <a href={props.link}>{props.linkLabel}</a>
+    </p>
     <p class="mt-[1px]">{props.desc}</p>
   </div>
 );
@@ -116,7 +131,11 @@ export default () => {
         <h1 class="text-xl font-bold">Emilien Jegou</h1>
         <div class="mt-4 flex gap-4">
           <HeaderCategory icon={<>i</>} label="emilien@emje.dev" href="mailto:emilien@emje.dev" />
-          <HeaderCategory icon={<>i</>} label="LinkedIn" href="https://www.linkedin.com/in/emilien-jegou/" />
+          <HeaderCategory
+            icon={<>i</>}
+            label="LinkedIn"
+            href="https://www.linkedin.com/in/emilien-jegou/"
+          />
           <HeaderCategory icon={<>i</>} label="Blog" href="https://emje.dev/" />
           <HeaderCategory icon={<>i</>} label="GitHub" href="https://github.com/emilien-jegou" />
         </div>
@@ -124,7 +143,10 @@ export default () => {
         <div class="mt-4 flex flex-col bg-default rounded-2xl px-6 py-4">
           <HeaderDesc label="Current role" content="Full Stack Developer" />
           <HeaderDesc label="Experience" content="B2C, B2B" />
-          <HeaderDesc label="Technologies" content="TypeScript, Redis, Postgres, Rust, RabbitMQ, Grafana, Sentry, Next.js, Laravel, Mixpanel, React, Kubernetes, Node.js, Azure, WebSocket" />
+          <HeaderDesc
+            label="Technologies"
+            content="TypeScript, Redis, Postgres, Rust, RabbitMQ, Grafana, Sentry, Next.js, Laravel, Mixpanel, React, Kubernetes, Node.js, Azure, WebSocket"
+          />
         </div>
       </div>
       <div class="mt-8 mx-12">
@@ -136,15 +158,24 @@ export default () => {
             companyLink="https://emje.dev"
             from="Sep 2023"
             to="Present"
-            length="9m"
-            skills={['TypeScript', 'Redis', 'Postgres', 'Rust', 'RabbitMQ', 'Grafana']}
+            length="10m"
+            skills={[
+              'Rust',
+              'TypeScript',
+              'Redis',
+              'Postgres',
+              'RabbitMQ',
+              'Grafana',
+              'Terraform',
+              'Nomad',
+            ]}
             bullets={[
               'Designed and developped an open-source time-tracker application for desktop and android, meant for project management and productivity tracking. The product includes a distributed storage library over Git to allow automatic and conflict-free data replication across devices, allowing seamless synchronization.',
               'Development of a cloud platform for web scraping tailored for developers, built using a service oriented architecture with rabbitmq and redis for cross service communication.',
             ]}
           />
           <WorkExperience
-            jobTitle="Full Stack Developer"
+            jobTitle="Senior Full Stack Developer"
             company="Housemates"
             companyLink="https://housemates.io"
             from="Nov 2022"
@@ -156,7 +187,7 @@ export default () => {
               'Collaborated with the designer to redesign the marketplace and created the B2C marketing site from scratch',
               'Enhanced Marketplace and B2B capabilities by implementing features such as internationalization, Property Management system integrations, property listings, and back-office improvements.',
               'Implemented data-driven solutions to improve user experience, including A/B testing, user behavior monitoring, GDPR-compliant cookie banner, and insights into user behaviors.',
-              'Boosted SEO efforts by addressing indexing issues, improving rankings, and increasing Lighthouse performance scores by an average of 40% on both mobile and desktop platforms.'
+              'Boosted SEO efforts by addressing indexing issues, improving rankings, and increasing Lighthouse performance scores by an average of 40% on both mobile and desktop platforms.',
             ]}
           />
           <WorkExperience
@@ -166,7 +197,16 @@ export default () => {
             from="Apr 2021"
             to="Nov 2022"
             length="1y 7m"
-            skills={['React', 'Kubernetes', 'TypeScript', 'Node.js', 'Postgres', 'Sentry', 'Azure', 'Grafana']}
+            skills={[
+              'React',
+              'Kubernetes',
+              'TypeScript',
+              'Node.js',
+              'Postgres',
+              'Sentry',
+              'Azure',
+              'Grafana',
+            ]}
             bullets={[
               `Developed a web platform from scratch for car park teleoperation, utilizing React and Nodejs, and initiated its integration across Indigo's French car park network, encompassing 600 locations; the platform is now being deployed and used internationally`,
               'Coordinated with managers for quality assurance, technical requirement, user experience, and charge estimates. Gave explicit design of features in Figma and integrate them perfectly in code.',
@@ -230,9 +270,13 @@ export default () => {
         </div>
         <h2 class="mt-8 text-xl font-bold mb-4"> More about me </h2>
         <div class="flex w-full gap-6">
-          <AboutMe label="Interests" desc="Cooking, travelling, nutrition, hiking, watching series" />
+          <AboutMe
+            label="Interests"
+            desc="Cooking, travelling, nutrition, hiking, watching series"
+          />
           <AboutMe label="Languages" desc="English (professional), French (native)" />
         </div>
       </div>
-    </div>);
-}
+    </div>
+  );
+};

@@ -1,5 +1,5 @@
 import { component$ } from '@builder.io/qwik';
-import { twMerge } from 'tailwind-merge';
+import { cn } from '~/utils/cn';
 import { Label } from '../label';
 import { Textarea } from '../textarea';
 import type { TextareaProps } from '../textarea';
@@ -19,8 +19,8 @@ export const TextareaField = component$(
   ({ classes, info, label, required, error, helperText, ...props }: TextareaFieldProps) => (
     <div class={classes?.root}>
       <Label info={info} classes={{ root: 'mb-2' }} text={label} required={required} />
-      <Textarea error={Boolean(error)} class={twMerge('w-full', classes?.input)} {...props} />
-      <p class={twMerge('mt-1 text-xs text-subtler select-none', error && 'text-error')}>
+      <Textarea error={Boolean(error)} class={cn('w-full', classes?.input)} {...props} />
+      <p class={cn('mt-1 text-xs text-subtler select-none', error && 'text-error')}>
         {error || helperText}&nbsp;
       </p>
     </div>

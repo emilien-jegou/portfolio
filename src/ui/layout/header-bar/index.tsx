@@ -1,10 +1,9 @@
-import { ExternalLink } from '~/ui/common/external-link';
 import { ThemeSwitcherButton } from '~/ui/common/theme-switcher-button';
+import { cn } from '~/utils/cn';
 
-export const HeaderBar = () => (
-  <header class="absolute flex gap-4 right-4 top-4 h-[24px]">
-    <ExternalLink href="https://emje.dev/rss.xml" label="RSS" disableIcon />
-    <ExternalLink href="https://github.com/emilien-jegou" label="Github" />
+type HeaderBarProps = { class?: string };
+export const HeaderBar = (props: HeaderBarProps) => (
+  <header class={cn('absolute z-40 flex gap-4 right-4 top-4 h-[24px]', props.class)}>
     <ThemeSwitcherButton />
   </header>
 );

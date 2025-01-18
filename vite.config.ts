@@ -10,28 +10,28 @@ import MarkdownParserPlugin from './utils/vite-plugin-qwik-markdown-parser';
 export default defineConfig((): UserConfig => {
   return {
     plugins: [
-        MarkdownParserPlugin({
-          contentDirectory: './src/routes/blog',
-          jsonOutputPath: './src/generated/blog-data.json',
-          parse: (data) => data.data,
-        }),
-        qwikCity({
-          mdxPlugins: {
-              rehypeSyntaxHighlight: true,
-              remarkGfm: true,
-              rehypeAutolinkHeadings: true,
-          },
-          mdx: {
-            rehypePlugins: [
-              // Plugins can now be added manually to use a different configuration
-              [rehypeAutolinkHeadings, { behavior: 'wrap' }],
-            ],
-          },
-        }),
-        qwikVite(),
-        qwikPwa({}),
-        svgx(),
-        tsconfigPaths()
+      MarkdownParserPlugin({
+        contentDirectory: './src/routes/blog',
+        jsonOutputPath: './src/generated/blog-data.json',
+        parse: (data) => data.data,
+      }),
+      qwikCity({
+        mdxPlugins: {
+          rehypeSyntaxHighlight: true,
+          remarkGfm: true,
+          rehypeAutolinkHeadings: true,
+        },
+        mdx: {
+          rehypePlugins: [
+            // Plugins can now be added manually to use a different configuration
+            [rehypeAutolinkHeadings, { behavior: 'wrap' }],
+          ],
+        },
+      }),
+      qwikVite(),
+      qwikPwa({}),
+      svgx(),
+      tsconfigPaths()
     ],
     server: {
       headers: {

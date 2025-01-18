@@ -1,5 +1,5 @@
 import { component$ } from '@builder.io/qwik';
-import { twMerge } from 'tailwind-merge';
+import { cn } from '~/utils/cn';
 import { Label } from '../label';
 import { Select } from '../select';
 import type { SelectProps } from '../select';
@@ -20,8 +20,8 @@ export const SelectField = component$(
   ({ classes, info, label, required, error, helperText, ...props }: SelectFieldProps) => (
     <div class={classes?.root}>
       <Label info={info} classes={{ root: 'mb-2' }} text={label} required={required} />
-      <Select error={Boolean(error)} class={twMerge('w-full', classes?.select)} {...props} />
-      <p class={twMerge('mt-1 text-xs text-subtler select-none', error && 'text-error')}>
+      <Select error={Boolean(error)} class={cn('w-full', classes?.select)} {...props} />
+      <p class={cn('mt-1 text-xs text-subtler select-none', error && 'text-error')}>
         {error || helperText}&nbsp;
       </p>
     </div>

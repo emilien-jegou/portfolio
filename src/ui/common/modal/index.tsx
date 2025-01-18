@@ -1,6 +1,6 @@
 import { component$, Slot } from '@builder.io/qwik';
 import { Modal as HModal, ModalContent } from '@qwik-ui/headless';
-import { twMerge } from 'tailwind-merge';
+import { cn } from '~/utils/cn';
 import type { ModalProps as HModalProps } from '@qwik-ui/headless';
 
 import './styles.css';
@@ -12,10 +12,10 @@ type ModalProps = {
 export const Modal = component$((props: ModalProps) => (
   <HModal
     {...props}
-    class={twMerge(
+    class={cn(
       'modal-animation bg-transparent',
       !props.disableBackground &&
-        'bg-default w-full max-w-lg border bg-background p-6 shadow-lg sm:rounded-lg sm:max-w-[640px]',
+        'bg-default left-1/2 top-[32px] lg:top-[64px] -translate-x-1/2 w-full border p-6 shadow-lg sm:rounded-lg sm:max-w-[640px]',
     )}
   >
     <ModalContent>

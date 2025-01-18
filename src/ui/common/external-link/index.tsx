@@ -1,5 +1,5 @@
-import { twMerge } from 'tailwind-merge';
 import { ExternalLinkIcon } from '~/ui/icons/external-link';
+import { cn } from '~/utils/cn';
 import type { JSXChildren } from '@builder.io/qwik';
 
 export type HttpsLink = `https://${string}`;
@@ -16,7 +16,7 @@ export const ExternalLink = (props: ExternalLinkProps) => (
   <a
     href={props.href}
     style={props.style}
-    class={twMerge('flex text-default items-center font-semibold text-sm', props.class)}
+    class={cn('flex text-default items-center font-semibold text-sm', props.class)}
     rel={['nofollow', 'noopener', 'external', props.noreferrer && 'noreferrer']
       .filter(Boolean)
       .join(' ')}
@@ -33,7 +33,7 @@ export const ExternalLinkInline = (props: ExternalLinkProps) => (
   <a
     href={props.href}
     style={props.style}
-    class={twMerge('inline-block text-medium text-link hover:underline items-center', props.class)}
+    class={cn('inline-block text-medium text-link hover:underline items-center', props.class)}
     rel={['nofollow', 'noopener', 'external', props.noreferrer && 'noreferrer']
       .filter(Boolean)
       .join(' ')}

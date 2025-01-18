@@ -23,7 +23,7 @@ const getTestRawStorage = (): RawStorage & { store: Partial<Record<string, strin
 describe.concurrent('safeStorage', () => {
   test('get an empty element', () => {
     const rawStorage = getTestRawStorage();
-    const storage = safeStorage('test', rawStorage);
+    const storage = safeStorage('test', () => rawStorage);
 
     const result = storage.get();
 
@@ -33,7 +33,7 @@ describe.concurrent('safeStorage', () => {
   test('get a non empty element', () => {
     const rawStorage = getTestRawStorage();
     rawStorage.store['test'] = '{ "a": 32 }';
-    const storage = safeStorage('test', rawStorage);
+    const storage = safeStorage('test', () => rawStorage);
 
     const result = storage.get();
 
@@ -43,7 +43,7 @@ describe.concurrent('safeStorage', () => {
   test('get a non parseable element', () => {
     const rawStorage = getTestRawStorage();
     rawStorage.store['test'] = '{';
-    const storage = safeStorage('test', rawStorage);
+    const storage = safeStorage('test', () => rawStorage);
 
     const result = storage.get();
 
@@ -52,7 +52,7 @@ describe.concurrent('safeStorage', () => {
 
   test('setting an element', () => {
     const rawStorage = getTestRawStorage();
-    const storage = safeStorage('test', rawStorage);
+    const storage = safeStorage('test', () => rawStorage);
 
     const result = storage.set({ a: 32 });
 
@@ -62,7 +62,7 @@ describe.concurrent('safeStorage', () => {
 
   test('setting an erroneous object', () => {
     const rawStorage = getTestRawStorage();
-    const storage = safeStorage('test', rawStorage);
+    const storage = safeStorage('test', () => rawStorage);
 
     // Creating a recursive object (can't be stringified)
     const recursiveObject: any = { b: 32 };
@@ -77,7 +77,7 @@ describe.concurrent('safeStorage', () => {
   test('removing an element', () => {
     const rawStorage = getTestRawStorage();
     rawStorage.store['test'] = '{"a":42}';
-    const storage = safeStorage('test', rawStorage);
+    const storage = safeStorage('test', () => rawStorage);
 
     const result = storage.remove();
 
@@ -87,7 +87,7 @@ describe.concurrent('safeStorage', () => {
 
   test('removing an empty element', () => {
     const rawStorage = getTestRawStorage();
-    const storage = safeStorage('test', rawStorage);
+    const storage = safeStorage('test', () => rawStorage);
 
     const result = storage.remove();
 

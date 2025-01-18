@@ -1,12 +1,13 @@
 import type { JSXChildren } from '@builder.io/qwik';
 
-type IconSize = 'sm' | 'md' | 'lg';
+type IconSize = 'sm' | 'md' | 'lg' | 'xl';
 
 const getIconSizePx = (size: IconSize) =>
   ({
     sm: '12px',
     md: '16px',
     lg: '18px',
+    xl: '20px',
   })[size];
 
 export type IconProps = {

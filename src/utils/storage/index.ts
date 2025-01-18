@@ -32,8 +32,12 @@ const rawCookieStorage = (): RawStorage => ({
   },
 });
 
-export const safeStorage = <T>(storageKey: string, rawStorage: RawStorage): Storage<T> => ({
+export const safeStorage = <T>(
+  storageKey: string,
+  getRawStorage: () => RawStorage,
+): Storage<T> => ({
   get() {
+    const rawStorage = getRawStorage();
     return pipe(
       failable(() => fromNullable(rawStorage.getItem(storageKey) as string | null)),
       unwrap_or(none()),
@@ -41,6 +45,7 @@ export const safeStorage = <T>(storageKey: string, rawStorage: RawStorage): Stor
     );
   },
   set(value: T) {
+    const rawStorage = getRawStorage();
     return pipe(
       value,
       safeJsonStringify,
@@ -48,6 +53,7 @@ export const safeStorage = <T>(storageKey: string, rawStorage: RawStorage): Stor
     );
   },
   remove() {
+    const rawStorage = getRawStorage();
     return failable(() => void rawStorage.removeItem(storageKey));
   },
 });
@@ -56,8 +62,8 @@ export const getStorage = <T>(storageType: StorageType, storageKey: string): Sto
   safeStorage<T>(
     storageKey,
     match(storageType)
-      .with('local', () => window.localStorage)
-      .with('session', () => window.sessionStorage)
-      .with('cookie', rawCookieStorage)
+      .with('local', () => () => window.localStorage)
+      .with('session', () => () => window.sessionStorage)
+      .with('cookie', () => rawCookieStorage)
       .exhaustive(),
   );

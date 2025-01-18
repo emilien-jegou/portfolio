@@ -1,5 +1,42 @@
 /**** DM Sans ****/
 
+/*@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  src:
+    url('/fonts/dm-sans/DMSans-VariableFont_opsz,wght.woff2') format('woff2'),
+    url('/fonts/dm-sans/DMSans-VariableFont_opsz,wght.woff') format('woff');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'DM Sans';
+  font-style: italic;
+  src:
+    url('/fonts/dm-sans/DMSans-Italic-VariableFont_opsz,wght.woff2') format('woff2'),
+    url('/fonts/dm-sans/DMSans-Italic-VariableFont_opsz,wght.woff') format('woff');
+  font-display: swap;
+}
+*/
+
+@font-face {
+  font-family: 'FiraCode';
+  font-style: normal;
+  src:
+    url('/fonts/FiraCode-VariableFont_wght.woff') format('woff'),
+    url('/fonts/FiraCode-VariableFont_wght.woff2') format('woff2');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Jersey';
+  font-style: normal;
+  src:
+    url('/fonts/Jersey25-Regular.woff') format('woff'),
+    url('/fonts/Jersey25-Regular.woff2') format('woff2');
+  font-display: swap;
+}
+
 @font-face {
   font-family: 'DM Sans';
   font-style: normal;

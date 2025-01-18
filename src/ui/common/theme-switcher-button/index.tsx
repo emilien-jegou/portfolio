@@ -21,12 +21,12 @@ export const ThemeSwitcherButton = component$(() => {
   return (
     <>
       <button
-        class="p-1 rounded-full hover:bg-subtle w-[24px]"
+        class="z-40 rounded-full bg-default border border-subtle hover:bg-subtle h-[40px] w-[40px] flex items-center justify-center"
         type="button"
         onClick$={() => colorMode.set(currentColorMode.value === 'dark' ? 'light' : 'dark')}
       >
-        {currentColorMode.value === 'dark' && <WheatherMoonIcon />}
-        {currentColorMode.value === 'light' && <WheatherSunnyIcon />}
+        {currentColorMode.value === 'dark' && <WheatherMoonIcon size="xl" />}
+        {currentColorMode.value === 'light' && <WheatherSunnyIcon size="xl" />}
       </button>
     </>
   );

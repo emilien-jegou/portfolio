@@ -1,5 +1,5 @@
 import { $, component$, useId, useSignal, useVisibleTask$ } from '@builder.io/qwik';
-import { twMerge } from 'tailwind-merge';
+import { cn } from '~/utils/cn';
 import type { PropFunction, QwikFocusEvent } from '@builder.io/qwik';
 import type { FieldElement } from '@modular-forms/qwik';
 
@@ -81,12 +81,12 @@ export const Textarea = component$(
         style={{
           transition: 'height 0.1s ease',
         }}
-        class={twMerge(
-          'field relative rounded-md border text-sm leading-none shadow-xs cursor-text',
+        class={cn(
+          'field relative rounded-md border text-sm leading-none shadow-2xs cursor-text',
           error && 'border-error',
           focused.value && 'field-focused',
           disabled &&
-            'cursor-not-allowed shadow-sm outline-0 border-transparent bg-subtle text-subtle',
+            'cursor-not-allowed shadow-xs outline-0 border-transparent bg-subtle text-subtle',
           className,
         )}
       >
@@ -96,8 +96,8 @@ export const Textarea = component$(
           spellcheck={false}
           rows={props.rows}
           disabled={disabled}
-          class={twMerge(
-            'w-full block h-[39px] p-2.5 pt-3 pr-10 text-sm bg-transparent leading-tight focus:outline-none font-medium placeholder:font-normal text-text-default placeholder:text-text-subtle focus:placeholder:text-subtler resize-none overflow-y-hidden',
+          class={cn(
+            'w-full block h-[39px] p-2.5 pt-3 pr-10 text-sm bg-transparent leading-tight focus:outline-hidden font-medium placeholder:font-normal text-text-default placeholder:text-text-subtle focus:placeholder:text-subtler resize-none overflow-y-hidden',
             disabled && 'cursor-not-allowed',
           )}
           onFocus$={() => {

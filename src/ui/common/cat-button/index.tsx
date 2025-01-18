@@ -21,17 +21,18 @@ export const CatButton = component$(() => {
     <>
       <div
         ref={catArea}
-        class="z-[4000] pointer-events-none select-none fixed top-0 left-0 w-screen h-screen"
+        class="z-4000 pointer-events-none select-none fixed top-0 left-0 w-screen h-screen"
       />
       <Button
-        class="group overflow-hidden w-24"
+        class="group overflow-hidden bg-default w-24"
         variant="outline"
         onClick$={$(() => {
           launcher.value?.launchCat();
         })}
       >
         <img
-          width="48" height="48"
+          width="48"
+          height="48"
           class="transition-all w-auto mt-[10%] h-[90%] group-hover:mt-0 group-hover:h-[100%]"
           src={catImage}
         />
