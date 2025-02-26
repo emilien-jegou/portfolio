@@ -13,9 +13,7 @@ export const PageLayout = (props: PageLayoutProps) => (
       <AppIcon fg={{ r: 84, g: 3, b: 149 }} />
       <ThemeSwitcherButton />
     </div>
-    <div class="relative mx-auto custom-container px-4 sm:px-8 ">
-      <section class="mdx my-8 mb-32">{props.children}</section>
-    </div>
+    <section class="relative my-8 px-4 sm:px-8 ">{props.children}</section>
     <FooterBar />
   </div>
 );

@@ -2,13 +2,12 @@ import { $, Slot, component$, useSignal, useVisibleTask$ } from '@builder.io/qwi
 import { cn } from '~/utils/cn';
 import { BlogCodeHeader } from '../blog-code-header';
 import type { CodeViewType } from '../blog-code-header';
-import type { JSXChildren } from '@builder.io/qwik';
 
 import './styles.css';
 
 type BlogCodeProps = {
   language: string;
-  content: JSXChildren;
+  disableExpand?: boolean;
 };
 
 export const BlogCode = component$((props: BlogCodeProps) => {
@@ -38,6 +37,7 @@ export const BlogCode = component$((props: BlogCodeProps) => {
         onViewChange$={$((newViewType: CodeViewType): void => {
           viewType.value = newViewType;
         })}
+        disableExpand={props.disableExpand}
       />
       <div class="blog-code-container h-full">
         <Slot />
