@@ -2,6 +2,14 @@
 
 /* Typography */
 
+.mdx > * {
+  @apply custom-container mx-auto;
+}
+
+.mdx > .mdx-expand {
+  max-width: min(1280px, calc(100vw - 2rem));
+}
+
 .mdx h1 {
   @apply font-extrabold text-4xl;
 }
