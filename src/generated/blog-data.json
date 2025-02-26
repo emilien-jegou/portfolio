@@ -26,5 +26,14 @@
       "shareImageUrl": "/images/posts/github-discovery-jan-2024/share.svg",
       "createdAt": 1717777441000
     }
+  },
+  "you-dont-need-classes": {
+    "data": {
+      "title": "Without class; typescript side-by-side comparison",
+      "thumbnailUrl": "/images/posts/10-libraries-to-enhance-your-typescript-projects/thumbnail.png",
+      "description": "Discover a set of TypeScript libraries to enhance your productivity, reduce bugs and deepen your understanding of the language.",
+      "shareImageUrl": "/images/posts/10-libraries-to-enhance-your-typescript-projects/share.svg",
+      "createdAt": 1740537088000
+    }
   }
 }

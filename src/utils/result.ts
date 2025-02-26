@@ -28,6 +28,7 @@ export const failure = <E>(error: E): Failure<E> => {
 };
 
 // run code in a 'failable' context where thrown exception are converted to a result error
+// e.g. failable(() => {throw 'uncaught'; return 123})
 export const failable = <const T>(cb: () => T): Result<T, unknown> => {
   try {
     return success(cb());
@@ -36,6 +37,7 @@ export const failable = <const T>(cb: () => T): Result<T, unknown> => {
   }
 };
 
+// e.g. failableAsync(() => {throw 'uncaught'; return Promise.resolve(123)})
 export const failableAsync = async <const T>(cb: () => Promise<T>): Promise<Result<T, unknown>> => {
   try {
     return success(await cb());
@@ -45,6 +47,14 @@ export const failableAsync = async <const T>(cb: () => Promise<T>): Promise<Resu
 };
 
 // transform a throwable function into a function that return a result type
+//
+// e.g.:
+// const myFunction = (t: boolean): number => {
+//  if (t) { throw 'invalid' }
+//  else { return 123 }
+// }
+// const mySafeFunction = safeify(myFunction)
+// mySafeFunction(false) // Success<number>
 export const safeify = <const CB extends (...args: any) => any>(
   cb: CB,
 ): ((...args: Parameters<CB>) => Result<Prettify<ReturnType<CB>>, unknown>) => {
