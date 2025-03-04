@@ -16,7 +16,6 @@ import { BlogImage } from '~/ui/common/blog-image';
 import HaskellImage from './haskell.png?jsx';
 import GetterAndSetterImage from './getter-and-setter.png?jsx';
 
-
 Classes have been a part of programming since the early days of JavaScript. Initially, developers used functions to effectively represent classes, which was sufficient for the needs of JavaScript at the time. However, as the language evolved, developers began to ask for more features.
 
 The 2000s saw a significant influence of object-oriented programming, languages like PHP, C#, C++, and Java consolidated their presence, it was in this context that classes specific utilities were first introduced to javascript in 2009 through the ES6 (ECMAScript 6) proposal which was finalized as a standard in 2015.
@@ -49,7 +48,8 @@ class HelloMessage extends React.Component {
   constructor(props) {
     super(props);
     this.state = { name: 'Alice' };
-    this.handleClick = this.handleClick.bind(this);
+    // this was a pain to deal with:
+    this.handleClick = this.handleClick.bind(this); 
   }
   handleClick() {
     this.setState({ name: 'Bob' });
@@ -70,23 +70,23 @@ Since their "shinier" counterpart arrived, function classes have slowly faded aw
 
 ## "Your code doesn't allow X"
 
-A common criticism of class-based programming is its tendency toward over-engineering. Converting class-heavy code to more functional approaches frequently results in significant code reduction.
+A common criticism of class-based programming is its tendency toward over-engineering. Converting class-heavy code to more functional approaches frequently results in significant code reduction, in essence it is a much more minimal approach to programming.
 
 Developers who over-engineer solutions often do so anticipating future
 extensions or requirements, in OOP this tendency is prevalent and can only be
-explained by the highly codified practices practices developer have to follow
+explained by the highly codified practices developers have to follow
 (`SOLID`, `DRY`, design patterns and so on). Yet a more efficient approach
 would be implementing these hypothetical extensions only when genuinely
-required, through focused refactoring. This just-in-time development strategy
-keeps codebases cleaner, simpler, and more maintainable rather than cluttering
-them with speculative functionality e.g.:
+required, *through focused refactoring*.
+
+A "just-in-time" development strategy keeps codebases cleaner, simpler, and more maintainable rather than cluttering them with speculative functionality e.g.:
 - The benefit of the Open-closed principle is minimal on the code you control.
 - Dependency Inversion assume you define abstraction for code that may not need them.
 
 Those principles may have made sense when they were first introduced in the
-early 2000s but with the advent of LSP and types systems refactoring have never
+early 2000s but with the advent of LSP and types systems refactoring has never
 been made easier, in 2004 languages made extra effort to not have a type-system
-(think python, ruby, PHP) in that context any security guarantees in your code
+(think python, ruby, PHP), in that context any security guarantees in your code
 were extrapolated to extreme importance.
 
 <GetterAndSetterImage />
@@ -94,7 +94,7 @@ were extrapolated to extreme importance.
 
 > *why are you telling me this?*
 
-Well I wan't to be clear about my intent, I do not wish to offer 1 to 1 representation of javascript classes to their "functional" counterpart, instead I will simply reimagine the code from the OOP implementation through the lens of functional programming: or in other word, if I don't need to use it I won't code it.
+Well I wan't to be clear about my intent, I do not wish to offer 1 to 1 representation of javascript classes to their "functional" counterpart, instead I will simply reimagine the code from the OOP implementation through the lens of functional programming: or in other word, *if the code doesn't allow X it's because it does not need X right now.*
 
 ## Class functions
 
