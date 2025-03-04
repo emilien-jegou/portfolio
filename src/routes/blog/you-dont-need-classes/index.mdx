@@ -66,37 +66,45 @@ class HelloMessage extends React.Component {
 ```
 </SideBySideCode>
 
-Since their "shinier" counterpart arrived, function classes have slowly faded away, but should we really give them up entirely? This article is an opinionated excercise to provide a comparison between popular object-oriented patterns and libraries, and demonstrate what a class-less approach would look like in practice — enjoy!
+Since their "shinier" counterpart arrived, function classes have slowly faded away, and OOP practices have thrived to this day through libraries like Angular and Nest.js, but what does this new addition really bringed to the language? This article is an opinionated one that wish to give you a different perspective on OOP and programming in typescript in general, my wish is to give a more nuance take about what OOP is really giving you with the hope of broadening your horizon in a sort of article/tutorials kinda way. — enjoy!
 
 ## "Your code doesn't allow X"
 
-A common criticism of class-based programming is its tendency toward over-engineering. Converting class-heavy code to more functional approaches frequently results in significant code reduction, in essence it is a much more minimal approach to programming.
+A common criticism of class-based programming is its tendency toward
+over-engineering, in that regards, converting class-heavy code to more
+functional approaches frequently results in significant code reduction, I will credit two reasons for this: programming practices and an "architectural"-first mindset.
 
-Developers who over-engineer solutions often do so anticipating future
-extensions or requirements, in OOP this tendency is prevalent and can only be
-explained by the highly codified practices developers have to follow
-(`SOLID`, `DRY`, design patterns and so on). Yet a more efficient approach
-would be implementing these hypothetical extensions only when genuinely
-required, *through focused refactoring*.
+Over-engineering solutions often come from a place of anticipating future
+extensions or requirements, in OOP this tendancy could partly be explained by
+the highly codified practices developers have to follow (`SOLID`, `DRY`,
+design patterns and so on). While in isolation thoses rules may appears appealing, in combination they often lead to over-abstraction, on any single piece of code the question "*which of SOLID or DRY principles could this code benefit from*" would lead up to an answer.
 
-A "just-in-time" development strategy keeps codebases cleaner, simpler, and more maintainable rather than cluttering them with speculative functionality e.g.:
-- The benefit of the Open-closed principle is minimal on the code you control.
-- Dependency Inversion assume you define abstraction for code that may not need them.
-
-Those principles may have made sense when they were first introduced in the
-early 2000s but with the advent of LSP and types systems refactoring has never
-been made easier, in 2004 languages made extra effort to not have a type-system
-(think python, ruby, PHP), in that context any security guarantees in your code
-were extrapolated to extreme importance.
+The `Single Responsibility principles` is notable for leading developers to premature optimization, as abstractions can always be justified by the rule: my class does X and Y therefore it has two responsibility or two reason to exist. When it was created the rule didn't provide a "bad reason" for abstraction, this is obviously an issue as the benefit of abstraction are much more nuanced that the rule would let it believe, to give a parallel it would be like asking developers to drink more water as it's good for them, just for them to suffer from water intoxication, not so strangely developers are very good at seeing things in a binary approach.
 
 <GetterAndSetterImage />
-[Getter and setter offer the perfect case of premature optimizations](https://stackoverflow.com/questions/1568091/why-use-getters-and-setters-accessors)
+[Getter and setter, or an example of how programming concepts could lead to premature optimizations](https://stackoverflow.com/questions/1568091/why-use-getters-and-setters-accessors)
 
-> *why are you telling me this?*
+What you get from abstraction is isolation of changes, yet a more efficient approach would be implementing these hypothetical extensions only when genuinely required, *through focused refactoring*, or not be afraid of changes.
 
-Well I wan't to be clear about my intent, I do not wish to offer 1 to 1 representation of javascript classes to their "functional" counterpart, instead I will simply reimagine the code from the OOP implementation through the lens of functional programming: or in other word, *if the code doesn't allow X it's because it does not need X right now.*
+SOLID gained popularity in the early 2000s but with the advent
+of LSP and types systems refactoring has never been made easier, in 2004
+languages made extra effort to not have a type-system (think python, ruby,
+PHP), in that context any security guarantees in your code were extrapolated
+to extreme importance. Without strong typing it becomes trivial for developers to breaks things, and things were broken all the time, and such we created a platform for code to be extended rather than modified, as such, things that already worked wouldn't have to be revisited, we would just build on top of them or forced extensibility accross most objects through diverse patterns.
 
-## Class functions
+A more pragmatic "only what I need" development strategy keeps codebases cleaner, simpler, and more maintainable rather than providing functionality based on speculative gains, for you to know what is speculative and what is not you will need to question the fundamentals, but do not fear refactoring.
+
+*why are you telling me this?* -- Well I wan't to be clear about my intent, in this article I will not provide a 1 to 1 representation of javascript classes to their "function" counterpart, instead I will simply reimagine the code from the OOP implementation through the lens of functional programming: or in other word, *if the code doesn't allow X it's because it does not need X right now*.
+
+For the same reason, when doing side-by-side in this article, I will not adhere to any strict coding rules on the object-oriented side, e.g. I will not mark all variable as privates to respect the Open-closed principle.
+
+# Demystifying classes
+
+To truly understand JavaScript's class syntax introduced in ES6, let's go back to pre-ES6 practices and examine what functional classes looks like in today's context. This exploration will illustrate what's happening under the hood when using the `class` keyword aswell as showcasing the flexibility of the typescript type system.
+
+### Bare function classes
+
+The side-by-side comparison below demonstrates two class-based implementation, one with the `class` keywords, and one through factory functions. I purposefully left inheritance out of this example as it will be showcased later on in this article.
 
 <SideBySideCode language="typescript">
 ```typescript
@@ -148,10 +156,9 @@ greeter.greetAndSave('Bob');
 
 const mockLogger = { log: jest.fn() };
 
-
-// We cast an object to a class here, typescript accepts it
-// but this can lead to issue down the line (e.g. instanceof
-// would return `Object` on mockDatabase instead of `SaveManager`)
+// We cast an object to a class here, this can lead to issue down
+// the line // (e.g. instanceof would return `Object` on
+// mockDatabase instead of `SaveManager`)
 const mockDatabase: Record<string, string> = {};
 const mockSaveManager = {
   save: jest.fn((message: string): string => {
@@ -176,6 +183,7 @@ expect(mockSaveManager.save).toHaveBeenCalledWith('Bob');
 // classes may sometimes be better suited as functions
 const myLogger = (message: string) => console.log(message);
 type MyLogger = typeof myLogger;
+
 
 
 
@@ -222,7 +230,6 @@ const mockLogger = jest.fn();
 
 
 
-
 // we won't face the instanceof issue on this side.
 const mockDatabase: Record<string, string> = {};
 const mockSaveManager = {
@@ -246,52 +253,33 @@ expect(mockSaveManager.save).toHaveBeenCalledWith('Bob');
 </SideBySideCode>
 
 
-## Inheritance, mixed results
+### Inheritance with functions classes
 
 The "composition over inheritance" principle seems widely accepted today, yet
 there may be cases where working with multiple levels of inheritance is the
 best option available, for instance (and unironically), if you are working on
 top of legacy systems modelled using inheritance. A notable example is the
-HTML/XML tree structure, where a hierarchical organization is inherent to the
-underlying data.
+HTML/XML tree structure.
 
-The Servo JavaScript engine, built entirely in Rust, encountered this
-challenge of modelling the html tree structure. As Rust does not support
-inheritance, the developers had to rely on complex macros to mitigate the
-overhead of modifying, resulting in significant code duplication ([see how
-methods and properties are copied over in the HtmlAnchorElement](https://github.com/servo/servo/blob/03e953e22c5cb8ce3d7d375f6f9e841da46ba6f3/components/script/dom/htmlanchorelement.rs#L40)).
+Going a bit off-track, but the Servo JavaScript engine, built entirely in Rust,
+encountered this challenge of modelling the HTML tree structure. As Rust does
+not support inheritance, the developers had to rely on complex macros to
+mitigate the overhead of modifying, resulting in significant code duplication
+([see how methods and properties are copied over in the
+HtmlAnchorElement](https://github.com/servo/servo/blob/03e953e22c5cb8ce3d7d375f6f9e841da46ba6f3/components/script/dom/htmlanchorelement.rs#L40)).
 
 Similarly, the Ladybird browser and JavaScript engine initially considered
 switching from C++ to Rust but eventually abandoned the idea due to the
 inheritance barrier, instead opting for Swift, an object oriented language.
 
-Luckily for you typescript is so flexible you may use inheritance without
-resorting to class tokens, not that I'd expect you to develop a javascript
-engine in javascript.
+Inheritance would have been possible in rust through complex use of function pointers, but it would have led to an immediate drawback: the type system would not have worked on that code. Yet in typescript, and even before class tokens where introduced we were able to replicate the inheritance behavior without losing any type information.
 
-For our experiment we will build a simple html inheritance chain, both code
-will use the following function for generating html:
-
-<BlogCode language="typescript">
-```typescript
-const buildHtmlTag = (
-    tagName: string,
-    attributes: Record<string, string>,
-    childHtml: string
-  ) =>
-  `<${tagName} ${Object.entries(attributes)
-    .map(([key, value]) => `${key}="${value}"`)
-    .join(' ')}> ${childHtml} </a>`;
-```
-</BlogCode>
-
-One of the challenge with dealing with inheritance is detecting whether a class
-extends from another or in other words the `instanceOf` function, technically.
-
-https://gist.github.com/emilien-jegou/4ce3e69fb0bcfc047274bda6535df408
+For our example we will build a simple html inheritance chain.
 
 <SideBySideCode language="typescript">
 ```typescript
+import { buildHtmlTag } from './utils';
+
 class Elem {
   public childrens: Elem[] = [];
   public attributes: Record<string, string> = {};
@@ -333,6 +321,10 @@ const elem = new DownloadLinkElem('localhost', 'file.pdf');
 console.log(elem.getHTML());
 ```
 ```typescript
+import { buildHtmlTag } from './utils';
+
+// in our case this method never get's overwritted, so we keep it
+// outside of the Elem type.
 const getHTML = (elem: Elem) => {
   const childHtml: string = elem.childrens.map(getHTML).join('');
   return buildHtmlTag(elem.tagName, elem.attributes, childHtml);
@@ -351,7 +343,6 @@ const createElem = (tagName: string): Elem => ({
 });
 
 type AnchorElem = Elem;
-
 const createAnchorElem = (href: string): AnchorElem => {
   const elem = createElem('a');
   elem.attributes['href'] = href;
@@ -375,12 +366,25 @@ console.log(getHTML(elem));
 ```
 </SideBySideCode>
 
+One of the challenge with dealing with inheritance is detecting whether a class extends from another or in other words the `instanceOf` function, it's a bit of an unelegant way to handle class polymorphism but there may be time where it's your only option. As such I also coded a version of this code that allow for this kind of dynamic cast through a cls utility, you can find [it in this gist](https://gist.github.com/emilien-jegou/4ce3e69fb0bcfc047274bda6535df408).
+
+# Part 2: The relation with functional programming
+
+Thirteen years ago Simon Peyton Jones, the creator of haskell, offered his perspective on programming language evolution, in his now infamous video called "[Haskell is useless](https://www.youtube.com/watch?v=iSmkqocn0oQ)". In it, he explained that languages accross the spectrum of paradigms are working together in order to improve, this sharing of knowledge is what allow for improvment in programming languages and what brings them closer.
+
+Functional programming principles have gained significant footing in the programming community in that aspect, Elixir and Rust both have a dedicated loving fanbase as "in between paradigms" languages, while concepts from FP languages like haskell sips into other languages, sometimes with different names, e.g. haskell `sum types` are available through `tagged unions` in typescript, while concepts like `function composition` reappears through `pipe` utilities.
+
+In my perspective, when it comes to OOP what's keeping it used is that people bought into the paradigm, if something work why changed it? well I am gonna try to give you a reason.
+
 ## Opening up interfaces
 
-So here we reach the point where you need to expose your code to the external
-world, how would you build up an interface that would allow users to extend it,
-without compromising on what you built so far?
+The [Open-closed principle](https://drive.google.com/file/d/0BwhCYaYDn8EgN2M5MTkwM2EtNWFkZC00ZTI3LWFjZTUtNTFhZGZiYmUzODc1/view?resourcekey=0-FsS837CGML599A_o5D-nAw) (the `O` from the `SOLID` acronym) does provide benefits for code exposed to external users, yet it should not be applied to every piece of your code — this omitted "detail" makes all the difference. The Open-closed principles leads to two things: overplanning and technical debt:
 
+The first can be explained by the fact that if your interface can never change, you must be sure to get it right on the first try, developers will over-focused on respecting the principle and planning ahead for modification rather than actually solving the problem at hand, and when the problem itself is not clear (as it's often the case) then all that planning could be spent meaningleslly. This is one of the longest standing critic of OOP by procedural developer, and one of the main reason C++, an object oriented language compatible with C, [was never allowed in the linux kernel by Linus Torvald](http://web.archive.org/web/20250218025308/https://harmful.cat-v.org/software/c++/linus).
+
+Second, the open-closed principles leads to technical debt, if your interface didn't fit your need, it advise layering on top of it, in my view, this is both bug inducing and a high source of technical debt, why layer on top of something you control in the first place? Programming is an itterative process, you will never get it right on the first try, **you need to refactor your code**.
+
+But there is one notable case where classes layering and the Open-closed principle could be applied: when exposing interfaces outside of your control. The following is an example to show how you could replicate class extension without resorting to them, note that there are many way to provide equivalent capabilities, this is just one of them:
 
 <SideBySideCode language="typescript">
 ```typescript
@@ -413,16 +417,28 @@ const square = new Square(8);
 
 console.log(`circle radius: ${circle.calcRadius()}`);
 console.log(`square radius: ${square.calcRadius()}`);
+
+// Here any third-party library could create a new class
+// based on Shape and use it interchangeably with the others
+class CustomShape extends Shape {
+  calcRadius(): number {
+    return 3;
+  }
+}
+
+const shape = new CustomShape();
+
+console.log(`custom shape radius: ${shape.calcRadius()}`);
 ```
 ```typescript
-import { exhaustive } from "exhaustive";
-
-type Circle = { kind: 'circle'; radius: number; }
-type Square = { kind: 'square'; sideLength: number; }
+import { exhaustive } from "exhaustive"; // a pattern-matching library
 
 // This type will fill the role of the abstract interface
 // it will only be used externally (e.g. as exported from a library),
 type AbstractShape = { kind: 'abstract'; calcRadius(): number; }
+
+type Circle = { kind: 'circle'; radius: number; }
+type Square = { kind: 'square'; sideLength: number; }
 
 type Shape = Circle | Square | AbstractShape;
 
@@ -445,10 +461,11 @@ console.log(`square radius: ${calcRadius(square)}`);
 const customShape = { kind: 'abstract', calcRadius: () => 3 };
 console.log(`custom shape radius: ${calcRadius(customShape)}`);
 
-// If the code above was "locked" for modification, you would have many way to
-// extend it, one non-trivial example would be extending the Shape class.
-// In OOP you would have to wrap and uses adapters to achieve this, in FP
-// you could do so through dymamic interfaces:
+// If the code above was "locked" for modification, you
+// would have many way to extend it, one non-trivial example
+// would be extending the Shape class. In OOP you would have
+// to wrap and uses adapters to achieve this, in FP you could
+// do so through template parameters:
 type Shape<C extends AbstractShape = AbstractShape> = Circle | Square | C;
 
 // ...
@@ -456,6 +473,9 @@ type Shape<C extends AbstractShape = AbstractShape> = Circle | Square | C;
 type CustomShape = AbstractShape & { calcArea(): number; };
 
 const calcArea = (shape: Shape<CustomShape>) => exhaustive.tag(shape, 'kind', {
+  // The responsibility falls on the developer to not misuse internals.
+  // Properties can often be marked as private through __ notation but they
+  // will remain accessible.
   square: (s) => s.sideLength * s.sideLength,
   circle: (c) => Math.PI * c.radius ** 2,
   abstract: (shape) => shape.calcArea(),
@@ -691,7 +711,8 @@ enum UserRole {
 class Profile {
   @IsString()
   // Here we are making the mistake of having the value marked as optional
-  // but it is not nullable in the type
+  // but it is not nullable in the type. Decorators fundamentally operates
+  // outside the type system.
   @IsOptional()
   @MinLength(3)
   bio!: string;
@@ -832,7 +853,10 @@ console.log(product); // "/hello/world"
 </SideBySideCode>
 
 
-## References
+## Ressources
 
 https://yiming.dev/blog/2022/07/10/how-let-it-fail-leads-to-simpler-code/
+https://prahladyeri.github.io/blog/2024/10/the-illusion-of-simplicity.html
 https://meanderingthoughts.hashnode.dev/programming-paradigms-limit-what-you-can-do-and-that-is-a-good-thing
+
+If you wan't to learn more I greatly advice [this article](https://dannorth.net/best-simple-system-for-now/) from Dan North, and his other ones.

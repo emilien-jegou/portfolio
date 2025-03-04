@@ -57,7 +57,7 @@
 }
 
 .mdx > ul {
-  @apply mt-5 ml-2 flex flex-col gap-1;
+  @apply mt-5 pl-2 flex flex-col gap-1;
 }
 
 .mdx > ul > li {
