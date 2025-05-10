@@ -1,0 +1,90 @@
+---
+data:
+  title: 'Building a gradient generator'
+  thumbnailUrl: '/images/posts/gradients/app1.png'
+  coverUrl: '/images/posts/gradients/app0.png'
+  description: 'I have been playing around with gradient generation recently, here is the result app'
+  shareImageUrl: '/images/posts/gradients/app1.png'
+  createdAt: 1746834416000
+---
+
+import { ExternalLinkInline } from '~/ui/common/external-link';
+import { BlogTags } from '~/ui/common/blog-tags';
+import { BlogGithubLink } from '~/ui/common/blog-link-with-icon';
+import { BlogSeparator } from '~/ui/common/blog-separator';
+import { BlogCode } from '~/ui/common/blog-code';
+import { BlogImage } from '~/ui/common/blog-image';
+
+
+Try it at <ExternalLinkInline href="https://gradients.emje.dev" label="gradients.emje.dev" /> (computer only)
+
+I was inspired by Affinity Designer's procedural texture generation to build my own procedural texture generator as a fun project. I think it turned out all right, so I am now making it public.
+
+What you can do with it:
+
+- Pan around with your mouse.
+- Modify the generation parameters (e.g., scale, noise ratio, distortion).
+- Modify the gradient (add and remove nodes with right/left click).
+- Set a custom gradient curve.
+- Regenerate the gradient (random seed).
+- Download the results (currently by right-clicking and selecting 'Save Image As...').
+
+Here is an example of its use for a hero gradient:
+<BlogImage alt="An example hero gradient" width={1000} height={700} src="/images/posts/gradients/branding.png" noBorder />
+
+## Development
+
+I developed it in full-on JavaScript; there's no framework involved. Since we need to calculate the value of each pixel on the screen based on a custom formula (a mix of S-Curve noise), we use a Rust Web Worker to compute the value of the gradient while JavaScript is still in charge of attributing the colors. This layout doubles the speed of generation of large gradients (from 900ms to around 400ms) but, more importantly, tremendously lowers the required memory use.
+
+To allow the user to pan around, I also set up grid partitioning and caching. You can see it in this video with debug enabled. This was also somewhat of a requirement since I needed to divide the work across the user's CPUs (although I could have used worker threads, but it's quite annoying to set up). Each square of the grid passes through a worker pool and is picked up by one of four workers. When the result is received back by the caller, it is saved to a basic memory cache of around 300 squares (screen-dependent).
+
+<video width="640" height="360" controls class="mt-8">
+  <source src="/images/posts/gradients/demo.webm" type="video/webm" />
+  Your browser does not support the webm video format.
+</video>
+
+## Base presets
+
+### Deep blue
+
+<BlogImage alt="Deep blue preset" width={1000} height={700} src="/images/posts/gradients/deep-blue.png" noBorder />
+
+
+### Cyber lamp
+
+<BlogImage alt="Cyber lamp preset" width={1000} height={700} src="/images/posts/gradients/cyber-lamp.png" noBorder />
+
+Inspired by the universe of cowboy bepop
+
+<BlogImage alt="cowboy bepop" width={1000} height={700} src="/images/posts/gradients/cowboy.jpg" noBorder />
+
+### Evangelion
+
+<BlogImage alt="evangelion preset" width={1000} height={700} src="/images/posts/gradients/evangelion.png" noBorder />
+
+Inspired by this poster of Neon Genesis Evangelion
+
+<BlogImage alt="poster" width={1000} height={700} src="/images/posts/gradients/evangelion-01.jpg" noBorder />
+
+### Blaze
+<BlogImage alt="Blaze preset" width={1000} height={700} src="/images/posts/gradients/blaze.png" noBorder />
+
+### Arhipelago
+
+<BlogImage alt="Archipelago preset" width={1000} height={700} src="/images/posts/gradients/archipelago.png" noBorder />
+
+### Alien
+<BlogImage alt="Alien preset" width={1000} height={700} src="/images/posts/gradients/alien.png" noBorder />
+
+Inspired by the universe of Alien
+
+<BlogImage alt="poster" width={1000} height={700} src="/images/posts/gradients/alien.jpg" noBorder />
+
+### H20
+<BlogImage alt="H20 preset" width={1000} height={700} src="/images/posts/gradients/h2o.png" noBorder />
+
+
+
+<hr />
+
+Again it's at <ExternalLinkInline href="https://gradients.emje.dev" label="gradients.emje.dev" />!
