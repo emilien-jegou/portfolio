@@ -26,7 +26,7 @@ const sortedArticles: Article[] = Object.entries(articles)
 const heroArticleIdx = sortedArticles.findIndex((a) => !!a.coverUrl);
 const heroArticle = sortedArticles[heroArticleIdx];
 
-//sortedArticles.splice(heroArticleIdx, 1);
+sortedArticles.splice(heroArticleIdx, 1);
 
 export default () => {
   return (
