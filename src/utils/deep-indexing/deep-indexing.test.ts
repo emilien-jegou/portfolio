@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
-import { getIndexedValue, setIndexedValue } from '.';
 import { none, some } from '../option';
+import { getIndexedValue, setIndexedValue } from '.';
 
 describe.concurrent('getIndexedValue', () => {
   test('retrieving a non indexed value', () => {

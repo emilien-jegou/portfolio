@@ -1,5 +1,5 @@
-import articles from '~/generated/blog-data.json';
 import type { RequestHandler } from '@builder.io/qwik-city';
+import articles from '~/generated/blog-data.json';
 
 type Article = {
   slug: string;

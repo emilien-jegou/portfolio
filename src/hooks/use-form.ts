@@ -1,5 +1,8 @@
 import { $, useStore, useSignal, useVisibleTask$ } from '@builder.io/qwik';
+import type { QRL, Signal } from '@builder.io/qwik';
+import type { FormErrors, PartialValues, ValidateForm } from '@modular-forms/qwik';
 import * as R from 'remeda';
+import type { DeepPartial } from 'ts-essentials';
 import {
   type GetKeysDeep,
   type GetValueDeep,
@@ -8,10 +11,13 @@ import {
 } from '~/utils/deep-indexing';
 import { chainSuccess } from '~/utils/result';
 import { safeJsonParse, safeJsonStringify } from '~/utils/safe-std';
-import { getStorage, type StorageType } from '~/utils/storage';
-import type { QRL, Signal } from '@builder.io/qwik';
-import type { FormErrors, PartialValues, ValidateForm } from '@modular-forms/qwik';
-import type { DeepPartial } from 'ts-essentials';
+import {
+  getStorage,
+  storageGet,
+  storageRemove,
+  storageSet,
+  type StorageType,
+} from '~/utils/storage';
 
 export type OnSuccess<FormValues> = QRL<(data: FormValues) => void>;
 
@@ -80,18 +86,17 @@ export const useForm = <FormValues extends Record<string, any>>(
     // load it into the given signal.
     if (!initialized.value) {
       initialized.value = true;
-      const current = formStorage.get();
+      const current = storageGet(formStorage);
       if (current.kind === 'none') return;
       const newKeys = new Set(Object.keys(current.value));
-      // eslint-disable-next-line qwik/valid-lexical-scope
+
       for (const key of Object.keys(fields)) {
         if (!newKeys.has(key as string)) {
-          // eslint-disable-next-line qwik/valid-lexical-scope
           delete (fields as any)[key];
         }
       }
 
-      for (const key of [...newKeys]) {
+      for (const key of newKeys) {
         fields[key as keyof DeepPartial<FormValues>] =
           current.value[key as keyof DeepPartial<FormValues>];
       }
@@ -102,12 +107,12 @@ export const useForm = <FormValues extends Record<string, any>>(
     // the new value.
     // TODO: use structuredClone
     //const data = structuredClone({ ...fields });
-    // eslint-disable-next-line qwik/valid-lexical-scope
+
     const data = R.pipe(safeJsonStringify(fields), chainSuccess(safeJsonParse));
     if (data.kind === 'success') {
       const value = data.value as any;
       persistenceOptions.ignoreKeys.forEach((key) => removeIndexedValue(value, key));
-      formStorage.set(value);
+      storageSet(formStorage, value);
     }
   });
 
@@ -118,7 +123,7 @@ export const useForm = <FormValues extends Record<string, any>>(
     if (submitted.value === false) return;
     // TODO: speed this up
     const res = await validate(fields as PartialValues<FormValues>);
-    hasError.value = Object.keys(res).length !== 0;
+    hasError.value = Object.keys(res).length > 0;
     const left = new Set(Object.keys(res));
     Object.keys(errors)
       .filter((k) => !left.has(k))
@@ -147,14 +152,14 @@ export const useForm = <FormValues extends Record<string, any>>(
     submitted.value = true;
     const res = await validate(fields as PartialValues<FormValues>);
 
-    hasError.value = Object.keys(res).length !== 0;
+    hasError.value = Object.keys(res).length > 0;
     if (!hasError.value) {
       await onSuccess$(fields as FormValues);
 
       // Clear the form storage on success
       if (persistFormValues) {
         const formStorage = await getFormStorage();
-        formStorage.remove();
+        storageRemove(formStorage);
       }
       return;
     }

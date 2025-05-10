@@ -1,6 +1,6 @@
 import { useComputed$ } from '@builder.io/qwik';
-import { useWindowSize } from './use-window-size';
 import type { Signal } from '@builder.io/qwik';
+import { useWindowSize } from './use-window-size';
 
 type Breakpoint = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
 
@@ -19,9 +19,8 @@ type BreakpointInput = `${Operation}${Breakpoint}`;
 export const useBreakpoint = (breakpoint: BreakpointInput): Signal<boolean | undefined> => {
   const size = useWindowSize();
 
-  // eslint-disable-next-line qwik/no-use-visible-task
   return useComputed$(() => {
-    if (size.value === undefined) return undefined;
+    if (size.value === undefined) return;
     if (breakpoint[0] === '>') {
       const key = breakpoint.slice(2) as Breakpoint;
       const minWidth = breakpoints[key];

@@ -2,13 +2,12 @@ import { $, Slot, component$, useSignal, useVisibleTask$ } from '@builder.io/qwi
 import { cn } from '~/utils/cn';
 import { BlogCodeHeader } from '../blog-code-header';
 import type { CodeViewType } from '../blog-code-header';
-import type { JSXChildren } from '@builder.io/qwik';
 
 import './styles.css';
 
 type BlogCodeProps = {
   language: string;
-  content: JSXChildren;
+  disableExpand?: boolean;
 };
 
 export const BlogCode = component$((props: BlogCodeProps) => {
@@ -27,10 +26,15 @@ export const BlogCode = component$((props: BlogCodeProps) => {
   return (
     <div
       class={cn(
-        viewType.value !== 'fullscreen' && 'mt-8 shadow-sm blog-code-rounding bg-[#191D24]',
-        viewType.value === 'expanded' && 'lg:w-[940px] shadow-xl lg:-translate-x-[140px]',
-        viewType.value === 'fullscreen' && 'fixed top-0 left-0 w-[100%] h-screen z-50',
+        'lg:transition-[width]',
+        viewType.value !== 'fullscreen' &&
+          'w-[640px]! mt-8 shadow-sm blog-code-rounding bg-[#191D24]',
+        viewType.value === 'expanded' && 'w-[940px]! shadow-xl',
+        viewType.value === 'fullscreen' && 'w-screen! fixed top-0 left-0 w-[100%] h-screen z-50',
       )}
+      style={{
+        maxWidth: '100% !important',
+      }}
     >
       <BlogCodeHeader
         language={props.language}
@@ -38,6 +42,7 @@ export const BlogCode = component$((props: BlogCodeProps) => {
         onViewChange$={$((newViewType: CodeViewType): void => {
           viewType.value = newViewType;
         })}
+        disableExpand={props.disableExpand}
       />
       <div class="blog-code-container h-full">
         <Slot />

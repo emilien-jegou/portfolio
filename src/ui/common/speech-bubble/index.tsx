@@ -1,6 +1,6 @@
 import { Slot, component$ } from '@builder.io/qwik';
-import { PixelGrid } from '../pixel-grid';
 import type { CSSProperties } from '@builder.io/qwik';
+import { PixelGrid } from '../pixel-grid';
 
 type SpeechBubbleProps = {
   class?: string;

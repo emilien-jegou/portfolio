@@ -1,6 +1,6 @@
 import { $ } from '@builder.io/qwik';
-import { colorModeLocalStorageKey } from '../providers/initial-color-mode-provider';
 import type { QRL } from '@builder.io/qwik';
+import { colorModeLocalStorageKey } from '../providers/initial-color-mode-provider';
 
 export type ColorMode = 'light' | 'dark';
 
@@ -19,7 +19,7 @@ export const useColorMode = (): UseColorModeRet => ({
     const observer = new MutationObserver((mutationsList) => {
       for (const mutation of mutationsList) {
         if (mutation.type === 'attributes' && mutation.attributeName === 'data-color-mode') {
-          cb(document.body.getAttribute('data-color-mode') as ColorMode);
+          cb(document.body.dataset.colorMode as ColorMode);
         }
       }
     });
@@ -31,5 +31,12 @@ export const useColorMode = (): UseColorModeRet => ({
   set: $((newColorMode: ColorMode) => {
     localStorage.setItem(colorModeLocalStorageKey, newColorMode);
     document.body.dataset['colorMode'] = newColorMode;
+    if (newColorMode === 'light') {
+      document.body.classList.add('theme-onwo-light');
+      document.body.classList.remove('theme-onwo-dark');
+    } else {
+      document.body.classList.add('theme-onwo-dark');
+      document.body.classList.remove('theme-onwo-light');
+    }
   }),
 });

@@ -26,7 +26,7 @@ const sortedArticles: Article[] = Object.entries(articles)
 const heroArticleIdx = sortedArticles.findIndex((a) => !!a.coverUrl);
 const heroArticle = sortedArticles[heroArticleIdx];
 
-//sortedArticles.splice(heroArticleIdx, 1);
+sortedArticles.splice(heroArticleIdx, 1);
 
 export default () => {
   return (
@@ -59,7 +59,7 @@ export default () => {
           <div class="relative">
             <Wave
               timeSec={30}
-              class="absolute pointer-events-none w-[400px] h-[470px] lg:w-[350px] lg:h-[400px] bg-radial mix-blend-darken dark:mix-blend-lighten from-transparent from-60%  to-[#bad9ff] dark:to-[blue]"
+              class="absolute pointer-events-none w-[400px] h-[470px] lg:w-[350px] lg:h-[400px] bg-radial mix-blend-darken dark:mix-blend-lighten from-transparent from-60% to-[#bad9ff] dark:to-[blue]"
             />
             <Wave
               timeSec={60}

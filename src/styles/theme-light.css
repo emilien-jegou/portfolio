@@ -1,0 +1,40 @@
+@plugin '@onwo/tailwindcss/dist/theme' {
+  name: 'onwo-light';
+
+  color-accent-accent: rgb(63, 43, 215);
+  color-border-line: rgb(230, 229, 244);
+
+  color-bg-paper: rgb(255, 255, 255);
+  color-bg-parchment: rgb(248, 248, 250);
+  color-bg-papyrus: rgb(242, 242, 248);
+
+  color-text-ink: rgb(2, 0, 40);
+  color-text-lead: rgb(99, 98, 137);
+  color-text-graphite: rgb(117, 116, 139);
+  color-text-contrast: rgb(252, 252, 255);
+
+  color-hint-stare: rgb(39, 125, 97);
+  color-hint-scan: rgba(12, 12, 33, 0.13);
+  color-hint-gaze: rgba(12, 12, 33, 0.56);
+
+  color-status-warn: #ffb319;
+  color-status-error: #ff4e64;
+  color-status-success: #49b356;
+}
+
+@utility light-theme {
+  /* Background */
+  --color-bgr-contrast: black;
+
+  /* Text */
+  --color-text-disabled: #c0c0c0;
+  --color-text-contrast: #ffffff;
+
+
+  /* Other */
+  --color-focused: rgb(87, 141, 255);
+  --color-focused-subtle: rgba(87, 141, 255, 0.2);
+  --color-error: #dc2626;
+  --color-success: #00a064;
+}
+

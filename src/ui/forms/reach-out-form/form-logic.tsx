@@ -1,4 +1,5 @@
 import { component$ } from '@builder.io/qwik';
+import type { PropFunction } from '@builder.io/qwik';
 import { z } from '@builder.io/qwik-city';
 import { zodForm$ } from '@modular-forms/qwik';
 import { useForm } from '~/hooks/use-form';
@@ -7,7 +8,6 @@ import { InputField } from '~/ui/common/input-field';
 import { SelectField } from '~/ui/common/select-field';
 import { TextareaField } from '~/ui/common/textarea-field';
 import { cn } from '~/utils/cn';
-import type { PropFunction } from '@builder.io/qwik';
 
 const loginFormSchema = z
   .object({

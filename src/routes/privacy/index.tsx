@@ -1,15 +1,16 @@
 import { $ } from '@builder.io/qwik';
+import type { DocumentHead } from '@builder.io/qwik-city';
 import { cookieBannerStorage } from '~/providers/cookie-banner-provider';
 import { Button } from '~/ui/common/button';
 import { ArrowLeftIcon } from '~/ui/icons/arrow-left';
 import { FooterBar } from '~/ui/layout/footer-bar';
 import { buildHead } from '~/utils/build-head';
-import type { DocumentHead } from '@builder.io/qwik-city';
+import { storageRemove } from '~/utils/storage';
 
 export default () => (
   <>
     <a
-      class="absolute xl:fixed top-4 left-4 gap-1 font-semibold text-default text-sm underline flex items-center"
+      class="absolute xl:fixed top-4 left-4 gap-1 font-semibold text-ink text-sm underline flex items-center"
       href="/"
     >
       <ArrowLeftIcon /> Go back home
@@ -31,7 +32,7 @@ export default () => (
           variant="fill"
           class="mt-2"
           onClick$={$(() => {
-            cookieBannerStorage.remove();
+            storageRemove(cookieBannerStorage);
             document.location = '/';
           })}
         >
@@ -103,7 +104,7 @@ export default () => (
         <h2 class="text-xl font-semibold pb-4 pt-8">8. Changes to This Privacy Policy</h2>
         <p>
           We may update this policy from time to time. The latest version will always be available
-          on our website through the <code class="bg-subtler">/privacy</code> url. Any enhancements
+          on our website through the <code class="bg-papyrus">/privacy</code> url. Any enhancements
           to the privacy policy will require you to reconfirm cookie usage, as per best practices.
         </p>
         <h2 class="text-xl font-semibold pb-4 pt-8">9. Contact Us</h2>

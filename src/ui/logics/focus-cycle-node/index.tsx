@@ -1,6 +1,6 @@
 import { $, component$, useContext, useVisibleTask$ } from '@builder.io/qwik';
-import { FocusCycleContext } from '../focus-cycle-controller';
 import type { JSXOutput, QRL } from '@builder.io/qwik';
+import { FocusCycleContext } from '../focus-cycle-controller';
 
 type FocusCycleNodeProps = {
   position: number;

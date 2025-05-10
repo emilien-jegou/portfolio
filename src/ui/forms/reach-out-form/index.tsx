@@ -1,26 +1,29 @@
-import { useContext, type Signal, component$, useSignal, useTask$ } from '@builder.io/qwik';
+import { useContext, component$, useSignal, useTask$, $ } from '@builder.io/qwik';
+import { Modal as PModal } from '@onwo/primitives';
 import { PortalAPI } from '~/providers/portal';
-import { Modal } from '~/ui/common/modal';
 import { sendToast } from '~/ui/common/toast';
 import { sleep } from '~/utils/sleep';
+import { CustomPanel } from './custom-panel';
 import { ReachOutFormLogic } from './form-logic';
 
-type ReachOutFormProps = {
-  'bind:show': Signal<boolean>;
-};
-
-export const ReachOutForm = component$((props: ReachOutFormProps) => {
+export const ReachOutForm = component$(() => {
+  const context = PModal.useModalContext();
   const portal = useContext(PortalAPI);
   const loading = useSignal(false);
 
   useTask$(({ track }) => {
-    track(() => props['bind:show'].value);
-    if (props['bind:show'].value == false) return;
+    track(() => context.panel.value);
+    if (context.panel.value === undefined) return;
     loading.value = false;
   });
 
+  const closeModal$ = $(() => {
+    if (!context.panel.value) return;
+    context.panel.value.opened.value = false;
+  });
+
   return (
-    <Modal bind:show={props['bind:show']}>
+    <CustomPanel class="sm:max-w-screen-sm px-6 py-4">
       <h2 class="mb-6 sm:mb-8 mt-6 sm:mt-8 text-xl sm:text-3xl font-bold max-w-[480px] leading-relaxed">
         Need help with anything? Get in touch
       </h2>
@@ -59,12 +62,10 @@ export const ReachOutForm = component$((props: ReachOutFormProps) => {
             });
             console.error(error);
           }
-          props['bind:show'].value = false;
+          closeModal$();
         }}
-        onCancel$={() => {
-          props['bind:show'].value = false;
-        }}
+        onCancel$={closeModal$}
       />
-    </Modal>
+    </CustomPanel>
   );
 });
