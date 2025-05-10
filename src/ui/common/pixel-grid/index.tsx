@@ -1,6 +1,6 @@
 import { component$ } from '@builder.io/qwik';
-import { cn } from '~/utils/cn';
 import type { CSSProperties } from '@builder.io/qwik';
+import { cn } from '~/utils/cn';
 
 export type PixelGridProps<T extends string | number> = {
   class?: string;

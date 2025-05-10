@@ -1,10 +1,10 @@
 import { $, Slot, component$, useStore, useVisibleTask$ } from '@builder.io/qwik';
+import type { JSXChildren, QRL } from '@builder.io/qwik';
 import { useLocation } from '@builder.io/qwik-city';
 import { CookieBanner } from '~/ui/layout/cookie-banner';
-import { cn } from '~/utils/cn';
-import { getStorage } from '~/utils/storage';
-import type { JSXChildren, QRL } from '@builder.io/qwik';
 import type { CookieBannerSubmitData } from '~/ui/layout/cookie-banner';
+import { cn } from '~/utils/cn';
+import { getStorage, storageGet, storageSet } from '~/utils/storage';
 
 interface CookieBannerState {
   isVisible: boolean;
@@ -63,7 +63,7 @@ export const CookieBannerProvider = component$(() => {
 
   // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(() => {
-    const cookieConsent = cookieBannerStorage.get();
+    const cookieConsent = storageGet(cookieBannerStorage);
 
     if (cookieConsent.kind === 'none') {
       state.isVisible = true;
@@ -79,12 +79,12 @@ export const CookieBannerProvider = component$(() => {
         onAccept$={$(() => {
           state.isAccepted = true;
           state.isVisible = false;
-          cookieBannerStorage.set(true);
+          storageSet(cookieBannerStorage, true);
         })}
         onReject$={$(() => {
           state.isAccepted = false;
           state.isVisible = false;
-          cookieBannerStorage.set(false);
+          storageSet(cookieBannerStorage, false);
         })}
       >
         <Slot />

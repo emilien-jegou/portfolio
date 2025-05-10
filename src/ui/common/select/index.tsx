@@ -1,11 +1,11 @@
 import { $, component$, useId, useOnDocument, useSignal } from '@builder.io/qwik';
+import type { PropFunction, QRL } from '@builder.io/qwik';
 import { SelectExpandIcon } from '~/ui/icons/select-expand';
 import { FocusCycleController } from '~/ui/logics/focus-cycle-controller';
 import { FocusCycleNode } from '~/ui/logics/focus-cycle-node';
 import { cn } from '~/utils/cn';
 import { findIndex } from '~/utils/safe-std';
 import { SelectOption } from './option';
-import type { PropFunction, QRL } from '@builder.io/qwik';
 
 import './styles.css';
 
@@ -57,14 +57,14 @@ export const Select = component$((props: SelectProps) => {
         }}
         aria-autocomplete="none"
         class={cn(
-          'field w-full flex items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 shadow-sm ring-offset-background [&amp;>span]:line-clamp-1',
+          'field w-full flex items-center justify-between whitespace-nowrap rounded-onwo-s-sm border border-input bg-transparent px-3 py-2 shadow-sm ring-offset-background [&amp;>span]:line-clamp-1',
           (expanded.value || focused.value) && 'field-focused',
           props.disabled &&
-            'cursor-not-allowed shadow-sm outline-0 border-transparent bg-subtle text-subtle',
+            'cursor-not-allowed shadow-sm outline-0 border-transparent bg-parchment text-lead',
           props.error && 'border-error',
         )}
       >
-        <span class={cn('pointer-events-none', !props.selected && 'text-subtler')}>
+        <span class={cn('pointer-events-none', !props.selected && 'text-graphite')}>
           {(props.selected ? props.options.find((a) => a.value === props.selected)?.label : null) ??
             props.placeholder ??
             'select an option'}
@@ -77,7 +77,7 @@ export const Select = component$((props: SelectProps) => {
           defaultPosition={findIndex(props.options, (o) => o.value === props.selected) ?? 0}
           role="presentation"
           class={cn(
-            'select-expanded flex flex-col border shadow-sm rounded-md absolute bg-default z-50 top-[100%] mt-2 p-1 h-fit w-full',
+            'select-expanded flex flex-col border shadow-sm rounded-onwo-s-sm absolute bg-paper z-50 top-[100%] mt-2 p-1 h-fit w-full',
           )}
         >
           {props.options.map((option, idx) => (

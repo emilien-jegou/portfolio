@@ -1,7 +1,7 @@
+import type { JSXChildren } from '@builder.io/qwik';
 import { Tooltip } from '~/ui/common/tooltip';
 import HelpCircle from '~/ui/icons/lib/help-circle-contained.svg?component';
 import { cn } from '~/utils/cn';
-import type { JSXChildren } from '@builder.io/qwik';
 import type { Classes } from '~/utils/types';
 
 export type LabelProps = {
@@ -18,7 +18,7 @@ export const Label = ({ classes, text, info, required }: LabelProps) => (
       {required ? ' *' : ''}
     </span>
     {info && (
-      <Tooltip classes={{ root: 'ml-1', tooltip: 'text-sm text-subtle' }} info={info}>
+      <Tooltip classes={{ root: 'ml-1', tooltip: 'text-sm text-lead' }} info={info}>
         <HelpCircle />
       </Tooltip>
     )}

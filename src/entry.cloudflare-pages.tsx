@@ -17,6 +17,7 @@ import { manifest } from '@qwik-client-manifest';
 import render from './entry.ssr';
 
 declare global {
+  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
   interface QwikCityPlatform extends PlatformCloudflarePages {}
 }
 
@@ -40,22 +41,25 @@ const fetch = async (
   const url = new URL(request.url);
 
   const f = async <T extends { run: ApiFunction }>(m: Promise<T>) =>
+    // eslint-disable-next-line unicorn/no-await-expression-member
     (await m).run(request, env, ctx);
 
   const apiRouter = async () => {
+    // eslint-disable-next-line sonarjs/no-small-switch
     switch (url.pathname) {
-      case '/api/contact':
+      case '/api/contact': {
         return f(import('./api/contact'));
+      }
     }
-    return Promise.resolve(new Response(null, { status: 404 }));
+    return new Response(null, { status: 404 });
   };
 
   if (url.pathname.startsWith('/api')) {
     if (request.method !== 'POST') return new Response(null, { status: 404 });
     try {
       return await apiRouter();
-    } catch (e) {
-      console.error(e);
+    } catch (error) {
+      console.error(error);
       return new Response(null, { status: 500 });
     }
   }

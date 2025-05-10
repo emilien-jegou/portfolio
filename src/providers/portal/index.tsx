@@ -7,8 +7,8 @@ import {
   useContextProvider,
   useSignal,
 } from '@builder.io/qwik';
-import { type JSXNode } from '@builder.io/qwik/jsx-runtime';
 import type { ContextId, QRL, Signal } from '@builder.io/qwik';
+import { type JSXNode } from '@builder.io/qwik/jsx-runtime';
 
 /**
  * Add JSX to a portal.
@@ -54,14 +54,13 @@ export const PortalProvider = component$(() => {
         contexts: [...(contexts || [])],
       };
       portal.close = $(() => {
-        // eslint-disable-next-line qwik/valid-lexical-scope
         portals.value = portals.value.filter((p) => p !== portal);
       });
       portal.contexts.push({
         id: PortalCloseAPIContextId,
         value: portal.close,
       });
-      // eslint-disable-next-line qwik/valid-lexical-scope
+
       portals.value = [...portals.value, portal];
       return portal.close;
     }),
@@ -80,6 +79,7 @@ type PortalProps = {
  * AFTER the portal is rendered can't be done in SSR, because it is not possible
  * to return back to the <Portal/> after it has been streamed to the client.)
  */
+// eslint-disable-next-line no-redeclare
 export const Portal = component$<PortalProps>(({ name }) => {
   const portals = useContext(PortalsContextId);
   const myPortals = portals.value.filter((portal) => portal.name === name);

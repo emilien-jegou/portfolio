@@ -1,0 +1,8 @@
+.container {
+  @apply max-w-[640px];
+}
+
+@utility mob-h-screen {
+  height: 100vh;
+  height: 100svh;
+}

@@ -1,11 +1,11 @@
 @reference "../../global.css";
 
 [data-color-mode='light'] {
-  --base0: #191a23; /* Slightly darker to match --color-bg-default */
-  --base1: #20212e; /* Matches --color-bg-subtle */
+  --base0: #191a23; /* Slightly darker to match --color-bg-paper */
+  --base1: #20212e; /* Matches --color-bg-parchment */
   --base3: #36374a; /* Darker shade for contrast against lighter texts */
   --base4: #ffffff; /* Lighter text color for contrast */
-  --base5: #eeeffc; /* Matches --color-text-default for clear readability */
+  --base5: #eeeffc; /* Matches --color-text-ink for clear readability */
   --green: #ACB6BF8C;
   --red: #AAD94C;
   --lightblue: #D2A6FF;

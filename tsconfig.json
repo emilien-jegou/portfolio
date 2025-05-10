@@ -29,7 +29,6 @@
     }
   },
   "files": [
-    "./.eslintrc.cjs",
     "./.prettierrc.cjs"
   ],
   "exclude": ["functions"],

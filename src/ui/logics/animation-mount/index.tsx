@@ -66,7 +66,7 @@ export const AnimationMount = component$(
             .join(' ')} }
         }
       `;
-      document.head.appendChild(style);
+      document.head.append(style as any);
 
       cleanup(() => {
         style.remove();
@@ -85,7 +85,7 @@ export const AnimationMount = component$(
         isVisible.value = true;
       } else {
         isAnimating.value = true;
-        timeoutId.value = window.setTimeout(
+        timeoutId.value = globalThis.setTimeout(
           () => {
             isAnimating.value = false;
             isVisible.value = false;
@@ -93,7 +93,7 @@ export const AnimationMount = component$(
           },
           // we add 200ms to account for potential javascript induced delays
           animation.duration * 1000 + 200 + (persistAfterAnimationSec ?? 0) * 1000,
-        );
+        ) as unknown as number;
       }
 
       cleanup(() => {

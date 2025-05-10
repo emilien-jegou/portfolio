@@ -1,7 +1,7 @@
+import type { JSXChildren, PropFunction } from '@builder.io/qwik';
 import { CheckmarkFilledIcon } from '~/ui/icons/checkmark';
 import { LoadingIcon } from '~/ui/icons/loading';
 import { cn } from '~/utils/cn';
-import type { JSXChildren, PropFunction } from '@builder.io/qwik';
 
 export type ButtonProps = {
   state?: Partial<Record<'disabled' | 'loading' | 'success', boolean>>;
@@ -15,14 +15,14 @@ export type ButtonProps = {
 export const Button = ({ variant = 'fill', onClick$, ...props }: ButtonProps) => (
   <button
     class={cn(
-      'select-none flex flex-row justify-center items-center whitespace-nowrap rounded-md gap-2 h-10 font-medium hover:drop-shadow-xs text-sm px-5',
+      'select-none flex flex-row justify-center items-center whitespace-nowrap rounded-onwo-s-sm gap-2 h-10 font-medium hover:drop-shadow-xs text-sm px-5',
       variant === 'fill' &&
         cn(
-          'border bg-bgr-contrast hover:bg-bgr-contrast/70 text-text-contrast dark:bg-bgr-subtler dark:text-text-default dark:hover:bg-[purple] border-border-subtler',
+          'border bg-bgr-contrast hover:bg-bgr-contrast/70 text-text-contrast dark:bg-papyrus dark:text-ink dark:hover:bg-[purple] border-line',
           props.state?.success && 'bg-success',
         ),
-      variant === 'transparent' && 'bg-transparent hover:bg-subtle',
-      variant === 'outline' && 'border border-subtle bg-transparent hover:bg-subtle',
+      variant === 'transparent' && 'bg-transparent hover:bg-parchment',
+      variant === 'outline' && 'border border-line bg-transparent hover:bg-parchment',
       (props.state?.loading || props.state?.disabled) && 'cursor-hand opacity-80 hover:opacity-80',
       props.class,
     )}

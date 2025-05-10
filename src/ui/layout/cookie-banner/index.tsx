@@ -1,18 +1,18 @@
 import { $, component$ } from '@builder.io/qwik';
+import type { JSXChildren, QRL } from '@builder.io/qwik';
 import { useBreakpoint } from '~/hooks/use-breakpoints';
 import { SpeechBubble } from '~/ui/common/speech-bubble';
 import { AnimationMount } from '~/ui/logics/animation-mount';
 import { cn } from '~/utils/cn';
 import Cat from './cat.png';
 import Cookie from './cookie-simple.png';
-import type { JSXChildren, QRL } from '@builder.io/qwik';
 
 import './styles.css';
 
 export type CookieBannerSubmitData = { kind: 'accepted' } | { kind: 'rejected' };
 
 export type CookieBannerProps = {
-  onSubmit$?: QRL<(submitted: CookieBannerSubmitData) => {}>;
+  onSubmit$?: QRL<(submitted: CookieBannerSubmitData) => void>;
   class?: string;
   visible: boolean;
 };
@@ -128,7 +128,7 @@ type CookieBannerButtonProps = {
 export const CookieBannerButton = (props: CookieBannerButtonProps) => (
   <button
     class={cn(
-      'transition-colors duration-50 border rounded-md py-1 items-center border-[3px] px-4 md:px-6',
+      'transition-colors duration-50 border rounded-onwo-s-sm py-1 items-center border-[3px] px-4 md:px-6',
       props.class,
     )}
     style={{ borderColor: props.color }}

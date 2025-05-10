@@ -41,7 +41,6 @@ export class CatLauncher {
   }
 
   private addBottomSensor() {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (this.line) {
       World.remove(this.world, this.line);
     }
@@ -54,8 +53,8 @@ export class CatLauncher {
       {
         isStatic: true,
         collisionFilter: {
-          category: 0x0001,
-          mask: 0x0001,
+          category: 0x00_01,
+          mask: 0x00_01,
         },
         render: {
           fillStyle: 'blue',
@@ -131,6 +130,7 @@ export class CatLauncher {
 
   private getRandomPosition() {
     const totalArea = this.height + this.width + this.imageSize * 2;
+    // eslint-disable-next-line sonarjs/pseudo-random
     const randomPoint = Math.floor(Math.random() * totalArea);
 
     if (randomPoint <= this.height / 2) {
@@ -144,15 +144,11 @@ export class CatLauncher {
 
   private moveElement(body_id: number, x: number, y: number, angle: number) {
     const radToDeg = (angle: number) => angle * (180 / Math.PI);
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+
     if (this.domElements[body_id]) {
       this.domElements[body_id].style.transform =
         `translate(${x - this.imageSize}px, ${y - this.imageSize}px) rotate(${radToDeg(angle)}deg)`;
     }
-  }
-
-  private toggleSecretImage(probability = 0.05) {
-    return Math.random() < probability;
   }
 
   private addElement(body_id: number, position: XY, angle: number) {
@@ -161,7 +157,7 @@ export class CatLauncher {
     element.style.cssText = `height: ${this.imageSize * 2}px; width: ${this.imageSize * 2}px; position: absolute; pointer-events: none;`;
     this.domElements[body_id] = element;
     this.moveElement(body_id, position.x, position.y, angle);
-    this.container.appendChild(element);
+    this.container.append(element as any);
   }
 
   public launchCat() {
@@ -198,7 +194,7 @@ export class CatLauncher {
           body.position.y < this.bounds.min.y ||
           body.position.y > this.bounds.max.y
         ) {
-          this.container.removeChild(this.domElements[body.id]);
+          this.domElements[body.id].remove();
           delete this.domElements[body.id];
           Composite.remove(this.world, body);
         }
@@ -208,6 +204,7 @@ export class CatLauncher {
 
   public cleanup() {
     Runner.stop(this.runner);
+    // eslint-disable-next-line unicorn/no-invalid-remove-event-listener
     window.removeEventListener('resize', this.updateBounds.bind(this));
   }
 }

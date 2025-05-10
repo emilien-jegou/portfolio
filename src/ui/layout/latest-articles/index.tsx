@@ -21,7 +21,7 @@ export const LatestArticles = component$((props: LatestArticlesProps) => {
   return (
     <section
       class={cn(
-        'relative rounded-md border border-subtler bg-default h-full py-4 px-6',
+        'relative rounded-onwo-s-sm border border-line bg-paper h-full py-4 px-6',
         props.class,
       )}
     >
@@ -29,7 +29,7 @@ export const LatestArticles = component$((props: LatestArticlesProps) => {
         <h4 class="text-base font-semibold">Latest posts</h4>
         <a
           href="/posts"
-          class="hidden sm:flex gap-2 bg-subtle hover:bg-subtler hover:ring-1 ring-border-default items-center px-5 py-1 text-sm font-medium rounded-full"
+          class="hidden sm:flex gap-2 bg-parchment hover:bg-papyrus hover:ring-1 ring-border-line items-center px-5 py-1 text-sm font-medium rounded-full"
         >
           <span>see all my posts</span>
           <ArrowRightIcon class="mt-1" />
@@ -50,7 +50,7 @@ export const LatestArticles = component$((props: LatestArticlesProps) => {
       </div>
       <a
         href="/posts"
-        class="flex w-full justify-center mt-4 sm:hidden gap-2 bg-subtle hover:bg-subtler hover:ring-1 ring-border-default items-center px-5 py-1 text-sm font-medium rounded-full"
+        class="flex w-full justify-center mt-4 sm:hidden gap-2 bg-parchment hover:bg-papyrus hover:ring-1 ring-border-line items-center px-5 py-1 text-sm font-medium rounded-full"
       >
         <span>see all my posts</span>
         <ArrowRightIcon class="mt-1" />

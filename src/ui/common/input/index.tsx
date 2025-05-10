@@ -1,7 +1,7 @@
 import { component$, useId } from '@builder.io/qwik';
-import { cn } from '~/utils/cn';
 import type { PropFunction, QwikFocusEvent } from '@builder.io/qwik';
 import type { FieldElement } from '@modular-forms/qwik';
+import { cn } from '~/utils/cn';
 
 export type InputType = 'text' | 'password';
 
@@ -37,9 +37,9 @@ export const Input = component$(
           onBlur$?.(...args);
         }}
         class={cn(
-          'field border transition-outline rounded-md p-2 w-full focus-visible:field-focused',
+          'field border transition-outline rounded-onwo-s-sm p-2 w-full focus-visible:field-focused',
           disabled &&
-            'cursor-not-allowed shadow-xs outline-0 border-transparent bg-subtle text-subtle',
+            'cursor-not-allowed shadow-xs outline-0 border-transparent bg-parchment text-lead',
           error && 'border-error',
           className,
         )}

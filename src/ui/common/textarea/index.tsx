@@ -1,7 +1,7 @@
 import { $, component$, useId, useSignal, useVisibleTask$ } from '@builder.io/qwik';
-import { cn } from '~/utils/cn';
 import type { PropFunction, QwikFocusEvent } from '@builder.io/qwik';
 import type { FieldElement } from '@modular-forms/qwik';
+import { cn } from '~/utils/cn';
 
 export type TextareaProps = {
   name: string;
@@ -33,6 +33,7 @@ export const Textarea = component$(
 
     const focusInput = $(() => {
       setTimeout(() => {
+        // eslint-disable-next-line unicorn/prefer-query-selector
         document.getElementById(id)?.focus();
       });
     });
@@ -56,19 +57,20 @@ export const Textarea = component$(
       clone.value += '0';
       clone.style.zIndex = String(100 + clone.scrollHeight + 5);
       clone.style.overflow = 'hidden';
-      document.body.appendChild(clone);
+      document.body.append(clone as any);
       clone.style.height = clone.scrollHeight + 2 + 'px';
       const computedHeight = clone.scrollHeight;
       textarea.style.height = computedHeight + 2 + 'px';
       containerRef.value.style.height = computedHeight + 'px';
 
-      document.body.removeChild(clone);
+      clone.remove();
     });
 
     // eslint-disable-next-line qwik/no-use-visible-task
     useVisibleTask$(({ track }) => {
       track(() => value);
 
+      // eslint-disable-next-line unicorn/prefer-query-selector
       const textarea = document.getElementById(id);
       resizeTextarea$(textarea as any);
     });
@@ -82,11 +84,11 @@ export const Textarea = component$(
           transition: 'height 0.1s ease',
         }}
         class={cn(
-          'field relative rounded-md border text-sm leading-none shadow-2xs cursor-text',
+          'field relative rounded-onwo-s-sm border text-sm leading-none shadow-2xs cursor-text',
           error && 'border-error',
           focused.value && 'field-focused',
           disabled &&
-            'cursor-not-allowed shadow-xs outline-0 border-transparent bg-subtle text-subtle',
+            'cursor-not-allowed shadow-xs outline-0 border-transparent bg-parchment text-lead',
           className,
         )}
       >
@@ -97,7 +99,7 @@ export const Textarea = component$(
           rows={props.rows}
           disabled={disabled}
           class={cn(
-            'w-full block h-[39px] p-2.5 pt-3 pr-10 text-sm bg-transparent leading-tight focus:outline-hidden font-medium placeholder:font-normal text-text-default placeholder:text-text-subtle focus:placeholder:text-subtler resize-none overflow-y-hidden',
+            'w-full block h-[39px] p-2.5 pt-3 pr-10 text-sm bg-transparent leading-tight focus-visible:outline-0! font-medium placeholder:font-normal text-ink placeholder:text-lead focus-visible:placeholder:text-graphite resize-none overflow-y-hidden',
             disabled && 'cursor-not-allowed',
           )}
           onFocus$={() => {

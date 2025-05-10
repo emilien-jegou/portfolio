@@ -14,7 +14,7 @@ type HeroCardProps = {
 
 export const HeroCard = (props: HeroCardProps) => (
   <a
-    class={cn('h-full relative rounded-lg bg-subtle w-full', props.class)}
+    class={cn('h-full relative rounded-onwo-s-md bg-parchment w-full', props.class)}
     href={props.slug}
     style={{
       backgroundImage: `url('${props.coverUrl}')`,
@@ -24,7 +24,7 @@ export const HeroCard = (props: HeroCardProps) => (
     }}
   >
     <div
-      class="absolute transition-colors duration-500 top-0 rounded-lg left-0 w-full h-full"
+      class="absolute transition-colors duration-500 top-0 rounded-onwo-s-md left-0 w-full h-full"
       style={{
         background: 'var(--hero-gradient)',
         mixBlendMode: 'color',
@@ -33,7 +33,7 @@ export const HeroCard = (props: HeroCardProps) => (
       }}
     />
     <div
-      class="absolute transition-colors duration-500 top-0 rounded-lg left-0 w-full h-full"
+      class="absolute transition-colors duration-500 top-0 rounded-onwo-s-md left-0 w-full h-full"
       style={{
         background: 'var(--hero-gradient)',
         mixBlendMode: 'screen',
@@ -43,14 +43,14 @@ export const HeroCard = (props: HeroCardProps) => (
     />
     <HeroCardDate class="top-4 left-4 absolute" date={props.date} />
     <div class="absolute right-4 bottom-4 w-full pl-8 sm:pl-0 sm:max-w-[45%] sm:min-w-[400px]">
-      <h3 class="text-sm bg-black text-white text-lg flex gap-4 items-center px-6 py-3 translate-y-[16px] rounded-lg font-medium w-min">
+      <h3 class="text-sm bg-black text-white text-lg flex gap-4 items-center px-6 py-3 translate-y-[16px] rounded-onwo-s-md font-medium w-min">
         <div class="w-2 h-2 mt-1 rounded-full bg-[pink]" />
         <span>{props.category}</span>
       </h3>
-      <h3 class="bg-black text-white text-2xl lg:text-4xl px-6 py-3 rounded-lg font-medium mt-1 w-full">
+      <h3 class="bg-black text-white text-2xl lg:text-4xl px-6 py-3 rounded-onwo-s-md font-medium mt-1 w-full">
         {props.title}
       </h3>
-      <p class="leading-5 mt-2 rounded-lg text-black bg-white lg:text-lg leading-relaxed px-6 py-3 rounded-lg w-full">
+      <p class="leading-5 mt-2 rounded-onwo-s-md text-black bg-white lg:text-lg leading-relaxed px-6 py-3 rounded-onwo-s-md w-full">
         {props.description}
         <span class="block mt-2 underline">Read now</span>
       </p>

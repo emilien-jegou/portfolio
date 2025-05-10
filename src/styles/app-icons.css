@@ -1,0 +1,20 @@
+@layer utilities {
+  :root {
+    /* Default Light Mode */
+    --app-icon-bg: black;
+    --app-icon-fg: white;
+    --app-icon-bg-hidden: rgba(0, 0, 0, 0);
+    --app-icon-bg-parchment: rgb(50, 50, 50);
+    --hero-gradient: linear-gradient(#8eb5e6, #d1aded);
+  }
+
+  [data-color-mode='dark'] {
+    --app-icon-border: rgba(128, 128, 128, 0.35);
+    --app-icon-bg: rgb(3, 7, 18);
+    --app-icon-fg: white;
+    --app-icon-bg-hidden: rgba(3, 7, 18, 0);
+    --app-icon-bg-parchment: rgb(18, 23, 38);
+    --hero-gradient: linear-gradient(#477abb, #7234a4);
+  }
+}
+

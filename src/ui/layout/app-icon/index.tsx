@@ -19,7 +19,7 @@ const mapChannels = (v: RGB, mapper: (v: number) => number) => ({
 const relativeLuminance = ({ r, g, b }: RGB): number => {
   const normalize = (value: number) => {
     const sRGB = value / 255;
-    return sRGB <= 0.03928 ? sRGB / 12.92 : Math.pow((sRGB + 0.055) / 1.055, 2.4);
+    return sRGB <= 0.039_28 ? sRGB / 12.92 : Math.pow((sRGB + 0.055) / 1.055, 2.4);
   };
 
   const R = normalize(r);
@@ -159,7 +159,7 @@ export const AppIcon = component$((props: AppIconProps) => {
 
 @keyframes app-icon__V3_f_p {
     0% {
-        fill: var(--app-icon-bg-subtle);
+        fill: var(--app-icon-bg-parchment);
         animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
     100% {
@@ -172,7 +172,7 @@ export const AppIcon = component$((props: AppIconProps) => {
         fill: ${toCssString(props.fg)};
     }
     100% {
-        fill: var(--app-icon-bg-subtle);
+        fill: var(--app-icon-bg-parchment);
     }
 }
 
@@ -230,7 +230,7 @@ export const AppIcon = component$((props: AppIconProps) => {
               d="M0,3.31802L0,3c0-1.26402.78174-2.345454,1.88812-2.787207L40.1713,47h-4.4289L0,3.31802ZM43.7701,47L5.31278,0h4.42895L46.7419,45.2192C46.2747,46.2685,45.2228,47,44,47h-.2299Z"
               transform="translate(-23.370951,-23.5)"
               clip-rule="evenodd"
-              fill="var(--app-icon-bg-subtle)"
+              fill="var(--app-icon-bg-parchment)"
               fill-rule="evenodd"
             />
           </g>

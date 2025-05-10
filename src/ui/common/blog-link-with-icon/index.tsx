@@ -1,9 +1,9 @@
+import type { JSXOutput } from '@builder.io/qwik';
+import type { XOR } from 'ts-essentials';
 import { GithubIcon } from '~/ui/icons/company-icons/github';
 import { ExternalLink } from '../external-link';
 import type { HttpsLink } from '../external-link';
 import type { IconProps } from '../svg-icon';
-import type { JSXOutput } from '@builder.io/qwik';
-import type { XOR } from 'ts-essentials';
 
 type VariadicIconProps = XOR<
   { iconUrl: string },

@@ -2,6 +2,14 @@
 
 /* Typography */
 
+.mdx > * {
+  @apply custom-container mx-auto;
+}
+
+.mdx > .mdx-expand {
+  max-width: min(1280px, calc(100vw - 2rem));
+}
+
 .mdx h1 {
   @apply font-extrabold text-4xl;
 }
@@ -9,7 +17,7 @@
   @apply font-extrabold text-2xl;
 }
 .mdx h3 {
-  @apply font-bold text-lg text-text-subtle;
+  @apply font-bold text-lg text-lead;
 }
 
 .mdx h4 {
@@ -49,7 +57,7 @@
 }
 
 .mdx > ul {
-  @apply mt-5 ml-2 flex flex-col gap-1;
+  @apply mt-5 pl-2 flex flex-col gap-1;
 }
 
 .mdx > ul > li {
@@ -58,8 +66,7 @@
 }
 
 .mdx code {
-  @apply font-mono bg-bgr-subtle rounded-sm px-1 shadow-sm;
-  line-height: 1.59 !important;
+  line-height: 1.39 !important;
 }
 
 /* Icon link on titles */

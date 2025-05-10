@@ -69,7 +69,7 @@ export const setIndexedValue = <T, K extends GetKeysDeep<T>>(
     currentObj = currentObj[k];
   }
 
-  currentObj[keys[keys.length - 1]] = value;
+  currentObj[keys.at(-1) as any] = value;
 };
 
 export const removeIndexedValue = <T, K extends GetKeysDeep<T>>(obj: T, needle: K) => {
@@ -84,5 +84,5 @@ export const removeIndexedValue = <T, K extends GetKeysDeep<T>>(obj: T, needle: 
     currentObj = currentObj[k];
   }
 
-  delete currentObj[keys[keys.length - 1]];
+  delete currentObj[keys.at(-1) as any];
 };

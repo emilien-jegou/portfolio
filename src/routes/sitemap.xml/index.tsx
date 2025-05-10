@@ -1,6 +1,6 @@
+import type { RequestHandler } from '@builder.io/qwik-city';
 import { differenceInMonths } from 'date-fns';
 import articles from '~/generated/blog-data.json';
-import type { RequestHandler } from '@builder.io/qwik-city';
 
 type Article = {
   slug: string;

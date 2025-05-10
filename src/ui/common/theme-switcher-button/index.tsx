@@ -4,7 +4,7 @@ import { WheatherMoonIcon } from '~/ui/icons/wheather-moon';
 import { WheatherSunnyIcon } from '~/ui/icons/wheather-sunny';
 
 export const ThemeSwitcherButton = component$(() => {
-  const currentColorMode = useSignal<ColorMode | undefined>(undefined);
+  const currentColorMode = useSignal<ColorMode | undefined>();
   const colorMode = useColorMode();
 
   // eslint-disable-next-line qwik/no-use-visible-task
@@ -21,7 +21,7 @@ export const ThemeSwitcherButton = component$(() => {
   return (
     <>
       <button
-        class="z-40 rounded-full bg-default border border-subtle hover:bg-subtle h-[40px] w-[40px] flex items-center justify-center"
+        class="z-40 rounded-full bg-paper border border-line hover:bg-parchment h-[40px] w-[40px] flex items-center justify-center"
         type="button"
         onClick$={() => colorMode.set(currentColorMode.value === 'dark' ? 'light' : 'dark')}
       >

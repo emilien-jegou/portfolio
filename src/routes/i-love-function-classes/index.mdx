@@ -1,0 +1,770 @@
+---
+data:
+    published: false
+    title: "I love function classes"
+    thumbnailUrl: '/images/posts/10-libraries-to-enhance-your-typescript-projects/thumbnail.png'
+    description: ""
+    shareImageUrl: '/images/posts/10-libraries-to-enhance-your-typescript-projects/share.svg'
+    createdAt: 1740537088000
+---
+
+import { ExternalLinkInline } from '~/ui/common/external-link';
+import { BlogCode } from '~/ui/common/blog-code';
+import { SideBySideCode } from '~/ui/common/side-by-side-code';
+import { BlogSeparator } from '~/ui/common/blog-separator';
+import { BlogGithubLink } from '~/ui/common/blog-link-with-icon';
+import { BlogImage } from '~/ui/common/blog-image';
+import HaskellImage from './haskell.png?jsx';
+import GetterAndSetterImage from './getter-and-setter.png?jsx';
+
+Why would you use function classes, after all we added the 'class' keyword to javascript for a reason and at face value they have a few inconveninent:
+- people are not used to them
+- they can be more verbose
+- inheritance with them can be confusing ([and is slower](https://ncjamieson.com/prefer-interfaces/))
+- they are not-named so error messages may be less clear
+
+This post will try to showcase that function classes:
+- are more flexible
+- are stricter
+- are more powerful
+
+<SideBySideCode language="javascript">
+```javascript
+// Pre ES6 introduction (2014)
+var HelloMessage = React.createClass({
+  getInitialState: function() {
+    return { name: 'Alice' };
+  },
+  handleClick: function() {
+    this.setState({ name: 'Bob' });
+  },
+  render: function() {
+    return (
+      <div>
+        <h1>Hello, {this.state.name}!</h1>
+        <button onClick={this.handleClick}>Click me</button>
+      </div>
+    );
+  }
+});
+```
+```typescript
+// Post ES6 (2015)
+class HelloMessage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { name: 'Alice' };
+    // this was a pain to deal with:
+    this.handleClick = this.handleClick.bind(this); 
+  }
+  handleClick() {
+    this.setState({ name: 'Bob' });
+  }
+  render() {
+    return (
+      <div>
+        <h1>Hello, {this.state.name}!</h1>
+        <button onClick={this.handleClick}>Click me</button>
+      </div>
+    );
+  }
+}
+```
+</SideBySideCode>
+
+# Demystifying classes
+
+To truly understand JavaScript's class syntax introduced in ES6, let's go back to pre-ES6 practices and examine what functional classes looks like in today's context. This exploration will illustrate what's happening under the hood when using the `class` keyword aswell as showcasing the flexibility of the typescript type system.
+
+### Bare function classes
+
+The side-by-side comparison below demonstrates two class-based implementation, one with the `class` keywords, and one through factory functions. I purposefully left inheritance out of this example as it will be showcased later on in this article.
+
+<SideBySideCode language="typescript">
+```typescript
+
+class MyLogger {
+  log(message: string): void {
+    console.log(message);
+  }
+}
+
+class SaveManager {
+  private db: SqliteDB;
+
+  constructor(username: string, password: string) {
+    this.db = createConnection({ username, password });
+  }
+
+  save(message: string): string {
+    return this.db.insert(message);
+  }
+
+  get(id: string): string {
+    return this.db.get(id);
+  }
+}
+
+class Greeter {
+  constructor(
+    private logger: MyLogger,
+    private saveManager: SaveManager,
+  ) {}
+
+  greet(name: string) {
+    this.logger.log(`Greeting ${name}`);
+  }
+
+  greetAndSave(name: string) {
+    this.greet(name);
+    this.saveManager.save(name);
+  }
+}
+
+const myLogger = new MyLogger();
+const saveManager = new SaveManager('admin', 'password');
+const greeter = new Greeter(myLogger, saveManager);
+greeter.greetAndSave('Bob');
+
+```
+```typescript
+// classes may sometimes be better suited as functions
+const myLogger = (message: string) => console.log(message);
+type MyLogger = typeof myLogger;
+
+const createSaveManager = (username: string, password: string) => {
+  // think of this section as the constructor
+  const db = createConnection({ username, password });
+
+  return {
+    save: (message: string) => db.insert(message),
+    get: (id: string) => db.get(id),
+  };
+};
+
+type SaveManager = ReturnType<typeof createSaveManager>;
+// ^? { save: (message: string) => string; get: ... }
+// infering the code through `ReturnType` has pros and cons e.g. typescript
+// error may become less clear on the `createSaveManager function.
+
+const createGreeter = (logger: MyLogger, saveManager: SaveManager) => ({
+  greet(name: string) {
+    logger(`Greeting ${name}`);
+  },
+
+  greetAndSave(name: string) {
+    this.greet(name);
+    saveManager.save(name);
+  },
+});
+
+// Simple dependency injection
+const saveManager = createSaveManager('admin', 'password');
+const greeter = createGreeter(myLogger, saveManager);
+
+greeter.greetAndSave('Bob');
+```
+</SideBySideCode>
+
+Testing will largely remain identical between implementations:
+
+<SideBySideCode language="typescript">
+```typescript
+const mockLogger = { log: jest.fn() };
+
+// We cast an object to a class here, this can lead to issue down
+// the line (e.g. instanceof would return `Object` on mockDatabase
+// instead of `SaveManager`)
+const mockDatabase: Record<string, string> = {};
+const mockSaveManager = {
+  save: jest.fn((message: string): string => {
+    const id = `id-${Object.keys(mockDatabase).length + 1}`;
+    mockDatabase[id] = message;
+    return id;
+  }),
+  get: jest.fn((id: string): string => {
+    return mockDatabase[id] || 'Not Found';
+  }),
+};
+
+const greeter = new Greeter(mockLogger, mockSaveManager);
+
+greeter.greetAndSave('Bob');
+
+expect(mockLogger.log).toHaveBeenCalledWith('Greeting Bob');
+expect(mockSaveManager.save).toHaveBeenCalledWith('Bob');
+```
+```typescript
+const mockLogger = jest.fn();
+
+// we won't face the instanceof issue on this side.
+const mockDatabase: Record<string, string> = {};
+const mockSaveManager = {
+  save: jest.fn((message: string): string => {
+    const id = `id-${Object.keys(mockDatabase).length + 1}`;
+    mockDatabase[id] = message;
+    return id;
+  }),
+  get: jest.fn((id: string): string => {
+    return mockDatabase[id] || 'Not Found';
+  }),
+};
+
+const greeter = createGreeter(mockLogger, mockSaveManager);
+
+greeter.greetAndSave('Bob');
+
+expect(mockLogger.log).toHaveBeenCalledWith('Greeting Bob');
+expect(mockSaveManager.save).toHaveBeenCalledWith('Bob');
+```
+</SideBySideCode>
+
+### Inheritance with functions classes
+
+The "composition over inheritance" principle seems widely accepted today, yet
+there may be cases where working with multiple levels of inheritance is the
+best option available, for instance (and unironically), if you are working on
+top of legacy systems modelled using inheritance. A notable example is the
+HTML/XML tree structure.
+
+Going a bit off-track, but the Servo JavaScript engine, built entirely in Rust,
+encountered this challenge of modelling the HTML tree structure. As Rust does
+not support inheritance, the developers had to rely on complex macros to
+mitigate the overhead of modifying, resulting in significant code duplication
+([see how methods and properties are copied over in the
+HtmlAnchorElement](https://github.com/servo/servo/blob/03e953e22c5cb8ce3d7d375f6f9e841da46ba6f3/components/script/dom/htmlanchorelement.rs#L40)).
+
+Similarly, the Ladybird browser and JavaScript engine initially considered
+switching from C++ to Rust but eventually opted for Swift instead after facing
+the OOP limitation of rust.
+
+Inheritance would have been possible in rust through function pointers and could even have been really fast, but it would have led two an immediate drawback: the type system would not have worked on that code. In typescript, and even before class tokens where introduced we were able to replicate the inheritance behavior without losing any type information.
+
+For our example we will build a simple html inheritance chain.
+
+<SideBySideCode language="typescript">
+```typescript
+import { buildHtmlTag } from './utils';
+
+class Elem {
+  public childrens: Elem[] = [];
+  public attributes: Record<string, string> = {};
+
+  constructor(public tagName: string) {}
+
+  getHTML(): string {
+    const childHtml = this.childrens.map((c) => c.getHTML()).join('');
+    return buildHtmlTag(this.tagName, this.attributes, childHtml);
+  }
+}
+
+class AnchorElem extends Elem {
+  constructor(href: string) {
+    super('a');
+    this.attributes['href'] = href;
+  }
+}
+
+class DownloadLinkElem extends AnchorElem {
+  public loading: boolean = false;
+
+  constructor(href: string, download: string) {
+    super(href);
+    this.attributes['download'] = download;
+  }
+}
+
+const elem = new DownloadLinkElem('localhost', 'file.pdf');
+
+console.log(elem.getHTML());
+```
+```typescript
+import { buildHtmlTag } from './utils';
+
+// in our case this method never get's overwritted, so we keep it
+// outside of the Elem type.
+const getHTML = (elem: Elem) => {
+  const childHtml: string = elem.childrens.map(getHTML).join('');
+  return buildHtmlTag(elem.tagName, elem.attributes, childHtml);
+};
+
+type Elem = {
+  tagName: string;
+  childrens: Elem[];
+  attributes: Record<string, string>;
+};
+
+const createElem = (tagName: string): Elem => ({
+  tagName,
+  childrens: [],
+  attributes: {},
+});
+
+type AnchorElem = Elem;
+const createAnchorElem = (href: string): AnchorElem => {
+  const elem = createElem('a');
+  elem.attributes['href'] = href;
+  return elem;
+};
+
+type DownloadLinkElem = AnchorElem & { loading: boolean };
+
+const createDownloadLinkElem = (href: string, download: string): DownloadLinkElem => {
+  const elem: DownloadLinkElem = {
+    ...createAnchorElem(href),
+    loading: false,
+  };
+  elem.attributes['download'] = download;
+  return elem;
+};
+
+const elem = createDownloadLinkElem('localhost', 'file.pdf');
+
+console.log(getHTML(elem));
+```
+</SideBySideCode>
+
+One of the challenge with dealing with inheritance is detecting whether a class extends from another or in other words the `instanceOf` function, it's a bit of an unelegant way to handle class polymorphism but there may be time where it's your only option. As such I also coded a version of this code that allow for this kind of dynamic cast through a cls utility, you can find [it in this gist](https://gist.github.com/emilien-jegou/4ce3e69fb0bcfc047274bda6535df408).
+
+# Part 2: The relation with functional programming
+
+> "*We do not need the class keyword. Nor do we need polymorphic dispatch. Nor do we need inheritance. A class is just a description, whether in full or in part, of an object."* -- Robert C. Martin, the creator of SOLID on classes in Functional Programming [source](https://blog.cleancoder.com/uncle-bob/2023/01/19/functional-classes-clojure.html)
+
+Thirteen years ago Simon Peyton Jones, the creator of haskell, offered his perspective on programming language evolution, in his now infamous video called "[Haskell is useless](https://www.youtube.com/watch?v=iSmkqocn0oQ)". In it, he explained that languages accross the spectrum of paradigms are working together in order to improve, this sharing of knowledge is what allow for improvment in programming languages and what brings them closer.
+
+Functional programming principles have gained significant footing in the programming community in that aspect, Elixir and Rust both have a dedicated loving fanbase as "in between paradigms" languages, while concepts from FP languages like haskell sips into other languages, sometimes with different names, e.g. haskell `sum types` are available through `tagged unions` in typescript, while concepts like `function composition` reappears through `pipe` utilities.
+
+In my perspective, when it comes to OOP what's keeping it used is that people bought into the paradigm, if something work why changed it? well I am gonna try to give you a reason.
+
+## Opening up interfaces
+
+The [Open-closed principle](https://drive.google.com/file/d/0BwhCYaYDn8EgN2M5MTkwM2EtNWFkZC00ZTI3LWFjZTUtNTFhZGZiYmUzODc1/view?resourcekey=0-FsS837CGML599A_o5D-nAw) (the `O` from the `SOLID` acronym) does provide benefits for code exposed to external users, yet it should not be applied to every piece of your code — this omitted "detail" makes all the difference. The Open-closed principles leads to two things: overplanning and technical debt:
+
+The first can be explained by the fact that if your interface can never change, you must be sure to get it right on the first try, developers will over-focused on respecting the principle and planning ahead for modification rather than actually solving the problem at hand, and when the problem itself is not clear (as it's often the case) then all that planning could be spent meaningleslly. This is one of the longest standing critic of OOP by procedural developer, and one of the main reason C++, an object oriented language compatible with C, [was never allowed in the linux kernel by Linus Torvald](http://web.archive.org/web/20250218025308/https://harmful.cat-v.org/software/c++/linus).
+
+Second, the open-closed principles leads to technical debt, if your interface didn't fit your need, it advise layering on top of it, in my view, this is both bug inducing and a high source of technical debt, why layer on top of something you control in the first place? Programming is an itterative process, you will never get it right on the first try, **you need to refactor your code**.
+
+But there is one notable case where classes layering and the Open-closed principle could be applied: when exposing interfaces outside of your control. The following is an example to show how you could replicate class extension without resorting to them, note that there are many way to provide equivalent capabilities, this is just one of them:
+
+<SideBySideCode language="typescript">
+```typescript
+abstract class Shape {
+  abstract calcRadius(): number;
+}
+
+class Circle extends Shape {
+  constructor(public radius: number) {
+    super();
+  }
+
+  calcRadius(): number {
+    return this.radius;
+  }
+}
+
+class Square extends Shape {
+  constructor(public sideLength: number) {
+    super();
+  }
+
+  calcRadius(): number {
+    return Math.sqrt((this.sideLength * this.sideLength) / Math.PI);
+  }
+}
+
+const circle = new Circle(5);
+const square = new Square(8);
+
+console.log(`circle radius: ${circle.calcRadius()}`);
+console.log(`square radius: ${square.calcRadius()}`);
+
+// Here any third-party library could create a new class
+// based on Shape and use it interchangeably with the others
+class CustomShape extends Shape {
+  calcRadius(): number {
+    return 3;
+  }
+}
+
+const shape = new CustomShape();
+
+console.log(`custom shape radius: ${shape.calcRadius()}`);
+```
+```typescript
+import { exhaustive } from "exhaustive"; // a pattern-matching library
+
+// This type will fill the role of the abstract interface
+// it will only be used externally (e.g. as exported from a library),
+type AbstractShape = { kind: 'abstract'; calcRadius(): number; }
+
+type Circle = { kind: 'circle'; radius: number; }
+type Square = { kind: 'square'; sideLength: number; }
+
+type Shape = Circle | Square | AbstractShape;
+
+const createCircle = (radius: number): Circle => ({ kind: 'circle', radius, });
+const createSquare = (sideLength: number): Square => ({ kind: 'square', sideLength, });
+
+const calcRadius = (shape: Shape) => exhaustive.tag(shape, 'kind', {
+  square: (s) => Math.sqrt((s.sideLength * s.sideLength) / Math.PI),
+  circle: (c) => c.radius,
+  abstract: (shape) => shape.calcRadius(),
+});
+
+// Example usage:
+const circle = createCircle(5);
+const square = createSquare(8);
+
+console.log(`circle radius: ${calcRadius(circle)}`);
+console.log(`square radius: ${calcRadius(square)}`);
+
+const customShape = { kind: 'abstract', calcRadius: () => 3 };
+console.log(`custom shape radius: ${calcRadius(customShape)}`);
+
+// If the code above was "locked" for modification, you
+// would have many way to extend it, one non-trivial example
+// would be extending the Shape class. In OOP you would have
+// to wrap and uses adapters to achieve this, in FP you could
+// do so through template parameters:
+type Shape<C extends AbstractShape = AbstractShape> = Circle | Square | C;
+
+// ...
+
+type CustomShape = AbstractShape & { calcArea(): number; };
+
+const calcArea = (shape: Shape<CustomShape>) => exhaustive.tag(shape, 'kind', {
+  // The responsibility falls on the developer to not misuse internals.
+  // Properties can often be marked as private through __ notation but they
+  // will remain accessible.
+  square: (s) => s.sideLength * s.sideLength,
+  circle: (c) => Math.PI * c.radius ** 2,
+  abstract: (shape) => shape.calcArea(),
+});
+```
+</SideBySideCode>
+
+## Dependency Inversion
+
+There are many packages for dependency inversion in typescript, a
+prominent one is inversify, it uses similar mechanism as nest.js, although
+the latter can be quite "hacky" in the way it resolve dependencies.
+
+In both those crate the main advantage is that both the declaration of a
+dependency and it's injection is done in the same place, the problem with
+those crate is that you inevitably sacrifice type safety as the
+dependencies are "assumed" to be loaded instead of ensured through the
+typesystem.
+
+In this example I will showcase how to achieve the same
+behavior, without packages, and with proper typing through functional
+typescript. the point is to prove that getting away from standard OOP will
+bring  improvment with minimal effort.
+
+<SideBySideCode language="typescript">
+```typescript
+type WeaponKind = 'sword' | 'firearm';
+
+type Weapon = {
+  damage: number;
+  kind: WeaponKind;
+};
+
+const ninjaWeaponId: symbol = Symbol.for('NinjaWeaponId');
+
+@injectable()
+class Katana implements Weapon {
+  public readonly damage: number = 10;
+  public readonly kind: WeaponKind = 'sword';
+}
+
+@injectable()
+class Ninja {
+  constructor(
+    @inject(ninjaWeaponId)
+    public readonly weapon: Weapon,
+  ) {}
+
+  // Perform a slash attack and returns it's damage
+  slash(): number {
+    switch (this.weapon.kind) {
+      case 'sword':
+        return 1.1 * this.weapon.damage;
+      case 'firearm':
+        return 0;
+    }
+  }
+}
+
+const container: Container = new Container();
+
+container.bind(Ninja).toSelf();
+container.bind(ninjaWeaponId).to(Katana);
+
+const ninja: Ninja = container.get(Ninja);
+
+console.log('Damage dealt:', ninja.slash());
+```
+```typescript
+// Some utilities are needed to make this work
+type Lazy<T> = () => T;
+
+const lazy = <T>(initializer: () => T): Lazy<T> => {
+  let initialized = false;
+  let value: T | undefined;
+  return (() => {
+    if (!initialized) {
+      value = initializer();
+      initialized = true;
+    }
+    return value!;
+  }) as Lazy<T>;
+};
+
+type Injected<K extends string, T> = Record<K, Lazy<T>>;
+
+type ContainerBuilder<T extends Record<string, any>> = {
+  bind: <K extends string, V>(key: K, value: V) => ContainerBuilder<T & Injected<K, V>>;
+  lazy: <K extends string, V>(
+    key: K,
+    initializer: (context: T) => V,
+  ) => ContainerBuilder<T & Injected<K, V>>;
+  build: () => T;
+};
+
+const createContainer = <T extends Record<string, any>>(): ContainerBuilder<T> => {
+  const context: Partial<T> = {};
+
+  const builder: ContainerBuilder<T> = {
+    bind<K extends string, V>(key: K, value: V) {
+      (context[key] as any) = () => value;
+      return this as any;
+    },
+    lazy<K extends string, V>(key: K, initializer: (context: T) => V) {
+      (context[key] as any) = lazy(() => initializer(context as T));
+      return this as any;
+    },
+    build() {
+      return context as T;
+    },
+  };
+
+  return builder;
+};
+
+// We will take a different approach in functional programming
+type WeaponKind = 'sword' | 'firearm';
+
+type Weapon = {
+  damage: number;
+  kind: WeaponKind;
+};
+
+const Katana: Weapon = {
+  damage: 10,
+  kind: 'sword',
+};
+
+// If you need multiple injection you would do it as such:
+// Injected<'a', A> & Injected<'b', B>
+const createNinja = (ctx: Injected<'ninjaWeapon', Weapon>) => ({
+  slash(): number {
+    switch (ctx.ninjaWeapon().kind) {
+      case 'sword':
+        return 1.1 * ctx.ninjaWeapon().damage;
+      case 'firearm':
+        return 0;
+    }
+  },
+});
+
+// every injected service is done lazily so that we avoid circular
+// dependencies from the get go.
+const container = createContainer()
+  .bind('ninjaWeapon', Katana)
+  .lazy('ninja', createNinja)
+  .build();
+
+const ninja = container.ninja();
+
+console.log('Damage dealt:', ninja.slash());
+
+const weapon = container.ninjaWeapon();
+console.log('ninja weapon kind', weapon.kind);
+```
+</SideBySideCode>
+
+### Validation
+
+Some framework still relies on decorators for object validation,
+one of the most popular library using decorators is class-validator, it's
+the one mentioned in nest.js documentation.
+
+class-validator has quite the history and is a proven solution for class
+validation, but it still fall short in it's use of the typesystem; today
+libraries like zod makes use of function composition and typescript
+powerful type inference.
+
+I will use it as an example of why you need to think carefully about
+decorators as they do not play well with typescript.
+<SideBySideCode language="typescript">
+```typescript
+// enums are quite problematic in javascript ([find source]) but are required since
+// decorator need it's symbol to work.
+enum UserRole {
+  ADMIN = 'admin',
+  USER = 'user',
+}
+
+class Profile {
+  @IsString()
+  // Here we are making the mistake of having the value
+  // marked as optional but it is not nullable in the type.
+  // Decorators fundamentally cannot access class properties
+  // type information.
+  @IsOptional()
+  @MinLength(3)
+  bio!: string;
+
+  @IsDate()
+  @Type(() => Date)
+  joinedDate!: Date;
+
+  @IsOptional()
+  @IsString()
+  avatarUrl?: string;
+}
+
+class User {
+  @IsString()
+  @MinLength(2)
+  name!: string;
+
+  @IsEmail()
+  email!: string;
+
+  @IsEnum(UserRole)
+  role!: UserRole;
+
+  @ValidateNested()
+  @Type(() => Profile)
+  profile!: Profile;
+
+  @Expose()
+  @Transform(({ obj }) => `${obj.name} (${obj.role})`)
+  displayName!: string;
+}
+
+const userData = {
+  name: 'John Doe',
+  email: 'john@example.com',
+  role: 'admin' as UserRole,
+  profile: {
+    bio: 'Software developer',
+    joinedDate: new Date('2022-01-15'),
+    avatarUrl: 'https://example.com/avatar.jpg',
+  },
+} satisfies Partial<User>;
+
+// If you forget class conversion here, your object will
+// pass validation even if invalid, which is very unsafe for a
+// validation library!
+const user = plainToClass(User, userData);
+
+validate(user).then((errors) => {
+  if (errors.length > 0) {
+    console.log('Validation failed:', errors);
+  } else {
+    console.log('User valid:', user);
+    console.log('Display name:', user.displayName); // John Doe (admin)
+  }
+});
+```
+```typescript
+const UserRole = z.enum(['admin', 'user']);
+type UserRole = z.infer<typeof UserRole>;
+//   ^? 'admin' | 'user'
+
+const ProfileSchema = z.object({
+  bio: z.string().min(3),
+  joinedDate: z.date(),
+  avatarUrl: z.string().url().optional(),
+});
+
+type Profile = z.infer<typeof ProfileSchema>;
+//   ^? { bio: string; joinedDate: Date; avatarUrl?: string }
+
+const UserSchema = z
+  .object({
+    name: z.string().min(2),
+    email: z.string().email(),
+    role: UserRole,
+    profile: ProfileSchema,
+  })
+  .transform((user) => ({
+    ...user,
+    displayName: `${user.name} (${user.role})`,
+  }));
+
+type User = z.infer<typeof UserSchema>;
+
+// Usage
+const userData = {
+  name: 'John Doe',
+  email: 'john@example.com',
+  role: 'admin',
+  profile: {
+    bio: 'Software developer',
+    joinedDate: new Date('2022-01-15'),
+    avatarUrl: 'https://example.com/avatar.jpg',
+  },
+} satisfies Partial<User>;
+
+try {
+  const user = UserSchema.parse(userData);
+  console.log('User valid:', user);
+  console.log('Display name:', user.displayName); // John Doe (admin)
+} catch (error) {
+  if (error instanceof z.ZodError) {
+    console.log('Validation failed:', error.errors);
+  }
+}
+```
+</SideBySideCode>
+
+## Builder Pattern vs Fluent Function Chains
+
+<SideBySideCode language="typescript">
+```typescript
+class UriBuilder {
+  private parts: string[] = [];
+  add(part: string) {
+    this.parts.push(part);
+    return this;
+  }
+  build() {
+    return '/' + this.parts.join('/');
+  }
+}
+
+const product: string = new UriBuilder().add('hello').add('world').build();
+console.log(product); // "/hello/world"
+```
+```typescript
+const uriBuilder = (initial: string[] = []) => ({
+  add: (part: string) => uriBuilder([...initial, part]),
+  build: () => '/' + initial.join('/'),
+});
+// There are ways to get a string literal type at the end instead of string
+const product: string = uriBuilder().add('hello').add('world').build();
+console.log(product); // "/hello/world"
+```
+</SideBySideCode>
+
+## Ressources
+
+https://blog.cleancoder.com/uncle-bob/2023/01/19/functional-classes-clojure.html
+https://yiming.dev/blog/2022/07/10/how-let-it-fail-leads-to-simpler-code/
+https://prahladyeri.github.io/blog/2024/10/the-illusion-of-simplicity.html
+https://meanderingthoughts.hashnode.dev/programming-paradigms-limit-what-you-can-do-and-that-is-a-good-thing
+
+If you wan't to learn more I greatly advice [this article](https://dannorth.net/best-simple-system-for-now/) from Dan North, and his other ones.

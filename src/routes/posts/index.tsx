@@ -1,8 +1,8 @@
+import type { DocumentHead } from '@builder.io/qwik-city';
 import articles from '~/generated/blog-data.json';
 import { BlogCard } from '~/ui/layout/blog-card';
 import { PageLayout } from '~/ui/layout/page-layout';
 import { buildHead } from '~/utils/build-head';
-import type { DocumentHead } from '@builder.io/qwik-city';
 
 type Article = {
   slug: string;

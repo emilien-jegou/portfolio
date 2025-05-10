@@ -7,8 +7,8 @@ import {
   useSignal,
   useVisibleTask$,
 } from '@builder.io/qwik';
-import { useColorMode } from '~/hooks/use-color-mode';
 import type { Signal } from '@builder.io/qwik';
+import { useColorMode } from '~/hooks/use-color-mode';
 import type { ColorMode } from '~/hooks/use-color-mode';
 
 export type ThemeContextData = {
@@ -27,7 +27,7 @@ export const ThemeContextProvider = component$(() => {
 
 export const useColorModeSignal = (): Signal<undefined | ColorMode> => {
   const cm = useColorMode();
-  const colorMode = useSignal<ColorMode | undefined>(undefined);
+  const colorMode = useSignal<ColorMode | undefined>();
 
   // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(async () => {

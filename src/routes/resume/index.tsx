@@ -126,7 +126,7 @@ export const Snippet = (props: SnippetProps) => (
 
 export default () => {
   return (
-    <div class="font-dm mb-8">
+    <div class="font-body mb-8">
       <div class="p-4" style={{ background: '#FCD51F' }}>
         <h1 class="text-xl font-bold">Emilien Jegou</h1>
         <div class="mt-4 flex gap-4">
@@ -140,7 +140,7 @@ export default () => {
           <HeaderCategory icon={<>i</>} label="GitHub" href="https://github.com/emilien-jegou" />
         </div>
 
-        <div class="mt-4 flex flex-col bg-default rounded-2xl px-6 py-4">
+        <div class="mt-4 flex flex-col bg-paper rounded-2xl px-6 py-4">
           <HeaderDesc label="Current role" content="Full Stack Developer" />
           <HeaderDesc label="Experience" content="B2C, B2B" />
           <HeaderDesc

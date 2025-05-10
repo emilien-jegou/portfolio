@@ -8,7 +8,6 @@ const ContactFormSchema = z.object({
   metadata: z.optional(z.string()),
 });
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const run: ApiFunction = async (req, env, _ctx) => {
   // Parse and validate the form data
   const formData = await req.formData();
@@ -27,7 +26,7 @@ export const run: ApiFunction = async (req, env, _ctx) => {
     .bind(
       parsedData.email,
       parsedData.message,
-      Number(new Date()),
+      Date.now(),
       parsedData.category,
       parsedData.metadata ?? '{}',
     )

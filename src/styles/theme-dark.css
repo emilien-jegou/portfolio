@@ -1,0 +1,50 @@
+@plugin '@onwo/tailwindcss/dist/theme' {
+  name: 'onwo-dark';
+
+  color-accent-accent: #8eb6ff;
+
+  color-bg-paper: #030712;
+  color-bg-parchment: #2a2b3b;
+  color-bg-papyrus: #20212e;
+
+  color-text-ink: #eeeffc;
+  color-text-lead: #e4e5f0;
+  color-text-graphite: #cdced9;
+  color-text-contrast: rgb(252, 252, 255);
+
+  color-hint-stare: rgb(39, 125, 97);
+  color-hint-scan: rgba(12, 12, 33, 0.13);
+  color-hint-gaze: rgba(12, 12, 33, 0.56);
+
+  color-border-line: #80808059;
+
+  color-status-warn: #ffb319;
+  color-status-error: #dc2626;
+  color-status-success: #00a064;
+}
+
+/*
+--color-text-disabled: #c3c4c9;
+--color-border-default: #80808059;
+--color-border-subtle: #80808033;
+--color-border-subtler: #80808040;
+--color-focused: #578dff;
+--color-focused-subtle: #578dff40;
+*/
+
+@utility dark-theme {
+  /* Background */
+  --color-bgr-contrast: #2a2a2a;
+
+  /* Text */
+  --color-text-disabled: #c3c4c9;
+  --color-text-contrast: #ffffff;
+
+  /* Other */
+  --color-focused: rgb(87, 141, 255);
+  --color-focused-subtle: rgba(87, 141, 255, 0.25);
+
+  --color-error: #dc2626;
+  --color-success: #00a064;
+}
+

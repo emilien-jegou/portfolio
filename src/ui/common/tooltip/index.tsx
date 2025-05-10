@@ -1,9 +1,9 @@
+import type { JSXChildren } from '@builder.io/qwik';
 import { match } from 'ts-pattern';
 import { cn } from '~/utils/cn';
 
-import styles from './Tooltip.module.css';
-import type { JSXChildren } from '@builder.io/qwik';
 import type { Classes } from '~/utils/types';
+import styles from './Tooltip.module.css';
 
 export type TooltipProps = {
   info: JSXChildren;
@@ -19,7 +19,7 @@ export const Tooltip = (props: TooltipProps) => (
     {!props.hidden && (
       <div
         class={cn(
-          'absolute px-2 py-0.5 transition-opacity delay-200 duration-500 opacity-0 rounded-sm bg-base-black text-base-white pointer-events-none',
+          'absolute px-2 py-0.5 transition-opacity delay-200 duration-500 opacity-0 rounded-onwo-s-xs bg-base-black text-base-white pointer-events-none',
 
           match(props.position ?? 'right')
             .with('right', () => 'left-full top-1/2 -translate-y-1/2')
