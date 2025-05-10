@@ -26,5 +26,15 @@
       "shareImageUrl": "/images/posts/github-discovery-jan-2024/share.svg",
       "createdAt": 1717777441000
     }
+  },
+  "gradients-app": {
+    "data": {
+      "title": "Building a gradient generator",
+      "thumbnailUrl": "/images/posts/gradients/app1.png",
+      "coverUrl": "/images/posts/gradients/app0.png",
+      "description": "I have been playing around with gradient generation recently, here is the result app",
+      "shareImageUrl": "/images/posts/gradients/app1.png",
+      "createdAt": 1746834416000
+    }
   }
 }
