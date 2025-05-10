@@ -21,7 +21,7 @@ export const SelectField = component$(
     <div class={classes?.root}>
       <Label info={info} classes={{ root: 'mb-2' }} text={label} required={required} />
       <Select error={Boolean(error)} class={cn('w-full', classes?.select)} {...props} />
-      <p class={cn('mt-1 text-xs text-subtler select-none', error && 'text-error')}>
+      <p class={cn('mt-1 text-xs text-graphite select-none', error && 'text-error')}>
         {error || helperText}&nbsp;
       </p>
     </div>

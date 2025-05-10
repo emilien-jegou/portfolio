@@ -18,7 +18,7 @@ export const Label = ({ classes, text, info, required }: LabelProps) => (
       {required ? ' *' : ''}
     </span>
     {info && (
-      <Tooltip classes={{ root: 'ml-1', tooltip: 'text-sm text-subtle' }} info={info}>
+      <Tooltip classes={{ root: 'ml-1', tooltip: 'text-sm text-lead' }} info={info}>
         <HelpCircle />
       </Tooltip>
     )}

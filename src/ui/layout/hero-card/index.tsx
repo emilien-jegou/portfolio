@@ -14,7 +14,7 @@ type HeroCardProps = {
 
 export const HeroCard = (props: HeroCardProps) => (
   <a
-    class={cn('h-full relative rounded-lg bg-subtle w-full', props.class)}
+    class={cn('h-full relative rounded-lg bg-parchment w-full', props.class)}
     href={props.slug}
     style={{
       backgroundImage: `url('${props.coverUrl}')`,

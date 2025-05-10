@@ -12,7 +12,7 @@ export const Link = (props: LinkProps) => (
   <QwikLink
     href={props.href}
     style={props.style}
-    class={cn('flex text-default items-center font-semibold text-sm', props.class)}
+    class={cn('flex text-ink items-center font-semibold text-sm', props.class)}
   >
     <span class="flex justify-center underline items-center gap-1">
       {props.children ? props.children : props.label}

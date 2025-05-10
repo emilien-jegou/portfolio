@@ -18,39 +18,37 @@ export const InitialColorModeProvider = component$(() => {
   return (
     <ClientEffect
       onMount={async (_, dispatch) => {
+        function setTheme(theme: 'light' | 'dark') {
+          document.body.dataset['colorMode'] = theme;
+          document.documentElement.style.colorScheme = theme;
+
+          if (theme === 'dark') {
+            document.body.classList.add('theme-onwo-dark');
+            document.body.classList.remove('theme-onwo-light');
+          } else {
+            document.body.classList.add('theme-onwo-light');
+            document.body.classList.remove('theme-onwo-dark');
+          }
+        }
+
         // preset before calling localStorage function
         if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-          document.body.dataset['colorMode'] = 'dark';
-          document.documentElement.style.colorScheme = 'dark';
+          setTheme('dark');
         } else {
           // We ignore the light color mode because
           // the website look better in dark right now
-          //document.body.dataset['colorMode'] = 'light';
-          //document.documentElement.style.colorScheme = 'light';
-          document.body.dataset['colorMode'] = 'dark';
-          document.documentElement.style.colorScheme = 'dark';
+          setTheme('dark');
         }
 
         // TODO: safe get localStorage
         const colorMode = localStorage.getItem('website-color-mode');
 
+        console.info('in here', colorMode);
         if (colorMode === 'dark') {
-          document.body.dataset['colorMode'] = 'dark';
-          document.documentElement.style.colorScheme = 'dark';
+          setTheme('dark');
           dispatch('dark');
         } else if (colorMode === 'light') {
-          document.body.dataset['colorMode'] = 'light';
-          document.documentElement.style.colorScheme = 'light';
-          dispatch('light');
-        } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-          document.body.dataset['colorMode'] = 'dark';
-          document.documentElement.style.colorScheme = 'dark';
-          dispatch('dark');
-        } else {
-          document.body.dataset['colorMode'] = 'dark';
-          document.documentElement.style.colorScheme = 'dark';
-          //document.body.dataset['colorMode'] = 'light';
-          //document.documentElement.style.colorScheme = 'light';
+          setTheme('light');
           dispatch('light');
         }
       }}

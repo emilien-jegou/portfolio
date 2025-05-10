@@ -20,7 +20,7 @@ export const InputField = component$(
     <div class={classes?.root}>
       <Label info={info} classes={{ root: 'mb-2' }} text={label} required={required} />
       <Input error={Boolean(error)} class={cn('w-full', classes?.input)} {...props} />
-      <p class={cn('mt-1 text-xs text-subtler select-none', error && 'text-error')}>
+      <p class={cn('mt-1 text-xs text-graphite select-none', error && 'text-error')}>
         {error || helperText}&nbsp;
       </p>
     </div>

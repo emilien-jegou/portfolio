@@ -8,7 +8,13 @@ import {
 } from '~/utils/deep-indexing';
 import { chainSuccess } from '~/utils/result';
 import { safeJsonParse, safeJsonStringify } from '~/utils/safe-std';
-import { getStorage, type StorageType } from '~/utils/storage';
+import {
+  getStorage,
+  storageGet,
+  storageRemove,
+  storageSet,
+  type StorageType,
+} from '~/utils/storage';
 import type { QRL, Signal } from '@builder.io/qwik';
 import type { FormErrors, PartialValues, ValidateForm } from '@modular-forms/qwik';
 import type { DeepPartial } from 'ts-essentials';
@@ -80,7 +86,7 @@ export const useForm = <FormValues extends Record<string, any>>(
     // load it into the given signal.
     if (!initialized.value) {
       initialized.value = true;
-      const current = formStorage.get();
+      const current = storageGet(formStorage);
       if (current.kind === 'none') return;
       const newKeys = new Set(Object.keys(current.value));
       // eslint-disable-next-line qwik/valid-lexical-scope
@@ -107,7 +113,7 @@ export const useForm = <FormValues extends Record<string, any>>(
     if (data.kind === 'success') {
       const value = data.value as any;
       persistenceOptions.ignoreKeys.forEach((key) => removeIndexedValue(value, key));
-      formStorage.set(value);
+      storageSet(formStorage, value);
     }
   });
 
@@ -154,7 +160,7 @@ export const useForm = <FormValues extends Record<string, any>>(
       // Clear the form storage on success
       if (persistFormValues) {
         const formStorage = await getFormStorage();
-        formStorage.remove();
+        storageRemove(formStorage);
       }
       return;
     }

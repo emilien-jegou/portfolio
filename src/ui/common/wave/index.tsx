@@ -1,7 +1,6 @@
 import { component$, useComputed$ } from '@builder.io/qwik';
+import { Animated } from '@onwo/primitives';
 import { cn } from '~/utils/cn';
-
-import './wave.css';
 
 type WaveProps = {
   class?: string;
@@ -10,13 +9,17 @@ type WaveProps = {
 
 export const Wave = component$((props: WaveProps) => {
   const delay = useComputed$(() => -(Math.random() * props.timeSec));
+
   return (
-    <div
-      class={cn('wave w-full pointer-events-none h-full', props.class)}
-      style={{
-        animation: `wave ${props.timeSec}s infinite reverse linear`,
-        animationDelay: `${delay.value}s`,
+    <Animated
+      in={{
+        timingFunction: 'linear',
+        iterationCount: 'infinite',
+        durationMs: props.timeSec * 1000,
+        rotate: 360,
+        delay: delay.value * 1000,
       }}
+      class={cn('pointer-events-none rounded-[40%] origin-center w-fit', props.class)}
     />
   );
 });

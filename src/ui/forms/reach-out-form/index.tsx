@@ -1,29 +1,34 @@
-import { useContext, type Signal, component$, useSignal, useTask$ } from '@builder.io/qwik';
+import { useContext, type Signal, component$, useSignal, useTask$, $ } from '@builder.io/qwik';
+import { Modal as PModal } from '@onwo/primitives';
+import { Modal } from '@onwo/ui';
 import { PortalAPI } from '~/providers/portal';
-import { Modal } from '~/ui/common/modal';
 import { sendToast } from '~/ui/common/toast';
 import { sleep } from '~/utils/sleep';
 import { ReachOutFormLogic } from './form-logic';
 
-type ReachOutFormProps = {
-  'bind:show': Signal<boolean>;
-};
+type ReachOutFormProps = {};
 
 export const ReachOutForm = component$((props: ReachOutFormProps) => {
+  const context = PModal.useModalContext();
   const portal = useContext(PortalAPI);
   const loading = useSignal(false);
 
   useTask$(({ track }) => {
-    track(() => props['bind:show'].value);
-    if (props['bind:show'].value == false) return;
+    track(() => context.panel.value);
+    if (context.panel.value === undefined) return;
     loading.value = false;
   });
 
+  const closeModal$ = $(() => {
+    if (!context.panel.value) return;
+    context.panel.value.opened.value = false;
+  });
+
   return (
-    <Modal bind:show={props['bind:show']}>
-      <h2 class="mb-6 sm:mb-8 mt-6 sm:mt-8 text-xl sm:text-3xl font-bold max-w-[480px] leading-relaxed">
-        Need help with anything? Get in touch
-      </h2>
+    <Modal.Panel>
+      <Modal.Header>
+        <Modal.Title>Need help with anything? Get in touch</Modal.Title>
+      </Modal.Header>
       <ReachOutFormLogic
         loading={loading.value}
         onSubmit$={async (data) => {
@@ -59,12 +64,10 @@ export const ReachOutForm = component$((props: ReachOutFormProps) => {
             });
             console.error(error);
           }
-          props['bind:show'].value = false;
+          closeModal$();
         }}
-        onCancel$={() => {
-          props['bind:show'].value = false;
-        }}
+        onCancel$={closeModal$}
       />
-    </Modal>
+    </Modal.Panel>
   );
 });

@@ -30,7 +30,7 @@ export const SelectOption = component$((props: SelectOptionProps) => {
       aria-selected={props.selected}
       tabIndex={0}
       class={cn(
-        'flex w-full select-none items-center rounded-xs py-1.5 pl-2 pr-8 text-sm outline-hidden focus:bg-subtler data-disabled:pointer-events-none data-disabled:opacity-50',
+        'flex w-full select-none items-center rounded-xs py-1.5 pl-2 pr-8 text-sm outline-hidden focus:bg-papyrus data-disabled:pointer-events-none data-disabled:opacity-50',
         props.selected && 'select-selected-option',
       )}
       data-radix-collection-item=""

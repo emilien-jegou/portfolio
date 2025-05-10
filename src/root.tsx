@@ -25,7 +25,7 @@ export default () => {
       </head>
       <body lang="en">
         <div class="absolute z-[-1] top-0 left-0 w-screen h-[32vh] bg-pattern-checked pattern-subtlest" />
-        <div class="absolute z-[-1] top-[22vh] left-0 w-screen h-[10vh] bg-linear-to-b from-transparent to-bg-default" />
+        <div class="absolute z-[-1] top-[22vh] left-0 w-screen h-[10vh] bg-linear-to-b from-transparent to-bg-paper" />
         <ThemeContextProvider>
           <CookieBannerProvider>
             <InitialColorModeProvider />

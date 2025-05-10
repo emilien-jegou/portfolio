@@ -31,5 +31,12 @@ export const useColorMode = (): UseColorModeRet => ({
   set: $((newColorMode: ColorMode) => {
     localStorage.setItem(colorModeLocalStorageKey, newColorMode);
     document.body.dataset['colorMode'] = newColorMode;
+    if (newColorMode === 'light') {
+      document.body.classList.add('theme-onwo-light');
+      document.body.classList.remove('theme-onwo-dark');
+    } else {
+      document.body.classList.add('theme-onwo-dark');
+      document.body.classList.remove('theme-onwo-light');
+    }
   }),
 });

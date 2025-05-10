@@ -86,7 +86,7 @@ export const Textarea = component$(
           error && 'border-error',
           focused.value && 'field-focused',
           disabled &&
-            'cursor-not-allowed shadow-xs outline-0 border-transparent bg-subtle text-subtle',
+            'cursor-not-allowed shadow-xs outline-0 border-transparent bg-parchment text-lead',
           className,
         )}
       >
@@ -97,7 +97,7 @@ export const Textarea = component$(
           rows={props.rows}
           disabled={disabled}
           class={cn(
-            'w-full block h-[39px] p-2.5 pt-3 pr-10 text-sm bg-transparent leading-tight focus:outline-hidden font-medium placeholder:font-normal text-text-default placeholder:text-text-subtle focus:placeholder:text-subtler resize-none overflow-y-hidden',
+            'w-full block h-[39px] p-2.5 pt-3 pr-10 text-sm bg-transparent leading-tight focus:outline-hidden font-medium placeholder:font-normal text-ink placeholder:text-lead focus:placeholder:text-graphite resize-none overflow-y-hidden',
             disabled && 'cursor-not-allowed',
           )}
           onFocus$={() => {

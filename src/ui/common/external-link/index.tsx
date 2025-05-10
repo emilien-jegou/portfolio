@@ -16,7 +16,7 @@ export const ExternalLink = (props: ExternalLinkProps) => (
   <a
     href={props.href}
     style={props.style}
-    class={cn('flex text-default items-center font-semibold text-sm', props.class)}
+    class={cn('flex text-ink items-center font-semibold text-sm', props.class)}
     rel={['nofollow', 'noopener', 'external', props.noreferrer && 'noreferrer']
       .filter(Boolean)
       .join(' ')}

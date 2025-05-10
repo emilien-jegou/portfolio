@@ -6,6 +6,7 @@ import svgx from "@svgx/vite-plugin-qwik";
 import tsconfigPaths from "vite-tsconfig-paths";
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import MarkdownParserPlugin from './utils/vite-plugin-qwik-markdown-parser';
+import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig((): UserConfig => {
   return {
@@ -31,6 +32,7 @@ export default defineConfig((): UserConfig => {
       qwikVite(),
       qwikPwa({}),
       svgx(),
+      tailwindcss(),
       tsconfigPaths()
     ],
     server: {

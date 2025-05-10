@@ -1,5 +1,5 @@
 @reference "../../../global.css";
 
 .select-expanded:not(:hover) .select-selected-option {
-  @apply bg-bgr-subtle;
+  @apply bg-parchment;
 }

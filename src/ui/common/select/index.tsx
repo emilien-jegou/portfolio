@@ -60,11 +60,11 @@ export const Select = component$((props: SelectProps) => {
           'field w-full flex items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 shadow-sm ring-offset-background [&amp;>span]:line-clamp-1',
           (expanded.value || focused.value) && 'field-focused',
           props.disabled &&
-            'cursor-not-allowed shadow-sm outline-0 border-transparent bg-subtle text-subtle',
+            'cursor-not-allowed shadow-sm outline-0 border-transparent bg-parchment text-lead',
           props.error && 'border-error',
         )}
       >
-        <span class={cn('pointer-events-none', !props.selected && 'text-subtler')}>
+        <span class={cn('pointer-events-none', !props.selected && 'text-graphite')}>
           {(props.selected ? props.options.find((a) => a.value === props.selected)?.label : null) ??
             props.placeholder ??
             'select an option'}
@@ -77,7 +77,7 @@ export const Select = component$((props: SelectProps) => {
           defaultPosition={findIndex(props.options, (o) => o.value === props.selected) ?? 0}
           role="presentation"
           class={cn(
-            'select-expanded flex flex-col border shadow-sm rounded-md absolute bg-default z-50 top-[100%] mt-2 p-1 h-fit w-full',
+            'select-expanded flex flex-col border shadow-sm rounded-md absolute bg-paper z-50 top-[100%] mt-2 p-1 h-fit w-full',
           )}
         >
           {props.options.map((option, idx) => (

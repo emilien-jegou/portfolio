@@ -24,7 +24,7 @@ export const CatButton = component$(() => {
         class="z-4000 pointer-events-none select-none fixed top-0 left-0 w-screen h-screen"
       />
       <Button
-        class="group overflow-hidden bg-default w-24"
+        class="group overflow-hidden bg-paper w-24"
         variant="outline"
         onClick$={$(() => {
           launcher.value?.launchCat();

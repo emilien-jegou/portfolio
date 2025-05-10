@@ -21,7 +21,7 @@ export const ThemeSwitcherButton = component$(() => {
   return (
     <>
       <button
-        class="z-40 rounded-full bg-default border border-subtle hover:bg-subtle h-[40px] w-[40px] flex items-center justify-center"
+        class="z-40 rounded-full bg-paper border border-line hover:bg-parchment h-[40px] w-[40px] flex items-center justify-center"
         type="button"
         onClick$={() => colorMode.set(currentColorMode.value === 'dark' ? 'light' : 'dark')}
       >

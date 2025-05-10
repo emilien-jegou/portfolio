@@ -1,8 +1,9 @@
 ---
 data:
-    title: "Without class; typescript side-by-side comparison"
+    published: false
+    title: "I love function classes"
     thumbnailUrl: '/images/posts/10-libraries-to-enhance-your-typescript-projects/thumbnail.png'
-    description: "Discover a set of TypeScript libraries to enhance your productivity, reduce bugs and deepen your understanding of the language."
+    description: ""
     shareImageUrl: '/images/posts/10-libraries-to-enhance-your-typescript-projects/share.svg'
     createdAt: 1740537088000
 ---
@@ -16,11 +17,16 @@ import { BlogImage } from '~/ui/common/blog-image';
 import HaskellImage from './haskell.png?jsx';
 import GetterAndSetterImage from './getter-and-setter.png?jsx';
 
-Classes have been a part of programming since the early days of JavaScript. Initially, developers used functions to effectively represent classes, which was sufficient for the needs of JavaScript at the time. However, as the language evolved, developers began to ask for more features.
+Why would you use function classes, after all we added the 'class' keyword to javascript for a reason and at face value they have a few inconveninent:
+- people are not used to them
+- they can be more verbose
+- inheritance with them can be confusing ([and is slower](https://ncjamieson.com/prefer-interfaces/))
+- they are not-named so error messages may be less clear
 
-The 2000s saw a significant influence of object-oriented programming, languages like PHP, C#, C++, and Java consolidated their presence, it was in this context that classes specific utilities were first introduced to javascript in 2009 through the ES6 (ECMAScript 6) proposal which was finalized as a standard in 2015.
-
-The introduction of the 'class' keyword in javascript was largely driven by a desire for familiarity and structure. Although the addition of OOP specific keywords was not a technical necesitty, their introduction catered to developers accustomed to traditional OOP methods and provided a platform for "uniformity" accross differents programming languages.
+This post will try to showcase that function classes:
+- are more flexible
+- are stricter
+- are more powerful
 
 <SideBySideCode language="javascript">
 ```javascript
@@ -65,48 +71,6 @@ class HelloMessage extends React.Component {
 }
 ```
 </SideBySideCode>
-
-Since their "shinier" counterpart arrived, function classes have slowly faded away, and OOP practices have thrived to this day through libraries like Angular and Nest.js, but what does this new addition really bringed to the language? This article is an opinionated one that wish to give you a different perspective on OOP and programming in typescript in general, my wish is to give a more nuance take about what OOP is really giving you with the hope of broadening your horizon in a sort of article/tutorials kinda way. — enjoy!
-
-## "Your code doesn't allow X"
-
-A common criticism of class-based programming is its tendency toward
-over-engineering, in that regards, converting class-heavy code to more
-functional approaches frequently results in significant code reduction, I will credit two reasons for this: programming practices and an "architectural"-first mindset.
-
-Over-engineering solutions often come from a place of anticipating future
-extensions or requirements, in OOP this tendancy could partly be explained by
-the highly codified practices developers have to follow (`SOLID`, `DRY`,
-design patterns and so on). While in isolation thoses rules may appears appealing, in combination they often lead to over-abstraction, on any single piece of code the question "*which of SOLID or DRY principles could this code benefit from*" would lead up to an answer.
-
-The `Single Responsibility principles` is notable for leading developers to premature optimization, as abstractions can always be justified by the rule: my class does X and Y therefore it has two responsibility or two reason to exist. When it was created the rule didn't provide a "bad reason" for abstraction, this is obviously an issue as the benefit of abstraction are much more nuanced that the rule would let it believe, to give a parallel it would be like asking developers to drink more water as it's good for them, just for them to suffer from water intoxication, not so strangely developers are very good at seeing things in a binary approach (abstraction is good or bad).
-
-<GetterAndSetterImage />
-[Getter and setter, or an example of how programming concepts could lead to premature optimizations](https://stackoverflow.com/questions/1568091/why-use-getters-and-setters-accessors)
-
-What you get from abstraction is isolation of changes, yet a more efficient approach would be implementing these hypothetical extensions only when genuinely required, *through focused refactoring*, or not be afraid of changes.
-
-SOLID gained popularity in the early 2000s but with the advent
-of LSP and types systems refactoring has never been made easier, in 2004
-dynamic programming languages thrived (think python, ruby, PHP), in that
-context any security guarantees in your code were extrapolated to extreme
-importance. Without strong typing it becomes trivial for developers to breaks
-things, as such Robert C. Martin created SOLID which is essentially a platform
-for code to be extended rather than modified, why care if developers became too
-strict with the rule implementation when the opposite approach could lead to
-disastrous bugs?
-
-Assuming you possess and respect a strongely typed approach, a more pragmatic
-"code what you need" or "keep it simple" development strategy will keep your
-codebase cleaner, simpler, and more maintainable; instead of focusing your
-effort on speculatives principles, focus on the gain on what you need right
-now and learn not to fear code iterations.
-
-*why are you telling me this?* -- Well I wan't to be clear about my intent, in this article I will not provide a 1 to 1 representation of javascript classes to their "function" counterpart, instead I will simply reimagine the code from the OOP implementation through the lens of functional programming: or in other word, if you think the code need X you should be able to showcase it.
-
-One example looking at the functional classes example could be: "your code doesn't allow method overwrite because the function is outside of the class", in this case, we would assume that the method *needs* to be overwritten which could be showcase by:
-- a class currently needing to overwrite the method
-- the class is exposed to an external interface and we want our users to be able to extend it.
 
 # Demystifying classes
 
@@ -271,10 +235,10 @@ mitigate the overhead of modifying, resulting in significant code duplication
 HtmlAnchorElement](https://github.com/servo/servo/blob/03e953e22c5cb8ce3d7d375f6f9e841da46ba6f3/components/script/dom/htmlanchorelement.rs#L40)).
 
 Similarly, the Ladybird browser and JavaScript engine initially considered
-switching from C++ to Rust but eventually abandoned the idea due to the
-inheritance barrier, instead opting for Swift, an object oriented language.
+switching from C++ to Rust but eventually opted for Swift instead after facing
+the OOP limitation of rust.
 
-Inheritance would have been possible in rust through complex use of function pointers, but it would have led to an immediate drawback: the type system would not have worked on that code. Yet in typescript, and even before class tokens where introduced we were able to replicate the inheritance behavior without losing any type information.
+Inheritance would have been possible in rust through function pointers and could even have been really fast, but it would have led two an immediate drawback: the type system would not have worked on that code. In typescript, and even before class tokens where introduced we were able to replicate the inheritance behavior without losing any type information.
 
 For our example we will build a simple html inheritance chain.
 

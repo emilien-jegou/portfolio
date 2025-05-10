@@ -1,4 +1,3 @@
-import { Modal } from '../modal';
 import type { Signal } from '@builder.io/qwik';
 
 type ImageBaseProps = {
@@ -13,8 +12,9 @@ type FullscreenImageModalProps = {
   'bind:show': Signal<boolean>;
 };
 
+//<Modal disableBackground bind:show={props['bind:show']}>
 export const FullScreenImageModal = (props: FullscreenImageModalProps) => (
-  <Modal disableBackground bind:show={props['bind:show']}>
+  <div>
     <div
       class="cursor-zoom-out"
       onClick$={() => {
@@ -26,5 +26,5 @@ export const FullScreenImageModal = (props: FullscreenImageModalProps) => (
         {props.image.alt}
       </figcaption>
     </div>
-  </Modal>
+  </div>
 );

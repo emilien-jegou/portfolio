@@ -39,7 +39,7 @@ export const Input = component$(
         class={cn(
           'field border transition-outline rounded-md p-2 w-full focus-visible:field-focused',
           disabled &&
-            'cursor-not-allowed shadow-xs outline-0 border-transparent bg-subtle text-subtle',
+            'cursor-not-allowed shadow-xs outline-0 border-transparent bg-parchment text-lead',
           error && 'border-error',
           className,
         )}
