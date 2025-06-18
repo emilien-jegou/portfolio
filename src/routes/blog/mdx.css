@@ -2,8 +2,17 @@
 
 /* Typography */
 
+
+.mdx > blockquote {
+  @apply pl-4 border-l border-line bg-papyrus;
+}
+
 .mdx > * {
   @apply custom-container mx-auto;
+}
+
+.mdx p > code {
+  @apply bg-parchment px-1 rounded-md border border-line;
 }
 
 .mdx > .mdx-expand {

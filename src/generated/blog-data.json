@@ -36,5 +36,14 @@
       "shareImageUrl": "/images/posts/gradients/app1.png",
       "createdAt": 1746834416000
     }
+  },
+  "type-vs-interface": {
+    "data": {
+      "title": "How interfaces are used in typescript",
+      "thumbnailUrl": "/images/posts/type-vs-interface/thumbnail.png",
+      "description": "I have been playing around with gradient generation recently, here is the result app",
+      "shareImageUrl": "/images/posts/gradients/app1.png",
+      "createdAt": 1750254692000
+    }
   }
 }
