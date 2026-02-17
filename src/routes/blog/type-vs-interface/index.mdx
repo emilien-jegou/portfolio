@@ -33,10 +33,10 @@ interface MyChain<A, B, C, D> {
 
 // You cannot use the "this" keywords in type.
 type MyChain<A, B, C, D> = {
-   chainA(a: A): MyComplexBuilder<A, B, C, D>;
-   chainB(b: B): MyComplexBuilder<A, B, C, D>;
-   chainC(b: C): MyComplexBuilder<A, B, C, D>;
-   chainD(b: D): MyComplexBuilder<A, B, C, D>;
+   chainA(a: A): MyChain<A, B, C, D>;
+   chainB(b: B): MyChain<A, B, C, D>;
+   chainC(b: C): MyChain<A, B, C, D>;
+   chainD(b: D): MyChain<A, B, C, D>;
    execute(): My;
 }
 ```
@@ -44,7 +44,7 @@ type MyChain<A, B, C, D> = {
 
 ## Declaration merging
 
-Declaration merging is a feature that allow multiple interface in the same scope to "merge" implicitely, e.g.:
+Declaration merging (or interface augmentation) is a feature that allow multiple interface in the same scope to "merge" implicitely, e.g.:
 <BlogCode language="typescript">
 ```typescript
 interface MyInterface {
@@ -59,12 +59,12 @@ const x: MyInterface = { age: 123, name: 'John Doe' }
 ```
 </BlogCode>
 
-This is a feature that is rarely used by developers for a few reason:
-- it doesn’t work well with LSP or typescript
+This is a feature that is generally avoided by developers for a few reason:
+- it doesn’t work well with LSP or typescript (e.g. goto definition)
 - it makes your code harder to navigate
-- it’s kinda comfusing and could be bug-inducing
+- Cognitively it's confusing and bug-inducing
 
-Yet there is one use case where declaration merging becomes a valid option: when you wish to extends external interfaces.
+Yet we may still find use-cases for declaration merging, for example when trying to extends external interfaces.
 
 ### On Typescript default
 
@@ -80,8 +80,10 @@ window.myAppVersion = "1.2.3";
 ```
 </BlogCode>
 
-This is the core of what the library `ts-reset` does for improving the standard
-library type-safety, and it does so without plugins, but with a single import:
+This is the how the library `ts-reset` improve javascript standard library
+type-safety, a single import can avoid many typescript pitfall; this is only
+possible through declaration merging:
+
 <BlogCode language="typescript">
 ```typescript
 import '@total-typescript/ts-reset'
@@ -90,8 +92,8 @@ import '@total-typescript/ts-reset'
 
 ### On external libraries
 
-The same principles can be used to extends external libraries in module files; it can help you avoid
-adapters, proxies or implicit casting in your code.
+The same principles is often found in module files for extending external
+libraries, express is a good example for it:
 
 <BlogCode language="typescript">
 ```typescript
@@ -111,12 +113,44 @@ If your package has weak typing (e.g. overly resort to “any” or “unknown�
 external interface). Your users could then resort to declaration merging for
 covering your type declaration as a palliative solution.
 
+## Implicit index signatures
+
+`type` aliases have an implicit index signature, but `interface` don't, it's a subtle difference that could lead to errors e.g.:
+
+<BlogCode language="typescript">
+```typescript
+type DemoType = { hello: number };
+
+const t : { [k: number]: string } = { hello: 123 } as DemoType;
+
+// vs
+
+interface DemoInterface { hello: number }
+
+// Type 'DemoInterface' is not assignable to type '{ [k: number]: string; }'.
+const i : { [k: number]: string } = { hello: 123 } as DemoInterface;
+```
+</BlogCode>
+
+The implicit type signature on type actually create an invalid casting:
+`DemoType` doesn't have any numeric keys or string values. this is sort of a quirky
+scenario but worth mentionning, I actually prefer how interfaces are stricter
+by default on this particular case.
+
+Worth noting that class will behave in the same way as interfaces even when
+they are extending a type.
+
 ## So which one should I use?
 
 > Should I use `interface` unless I need `type` features or use `type` unless I need `interface` features?
 
-In general you will need `type`-only features more often than you will need the `interface`-only one, so I would recommend making it the default choice.
+In general you will need `type`-only features more often than you will need the
+`interface`-only one, so I would recommend making it the default choice.
 
-You can still use interface for inheritance and having access to the `this` keyword when it simplify your types. You will rarely encounter cases where declaration merging can be usefull, only when encountering third-party cases such as the one presented above, so don't focus on it too much.
+You can still use interface for inheritance and having access to the `this`
+keyword when it simplify your types. You will rarely encounter cases where
+declaration merging can be usefull, only when encountering third-party cases
+such as the one presented above, so don't focus on it too much.
 
-Other than that, you may feel more comfortable using interface when coding in OOP, since it's meaning is deeply ingrained, and that's perfectly fine too.
+Other than that, you may feel more comfortable using interface when coding in
+OOP, since it's meaning is deeply ingrained, and that's perfectly fine too.

@@ -559,14 +559,12 @@ type Weapon = {
   kind: WeaponKind;
 };
 
-const Katana: Weapon = {
+const katana: Weapon = {
   damage: 10,
   kind: 'sword',
 };
 
-// If you need multiple injection you would do it as such:
-// Injected<'a', A> & Injected<'b', B>
-const createNinja = (ctx: Injected<'ninjaWeapon', Weapon>) => ({
+const createNinja = (ctx: Context<{ ninjaWeapon: Weapon }>) => ({
   slash(): number {
     switch (ctx.ninjaWeapon().kind) {
       case 'sword':
