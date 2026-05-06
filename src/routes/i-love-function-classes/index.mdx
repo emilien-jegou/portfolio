@@ -1,7 +1,7 @@
 ---
 data:
     published: false
-    title: "I love function classes"
+    title: "Pathing down from function classes"
     thumbnailUrl: '/images/posts/10-libraries-to-enhance-your-typescript-projects/thumbnail.png'
     description: ""
     shareImageUrl: '/images/posts/10-libraries-to-enhance-your-typescript-projects/share.svg'
@@ -238,7 +238,7 @@ Similarly, the Ladybird browser and JavaScript engine initially considered
 switching from C++ to Rust but eventually opted for Swift instead after facing
 the OOP limitation of rust.
 
-Inheritance would have been possible in rust through function pointers and could even have been really fast, but it would have led two an immediate drawback: the type system would not have worked on that code. In typescript, and even before class tokens where introduced we were able to replicate the inheritance behavior without losing any type information.
+Inheritance would have been possible in rust through function pointers and could even have been really fast, but it would have led to two an immediate drawback: the type system would not have worked on that code. In typescript, and even before class tokens where introduced we were able to replicate the inheritance behavior without losing any type information.
 
 For our example we will build a simple html inheritance chain.
 
@@ -324,7 +324,11 @@ console.log(getHTML(elem));
 ```
 </SideBySideCode>
 
-One of the challenge with dealing with inheritance is detecting whether a class extends from another or in other words the `instanceOf` function, it's a bit of an unelegant way to handle class polymorphism but there may be time where it's your only option. As such I also coded a version of this code that allow for this kind of dynamic cast through a cls utility, you can find [it in this gist](https://gist.github.com/emilien-jegou/4ce3e69fb0bcfc047274bda6535df408).
+One of the challenge with dealing with inheritance is detecting whether a class extends from another or in other words the `instanceOf` function, it's a bit of an unelegant way to handle class polymorphism but there may be time where it's your only option.
+
+There's actully nothing magic about instanceOf, for every class defined we append some information payload through the constructor. We can copy the same behavior with a helper function.
+
+As such I also coded a version of this code that allow for this kind of dynamic cast through a cls utility, you can find [it in this gist](https://gist.github.com/emilien-jegou/4ce3e69fb0bcfc047274bda6535df408).
 
 # Part 2: The relation with functional programming
 
@@ -332,7 +336,7 @@ One of the challenge with dealing with inheritance is detecting whether a class 
 
 Thirteen years ago Simon Peyton Jones, the creator of haskell, offered his perspective on programming language evolution, in his now infamous video called "[Haskell is useless](https://www.youtube.com/watch?v=iSmkqocn0oQ)". In it, he explained that languages accross the spectrum of paradigms are working together in order to improve, this sharing of knowledge is what allow for improvment in programming languages and what brings them closer.
 
-Functional programming principles have gained significant footing in the programming community in that aspect, Elixir and Rust both have a dedicated loving fanbase as "in between paradigms" languages, while concepts from FP languages like haskell sips into other languages, sometimes with different names, e.g. haskell `sum types` are available through `tagged unions` in typescript, while concepts like `function composition` reappears through `pipe` utilities.
+Functional programming principles have gained significant footing in the programming community in that aspect, Elixir and Rust both have a dedicated loving fanbase as "in between paradigms" languages, while concepts from FP languages like haskell sips into other languages, sometimes with different names, e.g. haskell `sum types` are available through `tagged unions` in typescript, while concepts like the reader monad reappears through `pipe` utilities.
 
 In my perspective, when it comes to OOP what's keeping it used is that people bought into the paradigm, if something work why changed it? well I am gonna try to give you a reason.
 

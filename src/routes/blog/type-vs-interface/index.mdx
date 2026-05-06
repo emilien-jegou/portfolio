@@ -2,7 +2,7 @@
 data:
   title: 'How interfaces are used in typescript'
   thumbnailUrl: '/images/posts/type-vs-interface/thumbnail.png'
-  description: 'On the little known cases for using interfaces over types in typescript'
+  description: 'On the lesser known cases for using interfaces over types in typescript'
   shareImageUrl: '/images/posts/type-vs-interface/thumbnail.png'
   createdAt: 1750254692000
 ---
@@ -14,9 +14,9 @@ import { BlogSeparator } from '~/ui/common/blog-separator';
 import { BlogCode } from '~/ui/common/blog-code';
 import { BlogImage } from '~/ui/common/blog-image';
 
-In typescript, we often use `interface` and `type` intercheangably, we tend to favorise `type` as they represent a higher subset of features, e.g. you can represent inheritacne with both interface and types but only with the second can you perform type mapping e.g. `Partial` or `Omit`.
+Typescript allow us to use `interface` and `type` intercheangably, we tend to favorise `type` as they represent a higher subset of features, e.g. you can represent inheritance with both interface and types but only with the second can you perform type mapping e.g. `Partial` or `Omit`.
 
-It seems only logical that if you have two almost identical solution you would choose the more feature-full option, especially when it’s syntax is also generally shorter. But in truth there are things that only interfaces can do:
+It seems only logical that if you have two almost identical solution you would choose the more feature-full option, especially when it’s syntax is also generally shorter. But in truth there are things that only interfaces can do.
 
 ## "This" keyword
 
