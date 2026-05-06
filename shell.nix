@@ -6,24 +6,24 @@ pkgs.mkShell {
   nativeBuildInputs = [
     pkgs.just
     pkgs.nodejs_22
+    pkgs.bun
     pkgs.nodePackages.concurrently
     pkgs.nodePackages.typescript-language-server
     pkgs.vscode-langservers-extracted
     pkgs.pnpm
+    pkgs.poppler-utils
+
+    # Add Nix's Chromium!
+    pkgs.chromium 
   ];
 
   shellHook = ''
+    # Tell Puppeteer to skip downloading Chrome
+    export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+
+    # Point Puppeteer to the Nix-provided Chromium
+    export PUPPETEER_EXECUTABLE_PATH="${pkgs.chromium}/bin/chromium"
+
     export PATH="$PWD/.packages/node_modules/.bin:$PATH"
-    if ! command -v yarn > /dev/null; then
-      echo "Installing yarn to .packages/bin..."
-      mkdir -p .packages
-      TMPDIR=$(mktemp -d)
-      pushd "$TMPDIR"
-      npm init -y >/dev/null 2>&1
-      npm install yarn >/dev/null 2>&1
-      cp -r node_modules/ "$OLDPWD/.packages/"
-      popd
-      rm -rf "$TMPDIR"
-    fi
   '';
 }

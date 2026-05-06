@@ -1,11 +1,11 @@
-import { QwikCityProvider, RouterOutlet, ServiceWorkerRegister } from '@builder.io/qwik-city';
-import { CookieBannerProvider } from './providers/cookie-banner-provider';
-import { InitialColorModeProvider } from './providers/initial-color-mode-provider';
-import { Portal, PortalProvider } from './providers/portal';
-import { ThemeContextProvider } from './providers/theme-provider';
+import { QwikCityProvider, RouterOutlet } from '@builder.io/qwik-city';
 import { RouterHead } from './ui/logics/router-head';
 
 import './global.css';
+import { RootProviders } from './providers';
+
+//<div class="absolute z-[-1] top-0 left-0 w-screen h-[32vh] bg-pattern-checked pattern-subtlest" />
+//<div class="absolute z-[-1] top-[22vh] left-0 w-screen h-[10vh] bg-linear-to-b from-transparent to-bg-paper" />
 
 export default () => {
   /**
@@ -18,23 +18,14 @@ export default () => {
   return (
     <QwikCityProvider>
       <head>
-        <meta charSet="utf-8" />
+        <meta charset="utf-8" />
         <link rel="manifest" href="/manifest.json" />
         <RouterHead />
       </head>
-      <body lang="en">
-        <div class="absolute z-[-1] top-0 left-0 w-screen h-[32vh] bg-pattern-checked pattern-subtlest" />
-        <div class="absolute z-[-1] top-[22vh] left-0 w-screen h-[10vh] bg-linear-to-b from-transparent to-bg-paper" />
-        <ThemeContextProvider>
-          <CookieBannerProvider>
-            <InitialColorModeProvider />
-            <PortalProvider>
-              <RouterOutlet />
-              <ServiceWorkerRegister />
-              <Portal name="toast" />
-            </PortalProvider>
-          </CookieBannerProvider>
-        </ThemeContextProvider>
+      <body lang="en" class="app">
+        <RootProviders>
+          <RouterOutlet />
+        </RootProviders>
       </body>
     </QwikCityProvider>
   );

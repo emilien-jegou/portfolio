@@ -1,0 +1,61 @@
+@theme {
+  --color-ink-primary: #070D21;
+  --color-ink-secondary: #515B7B;
+  --color-base-primary: #FEFEFF;
+  --color-base-secondary: hsl(0 0% 93% / 1);
+  --color-separator-primary: #C5CAD9;
+}
+
+@media print {
+
+  /* Backgrounds */
+  body {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Reset margins/padding for maximum usable space */
+  body,
+  html {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background-color: white;
+  }
+
+  /* Paper setup */
+  @page {
+    margin: 0;
+    /* or small values like 5mm if needed */
+    size: A4 portrait;
+    /* or landscape if your 1047px content fits better */
+  }
+
+  .resume {
+    width: 948px !important;
+    max-width: 948px !important;
+    min-width: 948px !important;
+    margin: 0 auto;
+    /* centers if possible */
+    box-sizing: border-box;
+  }
+
+  /* Prevent any scaling/shrinking from overflow rules */
+  * {
+    overflow: visible !important;
+    break-inside: avoid;
+  }
+
+  html,
+  body {
+    transform: none !important;
+    zoom: 1 !important;
+    /* or remove if it causes issues */
+  }
+}
+
+.resume {
+  max-width: 948px !important;
+  margin-left: auto;
+  margin-right: auto;
+}

@@ -1,0 +1,126 @@
+import { type JSXChildren } from '@builder.io/qwik';
+import './styles.css';
+import { MarkdownText } from './common/markdown-text';
+import type { ResumeData } from './hooks/use-resume-store';
+
+type WorkExperienceProps = { title: string; company: string; place: string; date: string; bullets: string[]; };
+export const WorkExperience = (props: WorkExperienceProps) => (
+  <div class="w-full text-sm z-10 relative print:break-inside-avoid mb-2">
+    <div class="w-full flex items-center justify-between">
+      <h3 class="font-semibold">
+        {props.title}, <span>{props.company}</span>
+      </h3>
+      <p class="text-gray-600 text-xs">{props.date}</p>
+    </div>
+    {props.place && <div class="text-xs text-gray-500 mb-2">{props.place}</div>}
+
+    {props.bullets.filter(b => b.trim() !== '').length > 0 && (
+      <div class="w-full flex flex-col gap-1 mt-2">
+        {props.bullets.filter(b => b.trim() !== '').map((bullet, idx) => (
+          <div key={idx} class="flex gap-2 items-start">
+            <div class="text-md mt-[-2px]">•</div>
+            <MarkdownText text={bullet} class="flex-1" />
+          </div>
+        ))}
+      </div>
+    )}
+  </div>
+);
+
+type SchoolEducationProps = { school: string; place: string; degree: string; date: string; };
+export const SchoolEducation = (props: SchoolEducationProps) => (
+  <div class="w-full text-sm z-10 relative print:break-inside-avoid">
+    <div class="w-full flex items-center justify-between">
+      <h3 class="font-semibold">{props.school} - {props.place}</h3>
+      <p class="text-gray-600 text-xs">{props.date}</p>
+    </div>
+    <div class="mt-1"><MarkdownText text={props.degree} /></div>
+  </div>
+);
+
+// --- UI Components ---
+type HeaderCategoryProps = { icon: JSXChildren; label: string; href: string; };
+const HeaderCategory = (props: HeaderCategoryProps) => (
+  <a href={props.href} class="flex gap-2 text-sm font-bold items-center hover:underline">
+    <span>{props.icon}</span>
+    <span>{props.label}</span>
+  </a>
+);
+
+type HeaderDescProps = { label: string; content: string; };
+const HeaderDesc = (props: HeaderDescProps) => {
+  if (!props.content) return null;
+  return (
+    <div class="text-xs w-full flex gap-0">
+      <div class="w-[93px] shrink-0 relative py-[6px] mr-[12px] font-bold">
+        <div class="font-bold w-px left-[100%] absolute shrink-0 top-0 h-[110%] border-l-[0.5px] border-[#C3C3BA]" />
+        {props.label}
+      </div>
+      <div class="py-[6px]"><MarkdownText text={props.content} /></div>
+    </div>
+  );
+};
+
+// --- Helper functions ---
+const getLinkData = (linkInfo?: { link: string; label: string } | string, fallbackLabel: string = "Link") => {
+  if (!linkInfo) return null;
+  if (typeof linkInfo === 'string') return { href: linkInfo, label: fallbackLabel };
+  return { href: linkInfo.link, label: linkInfo.label || fallbackLabel };
+};
+
+type ResumeProps = {
+  resume: ResumeData;
+}
+
+export const Resume = ({ resume }: ResumeProps) => {
+  const portfolioLink = getLinkData(resume.head.links.portfolio, 'Portfolio');
+  const githubLink = getLinkData(resume.head.links.github, 'GitHub');
+  const linkedinLink = getLinkData(resume.head.links.linkedin, 'LinkedIn');
+
+  return (
+    <div class="mb-8 z-10 relative pb-10" style={{ fontFamily: 'SF Pro Display' }}>
+      <div class="p-4 bg-slate-50 transition-colors print:break-inside-avoid border-b border-gray-200">
+        <h1 class="text-xl font-bold">{resume.head.firstname} {resume.head.lastname}</h1>
+        <p class="text-md font-medium text-gray-600 mt-1">{resume.head.jobTitle}</p>
+
+        <div class="mt-4 flex gap-4 flex-wrap">
+          {resume.head.links.email && <HeaderCategory icon={<span>📧</span>} label={resume.head.links.email} href={`mailto:${resume.head.links.email}`} />}
+          {linkedinLink && <HeaderCategory icon={<span>🔗</span>} label={linkedinLink.label} href={linkedinLink.href} />}
+          {portfolioLink && <HeaderCategory icon={<span>🌐</span>} label={portfolioLink.label} href={portfolioLink.href} />}
+          {githubLink && <HeaderCategory icon={<span>💻</span>} label={githubLink.label} href={githubLink.href} />}
+        </div>
+
+        <div class="mt-4 flex flex-col bg-paper rounded-2xl px-6 py-4 bg-white/70 shadow-sm border border-gray-100">
+          <HeaderDesc label="Location" content={resume.head.links.location || ''} />
+          <HeaderDesc label="About" content={resume.about.short} />
+          <HeaderDesc label="Skills" content={resume.skills.join(', ')} />
+        </div>
+      </div>
+
+      <div class="mt-8 mx-12">
+        {resume.about.detailed && (
+          <>
+            <h2 class="text-xl font-bold mb-4 print:break-after-avoid">About me</h2>
+            <div class="text-sm z-10 relative print:break-inside-avoid">
+              <MarkdownText text={resume.about.detailed} />
+            </div>
+          </>
+        )}
+
+        {resume.experiences.length > 0 && (
+          <h2 class="mt-8 text-xl font-bold mb-4 print:break-after-avoid">Work experience</h2>
+        )}
+        <div class="flex flex-col gap-6">
+          {resume.experiences.map((w, idx) => <WorkExperience key={idx} {...w} />)}
+        </div>
+
+        {resume.education.length > 0 && (
+          <h2 class="mt-8 text-xl font-bold mb-4 print:break-after-avoid">Education</h2>
+        )}
+        <div class="flex flex-col gap-6">
+          {resume.education.map((e, idx) => <SchoolEducation key={idx} {...e} />)}
+        </div>
+      </div>
+    </div>
+  );
+};

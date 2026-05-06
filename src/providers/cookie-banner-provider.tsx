@@ -1,14 +1,17 @@
-import { $, Slot, component$, useStore, useVisibleTask$ } from '@builder.io/qwik';
-import type { JSXChildren, QRL } from '@builder.io/qwik';
-import { useLocation } from '@builder.io/qwik-city';
-import { CookieBanner } from '~/ui/layout/cookie-banner';
+import { $, Slot, component$, noSerialize, useStore, useVisibleTask$ } from '@builder.io/qwik';
+import type { JSXChildren, NoSerialize, QRL } from '@builder.io/qwik';
+import { CookieBannerLayout } from '~/ui/layout/cookie-banner';
 import type { CookieBannerSubmitData } from '~/ui/layout/cookie-banner';
 import { cn } from '~/utils/cn';
+import { initContext } from '~/utils/context-utils';
+import { ExclusiveLock } from '~/utils/lock-handle';
 import { getStorage, storageGet, storageSet } from '~/utils/storage';
 
 interface CookieBannerState {
   isVisible: boolean;
   isAccepted: boolean;
+  isEnabled: boolean;
+  atomicHandle: ExclusiveLock;
 }
 
 export const cookieBannerStorage = getStorage<boolean>('local', 'cookie-banner');
@@ -28,7 +31,7 @@ const CookieBannerWrapper = ({
 }: CookieBannerWrapperProps) => {
   return (
     <div>
-      <CookieBanner
+      <CookieBannerLayout
         class="z-[2000]"
         visible={visible}
         onSubmit$={$((submitted: CookieBannerSubmitData) => {
@@ -44,7 +47,7 @@ const CookieBannerWrapper = ({
         class={cn(
           'z-[1000]',
           visible &&
-            'select-none pointer-events-none transition-all saturate-[0.1] bg-bgr-default overflow-hidden max-h-[120vh]',
+          'select-none pointer-events-none transition-all saturate-[0.1] bg-bgr-default overflow-hidden max-h-[120vh]',
         )}
         data-name="cookie-banner-wrapper"
       >
@@ -54,11 +57,31 @@ const CookieBannerWrapper = ({
   );
 };
 
+export const CookieBannerContext = initContext<CookieBannerState>('cookie-banner-context');
+
+
+export const CookieBanner = component$(() => {
+  const store = CookieBannerContext.use();
+
+  useVisibleTask$(({ cleanup }) => {
+    const handle = ExclusiveLock.tryAcquire(store.atomicHandle);
+    if (!handle) return;
+    cleanup(() => {
+      store.isEnabled = false;
+      handle.destroy();
+    });
+    store.isEnabled = true;
+  }, { strategy: 'document-ready' });
+
+  return <span data-cookie-banner-enabled class="absolute" />;
+});
+
 export const CookieBannerProvider = component$(() => {
-  const location = useLocation();
-  const state = useStore<CookieBannerState>({
+  const store = useStore<CookieBannerState>({
     isVisible: false,
     isAccepted: false,
+    isEnabled: false,
+    atomicHandle: ExclusiveLock.create(),
   });
 
   // eslint-disable-next-line qwik/no-use-visible-task
@@ -66,24 +89,26 @@ export const CookieBannerProvider = component$(() => {
     const cookieConsent = storageGet(cookieBannerStorage);
 
     if (cookieConsent.kind === 'none') {
-      state.isVisible = true;
+      store.isVisible = true;
     } else {
-      state.isAccepted = cookieConsent.value;
+      store.isAccepted = cookieConsent.value;
     }
   });
+
+  CookieBannerContext.useProvider(store);
 
   return (
     <div>
       <CookieBannerWrapper
-        visible={state.isVisible && location.url.pathname !== '/privacy/'}
+        visible={store.isVisible && store.isEnabled}
         onAccept$={$(() => {
-          state.isAccepted = true;
-          state.isVisible = false;
+          store.isAccepted = true;
+          store.isVisible = false;
           storageSet(cookieBannerStorage, true);
         })}
         onReject$={$(() => {
-          state.isAccepted = false;
-          state.isVisible = false;
+          store.isAccepted = false;
+          store.isVisible = false;
           storageSet(cookieBannerStorage, false);
         })}
       >

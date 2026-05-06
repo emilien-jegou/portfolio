@@ -58,23 +58,23 @@
 }
 
 @layer components {
-  body {
+  .app {
     @apply text-ink bg-paper border-0 border-line overflow-x-hidden;
   }
 
-  body[data-color-mode='light'] {
+  .app[data-color-mode='light'] {
     @apply light-theme;
   }
 
-  body[data-color-mode='dark'] {
+  .app[data-color-mode='dark'] {
     @apply dark-theme;
   }
 
-  body[data-color-mode='dark'] dialog {
+  .app[data-color-mode='dark'] dialog {
     @apply bg-parchment text-lead;
   }
 
-  body[data-color-mode='light'] dialog {
+  .app[data-color-mode='light'] dialog {
     @apply bg-paper text-ink;
   }
 }

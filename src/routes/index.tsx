@@ -1,5 +1,6 @@
 import { type DocumentHead } from '@builder.io/qwik-city';
 import articles from '~/generated/blog-data.json';
+import { CookieBanner } from '~/providers/cookie-banner-provider';
 import { ThemeSwitcherButton } from '~/ui/common/theme-switcher-button';
 import { Wave } from '~/ui/common/wave';
 import { AboutMe } from '~/ui/layout/about-me';
@@ -31,6 +32,7 @@ sortedArticles.splice(heroArticleIdx, 1);
 export default () => {
   return (
     <div class="grid overflow-hidden grid-flow-row xl:flex gap-4 xl:gap-8 px-4 sm:px-8 flex-col xl:flex-row w-screen xl:mob-h-screen py-6">
+      <CookieBanner />
       <HeaderBar class="hidden xl:block" />
       <div class="flex items-center xl:items-start justify-between w-full xl:w-fit">
         <div class="flex gap-2 items-center  xl:items-start">

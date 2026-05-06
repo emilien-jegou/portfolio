@@ -8,6 +8,7 @@ import { buildHead } from '~/utils/build-head';
 
 import './mdx.css';
 import './prism-theme-dark.css';
+import { CookieBanner } from '~/providers/cookie-banner-provider';
 
 export default component$(() => {
   const {
@@ -18,6 +19,7 @@ export default component$(() => {
 
   return (
     <PageLayout>
+      <CookieBanner />
       <TableOfContents headings={headings ?? []} />
       <main id="intro" class="custom-container mx-auto relative mt-24">
         <div class="absolute w-[105%] h-[160%] top-0 z-[-1] left-1/2 -translate-x-1/2 -translate-y-[16px] bg-paper opacity-[0.4] pointer-events-none" />

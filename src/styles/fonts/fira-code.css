@@ -1,0 +1,8 @@
+@font-face {
+  font-family: 'FiraCode';
+  font-style: normal;
+  src:
+    url('/fonts/FiraCode-VariableFont_wght.woff') format('woff'),
+    url('/fonts/FiraCode-VariableFont_wght.woff2') format('woff2');
+  font-display: swap;
+}

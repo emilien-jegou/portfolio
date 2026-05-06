@@ -1,5 +1,6 @@
 import type { DocumentHead } from '@builder.io/qwik-city';
 import articles from '~/generated/blog-data.json';
+import { CookieBanner } from '~/providers/cookie-banner-provider';
 import { BlogCard } from '~/ui/layout/blog-card';
 import { PageLayout } from '~/ui/layout/page-layout';
 import { buildHead } from '~/utils/build-head';
@@ -18,6 +19,7 @@ const sortedArticles: Article[] = Object.entries(articles)
 
 export default () => (
   <PageLayout>
+    <CookieBanner />
     <main id="intro" class="relative mt-24 mb-12">
       <h1 class="text-3xl sm:text-4xl sm:leading-[46px] font-extrabold max-w-[580px]">
         All my posts

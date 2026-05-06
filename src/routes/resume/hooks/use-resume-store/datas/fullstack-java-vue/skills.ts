@@ -1,0 +1,18 @@
+export const SKILLS = [
+  "Java",
+  "TypeScript",
+  "Vue.js / Nuxt",
+  "AWS",
+  "Docker",
+  "CI/CD",
+  "GraphQL",
+  "Microservices & SOA",
+  "Node.js",
+  "Github Actions",
+  "Git",
+  "SOLID",
+  "Redis",
+  "UI/UX",
+  "PostgreSQL",
+  "Next.js",
+]

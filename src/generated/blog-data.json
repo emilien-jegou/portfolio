@@ -41,8 +41,8 @@
     "data": {
       "title": "How interfaces are used in typescript",
       "thumbnailUrl": "/images/posts/type-vs-interface/thumbnail.png",
-      "description": "I have been playing around with gradient generation recently, here is the result app",
-      "shareImageUrl": "/images/posts/gradients/app1.png",
+      "description": "On the lesser known cases for using interfaces over types in typescript",
+      "shareImageUrl": "/images/posts/type-vs-interface/thumbnail.png",
       "createdAt": 1750254692000
     }
   }

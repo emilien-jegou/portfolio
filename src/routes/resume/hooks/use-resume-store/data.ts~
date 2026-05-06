@@ -1,0 +1,115 @@
+import type { ResumeData } from './types';
+
+export const DEFAULT_DATA: ResumeData = {
+  head: {
+    firstname: 'Emilien',
+    lastname: 'Jegou',
+    jobTitle: 'Fullstack Engineer',
+    links: {
+      location: 'France',
+      email: 'emj339@gmail.com',
+      portfolio: { link: 'https://emje.dev/', label: 'emje.dev' },
+      github: { label: 'github.com/emilien-jegou', link: 'https://github.com/emilien-jegou' },
+      linkedin: { label: 'in/emilien-jegou', link: 'www.linkedin.com/in/emilien-jegou' },
+    },
+  },
+  about: {
+    short: 'Experienced designer driven to integrate **ingenuity** and **empathy** into **interactions** and **experiences**',
+    detailed: 'I thrive in environments of discovery rather than predetermination. In my 5 years of professional experience, I have relied on free-thinking imagination tapered by data-driven pragmatism to execute business objectives and predict user needs. The resul is saved time, energy and money for agencies and brands. Most importantly, my mission is to design experiences that allow users to live richer, healthier and more connected lives.'
+  },
+  experiences: [
+    {
+      title: 'Full Stack Developer',
+      company: 'Self-employed',
+      companyLink: 'https://emje.dev',
+      date: 'Sep 2023 - Present',
+      place: 'France',
+      skills: ['Rust', 'TypeScript', 'Redis', 'Postgres', 'RabbitMQ', 'Grafana', 'Terraform', 'Nomad'],
+      bullets: [
+        'Developed an open-source time-tracker application for desktop and android.',
+        'Development of a cloud platform for web scraping tailored for developers',
+      ],
+    },
+    {
+      title: 'Senior Full Stack Developer',
+      company: 'Housemates',
+      companyLogo: '/resume/housemates-logo.png',
+      date: 'Sep 2023 - Present',
+      place: 'France',
+      skills: ['Typescript', 'Sentry', 'Next.js', 'Laravel', 'MySQL', 'Mixpanel'],
+      bullets: [
+        'Led the development of a global student accommodation platform and booking system.',
+        'Collaborated with the designer for the complete redesign of the marketplace and company portfolio.',
+        'Increased overall Lighthouse score of the marketplace by 40% (97+) on mobile and desktop through an aggressive refactor of the typescript codebase',
+        'Implemented data-driven solutions to improve user experience, such as A/B testing, user behavior monitoring, and GDPR-compliance.',
+        'Boosted SEO efforts by addressing indexing issues, improving overall rankings, and prioritizing high ROI accomodation',
+        'Improved general B2B capabilities e.g. internationalization, Property Management system integrations, and back-office improvements.',
+      ],
+    },
+    {
+      title: 'Full Stack Developer',
+      company: 'Polyconseil (now Polycea) - Bolloré',
+      companyLink: 'https://polycea.fr/',
+      companyLogo: '/resume/polyconseil-logo.png',
+      date: 'Sep 2023 - Present',
+      place: 'France',
+      skills: ['React', 'Kubernetes', 'TypeScript', 'Node.js', 'Postgres', 'Sentry', 'Azure', 'Grafana',],
+      bullets: [
+        "Developed a web platform from scratch for car park teleoperation, utilizing React and Nodejs, and initiated its integration across Indigo's French car park network, encompassing 600 locations; the platform is now being deployed and used internationally",
+        'Coordinated with managers for quality assurance, technical requirement, user experience, and charge estimates. Gave explicit design of features in Figma and integrate them perfectly in code.',
+        'Developed and maintained e2e/integration/unit tests on the frontend and backend as well as code quality tools, enforced proper programming practices through continuous integration jobs using gitlab CI.',
+        'Worked extensively with Azure Cloud Services, IoT devices communication, Bi-directional web communication strategies, Data Lake automation, video proxying and stream transcoding.',
+        'Interacted with Gitops tools for deployments, environment management, migrations, data transfer versioning and secure secret management.'
+      ],
+    },
+  ],
+  education: [
+    {
+      date: 'Sep 2019 - Sep 2021',
+      place: 'Paris',
+      school: 'Epitech',
+      schoolLogo: '/resume/epitech-logo.png',
+      degree: 'Master in information technology',
+    },
+    {
+      date: 'Sep 2019 - Sep 2020',
+      place: 'Taiwan',
+      school: 'National Tsing Hua University',
+      schoolLogo: '/resume/nthu-logo.png',
+      degree: 'Computer Science exchange year',
+    },
+    {
+      date: 'Sep 2016 - Sep 2019',
+      place: 'Rennes',
+      school: 'Epitech',
+      schoolLogo: '/resume/epitech-logo.png',
+      degree: 'Bsc in information technology',
+    },
+  ],
+  skills: ['Rust', 'TypeScript', 'Redis', 'Postgres', 'RabbitMQ', 'Grafana', 'Terraform', 'Nomad', 'Shadcn', 'Tailwindcss'],
+  software: {
+    sectionName: 'Languages',
+    items: [
+      {
+        icon: 'android',
+        name: 'Android'
+      },
+      {
+        icon: 'android',
+        name: 'Android'
+      },
+      {
+        icon: 'android',
+        name: 'Android'
+      },
+      {
+        icon: 'android',
+        name: 'Android'
+      },
+    ]
+  },
+  languages: [
+    { ac: 'FR', level: 'Native' },
+    { ac: 'EN',  level: 'Professional' },
+  ],
+};

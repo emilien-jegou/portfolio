@@ -11,13 +11,13 @@ import './styles.css';
 
 export type CookieBannerSubmitData = { kind: 'accepted' } | { kind: 'rejected' };
 
-export type CookieBannerProps = {
+export type CookieBannerLayoutProps = {
   onSubmit$?: QRL<(submitted: CookieBannerSubmitData) => void>;
   class?: string;
   visible: boolean;
 };
 
-export const CookieBanner = component$((props: CookieBannerProps) => {
+export const CookieBannerLayout = component$((props: CookieBannerLayoutProps) => {
   const md = useBreakpoint('>=md');
 
   return (
@@ -60,7 +60,7 @@ export const CookieBanner = component$((props: CookieBannerProps) => {
                 </a>{' '}
               </p>
               <div class="flex gap-2 md:gap-4 text-base sm:text-lg mt-4 ml-auto w-fit">
-                <CookieBannerButton
+                <CookieBannerLayoutButton
                   color="#c70e06"
                   class="hover:bg-[#c70e06]/30 bg-[#c70e06]/10 flex  gap-3"
                   onClick$={$(() => {
@@ -74,8 +74,8 @@ export const CookieBanner = component$((props: CookieBannerProps) => {
                       x
                     </p>
                   </div>
-                </CookieBannerButton>
-                <CookieBannerButton
+                </CookieBannerLayoutButton>
+                <CookieBannerLayoutButton
                   color="#249f09"
                   class="transition-colors hover:bg-[#249f09]/30 bg-[#249f09]/10 flex gap-2"
                   onClick$={$(() => {
@@ -84,7 +84,7 @@ export const CookieBanner = component$((props: CookieBannerProps) => {
                 >
                   <span>Allow</span>
                   <img class="shrink-0" src={Cookie} width={32} height={32} />
-                </CookieBannerButton>
+                </CookieBannerLayoutButton>
               </div>
             </SpeechBubble>
           ))}
@@ -118,14 +118,14 @@ export const CookieBanner = component$((props: CookieBannerProps) => {
   );
 });
 
-type CookieBannerButtonProps = {
+type CookieBannerLayoutButtonProps = {
   class?: string;
   onClick$?: QRL<() => void>;
   color: string;
   children: JSXChildren;
 };
 
-export const CookieBannerButton = (props: CookieBannerButtonProps) => (
+export const CookieBannerLayoutButton = (props: CookieBannerLayoutButtonProps) => (
   <button
     class={cn(
       'transition-colors duration-50 border rounded-onwo-s-sm py-1 items-center border-[3px] px-4 md:px-6',
