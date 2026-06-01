@@ -12,7 +12,6 @@
 @import './styles/fonts/fira-code.css';
 @import './styles/fonts/jersey.css';
 @import './styles/fonts/noto-sans.css';
-@import './styles/fonts/sf-pro.css';
 
 @source "./";
 @source "../node_modules/@onwo/ui";
