@@ -1,5 +1,5 @@
-import { $, Slot, component$, noSerialize, useStore, useVisibleTask$ } from '@builder.io/qwik';
-import type { JSXChildren, NoSerialize, QRL } from '@builder.io/qwik';
+import { $, Slot, component$, useStore, useVisibleTask$ } from '@builder.io/qwik';
+import type { JSXChildren, QRL } from '@builder.io/qwik';
 import { CookieBannerLayout } from '~/ui/layout/cookie-banner';
 import type { CookieBannerSubmitData } from '~/ui/layout/cookie-banner';
 import { cn } from '~/utils/cn';
