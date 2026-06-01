@@ -28,9 +28,6 @@
       "~/*": ["./src/*"]
     }
   },
-  "files": [
-    "./.prettierrc.cjs"
-  ],
   "exclude": ["functions"],
   "include": ["src", "./*.d.ts", "./*.config.ts"]
 }
