@@ -20,23 +20,25 @@ const sortedArticles: Article[] = Object.entries(articles)
 export default () => (
   <PageLayout>
     <CookieBanner />
-    <main id="intro" class="relative mt-24 mb-12">
-      <h1 class="text-3xl sm:text-4xl sm:leading-[46px] font-extrabold max-w-[580px]">
-        All my posts
-      </h1>
+    <main class="mx-auto custom-container pb-16">
+      <div id="intro" class="relative mt-24 mb-12">
+        <h1 class="text-3xl sm:text-4xl sm:leading-[46px] font-extrabold">
+          All my posts
+        </h1>
+      </div>
+      <div class="flex flex-col gap-12 gap-20">
+        {sortedArticles.map((data, idx) => (
+          <BlogCard
+            key={idx}
+            slug={`/blog/${data.slug}`}
+            title={data.title}
+            description={data.description}
+            thumbnailUrl={data.thumbnailUrl}
+            date={new Date(data.createdAt)}
+          />
+        ))}
+      </div>
     </main>
-    <div class="flex flex-col gap-12 gap-20">
-      {sortedArticles.map((data, idx) => (
-        <BlogCard
-          key={idx}
-          slug={`/blog/${data.slug}`}
-          title={data.title}
-          description={data.description}
-          thumbnailUrl={data.thumbnailUrl}
-          date={new Date(data.createdAt)}
-        />
-      ))}
-    </div>
   </PageLayout>
 );
 

@@ -35,7 +35,7 @@ export default () => {
       <CookieBanner />
       <HeaderBar class="hidden xl:block" />
       <div class="flex items-center xl:items-start justify-between w-full xl:w-fit">
-        <div class="flex gap-2 items-center  xl:items-start">
+        <div class="flex gap-2 items-center xl:items-start">
           <AppIcon fg={{ r: 84, g: 3, b: 149 }} />
           <p class="ml-2 italic hidden sm:block xl:hidden">
             "Computers are useless. They can only give you answers."

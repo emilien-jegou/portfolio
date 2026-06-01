@@ -1,4 +1,4 @@
-import { component$, useComputed$ } from '@builder.io/qwik';
+import { component$, useSignal, useVisibleTask$ } from '@builder.io/qwik';
 import { formatDistance } from 'date-fns';
 
 type BlogCardProps = {
@@ -11,8 +11,11 @@ type BlogCardProps = {
 };
 
 const BlogCardDate = component$(({ date }: { date: Date }) => {
-  const d = useComputed$(() => formatDistance(date, new Date(), { addSuffix: true }));
-  return <p class="text-graphite text-xs">{d.value}</p>;
+  const dateSince = useSignal<string>('');
+  useVisibleTask$(() => {
+    dateSince.value = formatDistance(date, new Date(), { addSuffix: true });
+  });
+  return <p class="text-graphite text-xs">{dateSince.value}</p>;
 });
 
 export const BlogCard = (props: BlogCardProps) => (

@@ -21,12 +21,12 @@ export default component$(() => {
     <PageLayout>
       <CookieBanner />
       <TableOfContents headings={headings ?? []} />
-      <main id="intro" class="custom-container mx-auto relative mt-24">
+      <main id="intro" class="custom-container mx-auto relative pt-32 pb-4">
         <div class="absolute w-[105%] h-[160%] top-0 z-[-1] left-1/2 -translate-x-1/2 -translate-y-[16px] bg-paper opacity-[0.4] pointer-events-none" />
-        <h1 class="text-3xl sm:text-4xl sm:leading-[46px] font-extrabold max-w-[580px]">
+        <h1 class="text-3xl sm:text-4xl sm:leading-[46px] font-extrabold">
           {data.title}
         </h1>
-        <p class="text-graphite mt-4 sm:mt-6">
+        <p class="text-graphite mt-2 text-lg">
           Emilien Jegou, {format(data.createdAt, 'EEE MMMM dd yyyy')}
         </p>
       </main>

@@ -28,8 +28,8 @@ export const BlogCode = component$((props: BlogCodeProps) => {
       class={cn(
         'lg:transition-[width]',
         viewType.value !== 'fullscreen' &&
-          'w-[640px]! mt-8 shadow-sm blog-code-rounding bg-[#191D24]',
-        viewType.value === 'expanded' && 'w-[940px]! shadow-xl',
+          'w-[940px]! mt-8 shadow-sm blog-code-rounding bg-[#191D24]',
+        viewType.value === 'expanded' && 'w-[1280px]! shadow-xl',
         viewType.value === 'fullscreen' && 'w-screen! fixed top-0 left-0 w-[100%] h-screen z-50',
       )}
       style={{
