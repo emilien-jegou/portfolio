@@ -1,8 +1,8 @@
 ---
 data:
-  title: 'How interfaces are used in typescript'
+  title: 'Interface vs Type in TypeScript'
   thumbnailUrl: '/images/posts/type-vs-interface/thumbnail.png'
-  description: 'On the lesser known cases for using interfaces over types in typescript'
+  description: 'On the lesser known cases for using interfaces over types in TypeScript'
   shareImageUrl: '/images/posts/type-vs-interface/thumbnail.png'
   createdAt: 1750254692000
 ---
@@ -14,9 +14,13 @@ import { BlogSeparator } from '~/ui/common/blog-separator';
 import { BlogCode } from '~/ui/common/blog-code';
 import { BlogImage } from '~/ui/common/blog-image';
 
-Typescript allow us to use `interface` and `type` intercheangably, we tend to favorise `type` as they represent a higher subset of features, e.g. you can represent inheritance with both interface and types but only with the second can you perform type mapping e.g. `Partial` or `Omit`.
+TypeScript allows us to use `interface` and `type` interchangeably. We tend to favor `type` aliases because they offer a broader and more powerful set of features. For instance, both can express inheritance, but only `type` lets you perform advanced type transformations such as `Partial<T>`, `Omit<T, K>`, and other mapped types.
 
-It seems only logical that if you have two almost identical solution you would choose the more feature-full option, especially when it’s syntax is also generally shorter. But in truth there are things that only interfaces can do.
+It seems logical that when two constructs are so similar, we’d choose the more capable one—especially when its syntax is often more concise. Features traditionally associated with interfaces, such as inheritance and class interoperability, are now handled just as easily (and sometimes more elegantly) with `type` aliases in modern TypeScript.
+
+So, should we only use `type`? Not quite. There are still a few specific capabilities that only interfaces provide—which is exactly what this article explores. We won’t rehash everything `type` can do; instead, we’ll focus on the small but important subset of features where interfaces still have the edge.
+
+<BlogImage alt="Interfaces are almost a subset of types" width={1419} height={809} src="/images/posts/type-vs-interface/this_article.png" />
 
 ## "This" keyword
 
@@ -140,17 +144,51 @@ by default on this particular case.
 Worth noting that class will behave in the same way as interfaces even when
 they are extending a type.
 
-## So which one should I use?
+## Difference in error types
 
-> Should I use `interface` unless I need `type` features or use `type` unless I need `interface` features?
+One of the main cited reason for the use of interface are "better transpilation
+messages".
 
-In general you will need `type`-only features more often than you will need the
-`interface`-only one, so I would recommend making it the default choice.
+Yet my testing didn't see significant differences, even on <ExternalLinkInline
+href="https://www.typescriptlang.org/play/#example/types-vs-interfaces" label="
+the official documentation example" />; I am leaving this one up to
+interpretation, depending on your typescript engine you may get different
+result, so keep an eye on it.
 
-You can still use interface for inheritance and having access to the `this`
-keyword when it simplify your types. You will rarely encounter cases where
-declaration merging can be usefull, only when encountering third-party cases
-such as the one presented above, so don't focus on it too much.
+<BlogCode language="typescript">
+```typescript
+type BirdType = { wings: 2; };
+interface BirdInterface { wings: 2; }
 
-Other than that, you may feel more comfortable using interface when coding in
-OOP, since it's meaning is deeply ingrained, and that's perfectly fine too.
+type ChickenType = { eggColor: 'white'; } & BirdType;
+interface ChickenInterface extends BirdInterface { eggColor: 'white'; }
+
+let ct1: ChickenType = { eggColor: 'white' };
+// Type '{ eggColor: "white"; }' is not assignable to type 'ChickenType'.
+// Property 'wings' is missing in type '{ eggColor: "white"; }' but required in type 'BirdType'.
+//
+// type BirdType = { wings: 2; };
+//                   ~~~~~
+// 'wings' is declared here.
+
+
+let ci2: ChickenInterface = { eggColor: 'white' };
+// Property 'wings' is missing in type '{ eggColor: "white"; }' but required in type 'ChickenInterface'.
+//
+// interface BirdInterface { wings: 2; }
+//                           ~~~~~
+// 'wings' is declared here.
+```
+</BlogCode>
+
+## Conclusion
+
+You can assume that most of the time, interfaces are used as a "force of
+habit" rather than any specific need. Either from OOP use, or simply
+from recommendation that ceased to be relevant.
+
+The most important thing — whether you choose `type` or `interface` — is to
+understand the features you are missing, luckily for you that list is extremely
+thin for `interfaces`, outside of declaration merging, `type` offers a more
+powerful and flexible foundation for most use cases in today’s
+TypeScript.

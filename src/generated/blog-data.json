@@ -39,9 +39,9 @@
   },
   "type-vs-interface": {
     "data": {
-      "title": "How interfaces are used in typescript",
+      "title": "Interface vs Type in TypeScript",
       "thumbnailUrl": "/images/posts/type-vs-interface/thumbnail.png",
-      "description": "On the lesser known cases for using interfaces over types in typescript",
+      "description": "On the lesser known cases for using interfaces over types in TypeScript",
       "shareImageUrl": "/images/posts/type-vs-interface/thumbnail.png",
       "createdAt": 1750254692000
     }
